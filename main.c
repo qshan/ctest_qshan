@@ -45,7 +45,7 @@ void main()
 		printf("i is really not equal 0\n");
 	}
 
-
+//add in qcavi pc
 
 	printf("the code is end here\n");
 
