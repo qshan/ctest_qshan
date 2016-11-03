@@ -7,12 +7,15 @@
 
 void main()
 {
+
+	int i;
+
+#if 0
 	unsigned int array[][2] = {{1,2},{3,4},(5,6)};
 	unsigned int *ptr1;
 	unsigned int *ptr2;
 	unsigned int *ptr3;
-	int i;
-#if 0
+
 	ptr1 = array;
 	ptr2 = array[0];
 	ptr3 = &array[0][1];
@@ -61,7 +64,7 @@ void main()
 enum TRAFFIC_TYPE {type_one, type_two, type_three, type_four};
 
 enum TRAFFIC_TYPE sellection;
-	sellection = type_one;
+	sellection = type_three;
 
 switch (sellection)
 {
@@ -71,8 +74,15 @@ case type_one :
 case type_two :
 	printf("current is type_two \n");
 	break;
+case type_three :
+	printf("current is type_three \n");
+	break;
+case type_four :
+	printf("current is type_four \n");
+	break;
 default :
-	//code;
+	//code here;
+	printf("current is default branch \n");
 	break;
 }
 
