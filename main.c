@@ -31,6 +31,10 @@ void main()
 	for (i=0;i<10;i++)
 	printf("Hell C %d time \n", (i+1));
 #endif
+
+
+#if 0
+//just example for my son
 /**/
 //
 	i=0;
@@ -49,9 +53,29 @@ void main()
 
 	printf("the code is end here\n");
 
+#endif
 
 
+#if 1
+//for the enmu test
+enum TRAFFIC_TYPE {type_one, type_two, type_three, type_four};
 
+enum TRAFFIC_TYPE sellection;
+	sellection = type_one;
 
+switch (sellection)
+{
+case type_one :
+	printf("current is type_one \n");
+	break;
+case type_two :
+	printf("current is type_two \n");
+	break;
+default :
+	//code;
+	break;
+}
+
+#endif
 
 }
