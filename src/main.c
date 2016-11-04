@@ -4,11 +4,14 @@
  *  Created on: Oct 26, 2016
  *      Author: qshan
  */
+#include <stdio.h>
+#include <practice.h>
 
-void main()
+int main()
 {
 
 	int i;
+	int Array[]={10,9,8,2,6,5,4,3,7,1};
 
 #if 0
 	unsigned int array[][2] = {{1,2},{3,4},(5,6)};
@@ -59,7 +62,7 @@ void main()
 #endif
 
 
-#if 1
+#if 0
 //for the enmu test
 enum TRAFFIC_TYPE {type_one, type_two, type_three, type_four};
 
@@ -88,4 +91,15 @@ default :
 
 #endif
 
+#if 1
+	//printf("sizeof(Array) = %d\n", (sizeof(Array)));
+	//printf("sizeof(Array[0]) = %d\n", (sizeof(Array[0])));
+	//printf("sizeof(Array)/sizeof(Array[0]) = %d\n", (sizeof(Array)/sizeof(Array[0])));
+	print_int_array(Array, (sizeof(Array)/sizeof(Array[0])));
+	sort_int(Array, sizeof(Array)/sizeof(Array[0]));
+	print_int_array(Array, (sizeof(Array)/sizeof(Array[0])));
+#endif
+
+
+return 0;
 }
