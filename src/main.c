@@ -14,7 +14,7 @@ int main()
 	int Array[]={10,9,8,2,6,5,4,3,7,1};
 
 #if 0
-	unsigned int array[][2] = {{1,2},{3,4},(5,6)};
+	unsigned int array[3][2] = {{1,2},{3,4},(5,6)};
 	unsigned int *ptr1;
 	unsigned int *ptr2;
 	unsigned int *ptr3;
@@ -22,16 +22,16 @@ int main()
 	ptr1 = array;
 	ptr2 = array[0];
 	ptr3 = &array[0][1];
-	printf("array is %x\n", array);
-	printf("sizeof(array) is %x \n", (sizeof(array)));
-	printf("sizeof(array[0]) is %x \n", (sizeof(array[0])));
-	printf("sizeof(array[0][0]) is %x \n", (sizeof(array[0][0])));
-	printf("sizeof(ptr1) is %x \n", (sizeof(ptr1)));
-	printf("sizeof(ptr2) is %x \n", (sizeof(ptr2)));
-	printf("sizeof(ptr3) is %x \n", (sizeof(ptr3)));
-	printf("sizeof(*ptr1) is %x \n", (sizeof(*ptr1)));
-	printf("sizeof(*ptr2) is %x \n", (sizeof(*ptr2)));
-	printf("sizeof(*ptr3) is %x \n", (sizeof(*ptr3)));
+	//printf("array is %x\n", array);
+	printf("sizeof(array) is %d \n", (sizeof(array)));
+	printf("sizeof(array[0]) is %d \n", (sizeof(array[0])));
+	printf("sizeof(array[0][0]) is %d \n", (sizeof(array[0][0])));
+	printf("sizeof(ptr1) is %d \n", (sizeof(ptr1)));
+	printf("sizeof(ptr2) is %d \n", (sizeof(ptr2)));
+	printf("sizeof(ptr3) is %d \n", (sizeof(ptr3)));
+	printf("sizeof(*ptr1) is %d \n", (sizeof(*ptr1)));
+	printf("sizeof(*ptr2) is %d \n", (sizeof(*ptr2)));
+	printf("sizeof(*ptr3) is %d \n", (sizeof(*ptr3)));
 #endif
 #if 0
 	for (i=0;i<10;i++)
