@@ -15,14 +15,25 @@ int sort_int(int Array[], int size_array);
 void print_int_array(int Array[], int size_array);
 
 
-#define DataType_dlinst_node int
+#define data_dlinst_node int
 
-typedef struct dlist_node{
-    DataType_dlinst_node data;
+#if 0
+struct dlist_node{
+    data_dlinst_node data;
     struct dlist_node *piror, *next;
-} qs_dlist_node;
+};
 
-typedef qs_dlist_node (*qs_dlist_ptr);
+typedef struct dlist_node QS_DLIST_NODE;
+#endif
+
+#if 1
+typedef struct dlist_node{
+    data_dlinst_node data;
+    struct dlist_node *piror, *next;
+} QS_DLIST_NODE;
+#endif
+
+typedef QS_DLIST_NODE (*QS_DLIST_PTR);
 
 
 
