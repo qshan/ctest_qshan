@@ -14,4 +14,16 @@
 int sort_int(int Array[], int size_array);
 void print_int_array(int Array[], int size_array);
 
+
+#define DataType_dlinst_node int
+
+typedef struct dlist_node{
+    DataType_dlinst_node data;
+    struct dlist_node *piror, *next;
+} qs_dlist_node;
+
+typedef qs_dlist_node (*qs_dlist_ptr);
+
+
+
 #endif /* SRC_QSHAN_PRACTICE_H_ */

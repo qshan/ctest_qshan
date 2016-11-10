@@ -36,7 +36,7 @@ ctest_qshan: $(OBJS) $(USER_OBJS)
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) ctest_qshan
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) ctest_qshan
 	-@echo ' '
 
 .PHONY: all clean dependents
