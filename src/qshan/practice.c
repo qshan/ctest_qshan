@@ -5,6 +5,7 @@
  *      Author: qshan
  */
 #include <stdio.h>
+#include <stdlib.h>
 
 int sort_int(int Array[], int size_array)
 {

@@ -6,6 +6,7 @@
  */
 #include <stdio.h>
 #include <practice.h>
+#include <stdlib.h>
 
 int main()
 {
@@ -91,7 +92,7 @@ default :
 
 #endif
 
-#if 1
+#if 0
     //printf("sizeof(Array) = %d\n", (sizeof(Array)));
     //printf("sizeof(Array[0]) = %d\n", (sizeof(Array[0])));
     //printf("sizeof(Array)/sizeof(Array[0]) = %d\n", (sizeof(Array)/sizeof(Array[0])));
@@ -101,6 +102,24 @@ default :
     print_int_array(Array, (sizeof(Array)/sizeof(Array[0])));
 #endif
 
+#if 1
 
+    //declare a struct
+    QS_DLIST_NODE qs_dlist;
+    //declare a pointer of struct
+    QS_DLIST_PTR qs_dlistptr;
+    //QS_DLIST_NODE *qs_dlistptr;
+
+#if 0
+    printf("\n [integer]: sizeof(int) is %d", sizeof(int));
+    printf("\n [struct]: sizeof(qs_dlist) is %d", sizeof(qs_dlist));
+    printf("\n [pointer of struct]: sizeof(qs_dlistptr) is %d", sizeof(qs_dlistptr));
+#endif
+
+#endif
+
+
+
+    printf("\n\n^-^ ##this is end of ctest_qshan## ^-^\n");
 return 0;
 }
