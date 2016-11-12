@@ -110,16 +110,18 @@ default :
     QS_DLIST_PTR qs_dlistptr;
     //QS_DLIST_NODE *qs_dlistptr;
 
-#if 0
+#if 1
     printf("\n [integer]: sizeof(int) is %d", sizeof(int));
     printf("\n [struct]: sizeof(qs_dlist) is %d", sizeof(qs_dlist));
     printf("\n [pointer of struct]: sizeof(qs_dlistptr) is %d", sizeof(qs_dlistptr));
+    //printf("\n Here is code line number %d in %s \n", __LINE__, __FILE__);
 #endif
 
 #endif
 
 
 
+    printf("\n ##this is end of %s in %s##\n", __func__, __FILE__);
     printf("\n\n^-^ ##this is end of ctest_qshan## ^-^\n");
 return 0;
 }

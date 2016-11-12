@@ -12,8 +12,6 @@
 
 #define NUMBEROFARRAYD1(x)  (sizeof(x)/sizeof(x[0]))
 
-int sort_int(int Array[], int size_array);
-void print_int_array(int Array[], int size_array);
 
 
 
@@ -46,5 +44,23 @@ typedef struct dlist_node{
 
 
 
+
+
+//////// function name list here
+int sort_int(int Array[], int size_array);
+void print_int_array(int Array[], int size_array);
+
+QS_DLIST_PTR qs_dlist_create();
+int qs_dlist_insert_R();
+int qs_dlist_insert_L();
+int qs_dlist_delete();
+int qs_dlist_delete_L();
+int qs_dlist_delete_R();
+int qs_dlist_print();
+int qs_dlist_length();
+int qs_dlist_find();
+int qs_dlist_find_L();
+int qs_dlist_find_R();
+//int qs_dlist_ListTraverse()
 
 #endif /* SRC_QSHAN_PRACTICE_H_ */
