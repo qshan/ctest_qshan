@@ -66,7 +66,7 @@ int qs_dlist_insert_R(QS_DLIST_PTR listptr, data_dlinst_node pos, data_dlinst_no
   QS_DLIST_PTR p = listptr;
   QS_DLIST_PTR newnodeptr;
   //if list is empty
-  if ((p->next == NULL) & (p->piror == NULL) & (p->data == NULL))
+  if ((p->next == NULL) && (p->piror == NULL) && (p->data == NULL))
     {
       printf("current list is empty\n");
       printf("insert %d\n", data);
@@ -138,7 +138,7 @@ int qs_dlist_delete(QS_DLIST_PTR listptr, data_dlinst_node data)
   QS_DLIST_PTR p = listptr;
   QS_DLIST_PTR newnodeptr;
   //if list is empty
-  if ((p->next == NULL) & (p->piror == NULL) & (p->data == NULL))
+  if ((p->next == NULL) && (p->piror == NULL) && (p->data == NULL))
     {
       printf("current list is empty\n");
       printf("do not find %d\n", data);

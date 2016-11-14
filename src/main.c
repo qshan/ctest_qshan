@@ -134,9 +134,9 @@ default :
   qs_dlist_print(qs_dlistptr);
   qs_dlist_delete(qs_dlistptr, 5);
   qs_dlist_print(qs_dlistptr);
-  qs_dlist_delete(qs_dlistptr, 6);
-  qs_dlist_print(qs_dlistptr);
   qs_dlist_delete(qs_dlistptr, 7);
+  qs_dlist_print(qs_dlistptr);
+  qs_dlist_delete(qs_dlistptr, 2);
   qs_dlist_print(qs_dlistptr);
 
 #endif
