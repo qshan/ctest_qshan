@@ -8,9 +8,10 @@
 #include <stdlib.h>
 #include <practice.h>
 
+//sort#####
 int sort_int(int Array[], int size_array)
 {
-  printf("\nHello from sort function!\n");
+  printf("\nHello from %s function!\n", __func__);
   int i,j;
   int temp;
 
@@ -50,7 +51,7 @@ void print_int_array(int Array[], int size_array)
 }
 
 
-///////
+//list#####
 QS_DLIST_PTR qs_dlist_create()
 {
   //create the dlist head
@@ -265,8 +266,118 @@ int qs_dlist_find_R()
 //int qs_dlist_ListTraverse()
 
 
+#if 1
+//queue##### FIFO
+
+int qs_InitQueue(QS_QUEUE *Q, int queuesize)
+{
+  Q->queuesize = queuesize;
+  Q->q = (datatype_queue *)malloc(sizeof(datatype_queue)*(Q->queuesize));
+  Q->head = 0;
+  Q->tail = 0;
+  printf("Hello from %s \n", __func__);
+  return 0;
+}
+
+
+int qs_EnQueue(QS_QUEUE *Q, datatype_queue key)
+{
+  //add code here
+  int tail = ((Q->tail+1) % Q->queuesize);
+  if (tail == Q->head)
+    {
+      printf("this queue is full\n");
+      return 1;
+    }else
+      {
+        Q->q[Q->tail] = key;
+        Q->tail = tail;
+        printf("Hello from %s\n", __func__);
+        return 0;
+      }
+}
+
+datatype_queue qs_DeQueue(QS_QUEUE *Q)
+{
+  //add code here
+  datatype_queue key;
+  if (Q->tail == Q->head)
+    {
+      printf("not DeQueue, queue is empty\n");
+      return 1;
+    }else
+      {
+        key = Q->q[Q->head];
+        Q->head = ((Q->head+1) % Q->queuesize);
+        printf("DeQueue, key is %d\n", key);
+        return key;
+      }
+}
+
+int qs_PrintQueue(QS_QUEUE *Q)
+{
+  //add code here
+  int i;
+  if(Q->head == Q->tail)
+    {
+      printf("this queue is empty!\n");
+      return 1;
+    }
+  printf("This queue is: {");
+  for (i=0; i< (Q->tail - Q->head);i++)
+    {
+      if (i <((Q->tail - Q->head) - 1))
+      {
+        printf("%d,", Q->q[Q->head+i]);
+      }else
+      {
+        printf("%d", Q->q[Q->head+i]);
+      }
+    }
+  printf("}\n");
+  return 0;
+}
+
+//qs_IsQueueEmpty
+//qs_IsQueueFull
+#endif
+
+
 #if 0
-QS_DLIST_PTR qs_dlist_()
+//stack##### FILO
+#endif
+
+#if 0
+//tree#####
+//BFS - Dreadth First Search
+//DFS - Depth First Search
+//Tree Traversals, Expression Tree
+#endif
+
+#if 0
+
+//graph#####
+#endif
+
+#if 0
+//BST - Binary Search Tree
+#endif
+
+#if 0
+//AVL Tree
+#endif
+
+#if 0
+//B Tree
+#endif
+
+#if 0
+//Hashing
+#endif
+
+
+#if 0
+
 {
   //add code here
   printf("\n Here is the end of %s \n", __func__);
