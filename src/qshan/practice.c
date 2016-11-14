@@ -57,7 +57,8 @@ QS_DLIST_PTR qs_dlist_create()
   QS_DLIST_PTR qs_dlist_new_ptr = (QS_DLIST_PTR)malloc(sizeof(QS_DLIST_NODE));
   qs_dlist_new_ptr->next = qs_dlist_new_ptr;
   qs_dlist_new_ptr->piror = qs_dlist_new_ptr;
-  printf("\n Here is the end of %s \n", __func__);
+  printf("\n%s is ##dlist with head##\n", __func__);
+  printf("\nHere is the end of %s \n", __func__);
   return qs_dlist_new_ptr;
 }
 
@@ -120,8 +121,6 @@ int qs_dlist_insert_R(QS_DLIST_PTR listptr, data_dlinst_node pos, data_dlinst_no
                 continue;
               }
           }
-
-
     }while(1);
 
   printf("\n Here is the end of %s \n", __func__);
