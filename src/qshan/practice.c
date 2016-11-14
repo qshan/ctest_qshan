@@ -53,9 +53,10 @@ void print_int_array(int Array[], int size_array)
 ///////
 QS_DLIST_PTR qs_dlist_create()
 {
+  //create the dlist head
   QS_DLIST_PTR qs_dlist_new_ptr = (QS_DLIST_PTR)malloc(sizeof(QS_DLIST_NODE));
-  qs_dlist_new_ptr->next = NULL;
-  qs_dlist_new_ptr->piror = NULL;
+  qs_dlist_new_ptr->next = qs_dlist_new_ptr;
+  qs_dlist_new_ptr->piror = qs_dlist_new_ptr;
   printf("\n Here is the end of %s \n", __func__);
   return qs_dlist_new_ptr;
 }
@@ -66,27 +67,28 @@ int qs_dlist_insert_R(QS_DLIST_PTR listptr, data_dlinst_node pos, data_dlinst_no
   QS_DLIST_PTR p = listptr;
   QS_DLIST_PTR newnodeptr;
   //if list is empty
-  if ((p->next == NULL) && (p->piror == NULL) && (p->data == NULL))
+  if ((p->next == p) && (p->piror == p))
     {
       printf("current list is empty\n");
       printf("insert %d\n", data);
       newnodeptr = (QS_DLIST_PTR)malloc(sizeof(QS_DLIST_NODE));
-      p->data = data;
-      p->next= NULL;
-      p->piror = NULL;
-      listptr = newnodeptr;
+      newnodeptr->data = data;
+      newnodeptr->next = newnodeptr;
+      newnodeptr->piror = p;
+      p->next= newnodeptr;
+      //listptr = newnodeptr;
       return 0;
     }
   //if find node
   do{
-
-      if ((p->next == NULL))
+      p = p->next;
+      if ((p->next == p))
         {
           //if this node is in the end or do not find
           if (p->data != pos)
             {
               //therer is no this node
-              printf("do not find %d, insert end \n", pos);
+              printf("not find %d, insert %d in end \n", pos, data);
             }else
               {
                 //there is node in the end
@@ -95,13 +97,13 @@ int qs_dlist_insert_R(QS_DLIST_PTR listptr, data_dlinst_node pos, data_dlinst_no
 
           newnodeptr = (QS_DLIST_PTR)malloc(sizeof(QS_DLIST_NODE));
           newnodeptr->data = data;
-          newnodeptr->next = NULL;
-          p->next = newnodeptr;
+          newnodeptr->next = newnodeptr;
           newnodeptr->piror = p;
+          p->next = newnodeptr;
           return 0;
         }else
           {
-            // if p->next != NULL
+            // if p->next != p, is not end
             if (p->data == pos)
             {
               //insert node
@@ -109,14 +111,14 @@ int qs_dlist_insert_R(QS_DLIST_PTR listptr, data_dlinst_node pos, data_dlinst_no
               newnodeptr = (QS_DLIST_PTR)malloc(sizeof(QS_DLIST_NODE));
               newnodeptr->data = data;
               newnodeptr->next = p->next;
+              newnodeptr->piror = p;
               p->next->piror = newnodeptr;
               p->next = newnodeptr;
-              newnodeptr->piror = p;
               return 0;
             }else
-            {
-              p = p->next;
-            }
+              {
+                continue;
+              }
           }
 
 
@@ -138,7 +140,7 @@ int qs_dlist_delete(QS_DLIST_PTR listptr, data_dlinst_node data)
   QS_DLIST_PTR p = listptr;
   QS_DLIST_PTR newnodeptr;
   //if list is empty
-  if ((p->next == NULL) && (p->piror == NULL) && (p->data == NULL))
+  if ((p->next == p) && (p->piror == p))
     {
       printf("current list is empty\n");
       printf("do not find %d\n", data);
@@ -147,27 +149,29 @@ int qs_dlist_delete(QS_DLIST_PTR listptr, data_dlinst_node data)
 
   //start search and delete in the list
   do{
-
-      if ((p->piror == NULL))
+      p = p->next;
+      if ((p->next == p))
         {
-          //if this node is in the head
+          //if this node is in the end
           if (p->data == data)
             {
-              //data is in the head
-              printf("find %d in head, delete \n", data);
+              //data is in the end
+              printf("find %d in end, delete \n", data);
               newnodeptr = p;
-              p->next->piror = NULL;
-              listptr = listptr->next;
+              p->piror->next = p->piror;
+              //listptr = p->next;
               free(newnodeptr);
               return 0;
             }else
               {
                 //find next
-                p = p->next;
+                //p = p->next;
+                printf("do not find %d \n", data);
+                return 1;
               }
-        }else if (p->next != NULL)
+        }else
           {
-            // if p->next != NULL
+            // if p->next != p
             if (p->data == data)
             {
               //find the data in the list
@@ -180,21 +184,9 @@ int qs_dlist_delete(QS_DLIST_PTR listptr, data_dlinst_node data)
             }else
             {
               //find next
-              p = p->next;
+              continue;
             }
-          }else if (p->data == data)
-            {
-              //data is in end of list
-              printf("find %d, in the end \n",  data);
-              newnodeptr = p;
-              p->piror->next = NULL;
-              free(newnodeptr);
-              return 0;
-            } else
-              {
-                printf("do not fine %d in dlist \n", data);
-                return 0;
-              }
+          }
     }while(1);
 
   printf("\n Here is the end of %s \n", __func__);
@@ -219,7 +211,7 @@ int qs_dlist_print(QS_DLIST_PTR listptr)
   //add code here
   QS_DLIST_PTR p = listptr;
   printf("current list is: {");
-  if ((p->next == NULL) & (p->piror == NULL))
+  if ((p->next == p) & (p->piror == p))
     {
       printf("empty\n");
       //printf("insert %d\n", data);
@@ -227,16 +219,16 @@ int qs_dlist_print(QS_DLIST_PTR listptr)
     }
   while(1)
     {
-        //insert node
+        p = p->next;
+        //scan node
         printf("%d", p->data);
 
-    if ((p->next == NULL))
+    if ((p->next == p))
       {
         printf("}\n");
         return 0;
       }
     printf(", ");
-    p = p->next;
     };
 
   printf("\n Here is the end of %s \n", __func__);
