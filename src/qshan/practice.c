@@ -344,8 +344,86 @@ int qs_PrintQueue(QS_QUEUE *Q)
 #endif
 
 
-#if 0
-//stack##### FILO
+#if 1
+//linked stack##### LIFO Last In First Out.
+int qs_lStackInit(LSTACK_NODE_PTR head)
+{
+  //add code here
+  //head =(LSTACK_NODE_PTR)malloc(sizeof(LSTACK_NODE));
+  head->next = head;
+  printf("Hello from %s\n", __func__);
+  return 0;
+}
+
+int qs_lStackPush(LSTACK_NODE_PTR head, lstack_datatype data)
+{
+  LSTACK_NODE_PTR tempptr = (LSTACK_NODE_PTR)malloc(sizeof(LSTACK_NODE));
+  if (head->next == head)
+    {
+      tempptr->data =data;
+      tempptr->next = tempptr;
+      head->next = tempptr;
+    }else
+      {
+        tempptr->data =data;
+        tempptr->next = head->next;
+        head->next = tempptr;
+      }
+  printf("push %d\n", tempptr->data);
+  return 0;
+}
+
+lstack_datatype qs_lStackPop(LSTACK_NODE_PTR head)
+{
+  LSTACK_NODE_PTR tempptr = head;
+  lstack_datatype tempdata;
+
+  if(tempptr->next == tempptr)
+    {
+      printf("no Pop, lStack empty!\n");
+      return 1;
+    }
+  tempptr = tempptr->next;
+  tempdata = tempptr->data;
+  if (tempptr->next != tempptr)
+    {
+    printf("Pop %d\n", tempptr->data);
+    head->next = tempptr->next;
+    free(tempptr);
+    return tempdata;
+    }else
+      {
+        printf("Pop %d\n", tempptr->data);
+        head->next = head;
+        free(tempptr);
+        return 1;
+      }
+}
+
+int qs_lStackPrint(LSTACK_NODE_PTR head)
+{
+  LSTACK_NODE_PTR tempptr = head;
+  if(tempptr->next == tempptr)
+    {
+      printf("no print, lStack empty!\n");
+      return 1;
+    }
+  printf("Current lStack is: {");
+  tempptr = tempptr->next;
+  while(1)
+    {
+      if (tempptr->next != tempptr)
+        {
+        printf("%d, ", tempptr->data);
+        }else
+          {
+            printf("%d}\n", tempptr->data);
+            break;
+          }
+      tempptr = tempptr->next;
+    }
+  return 0;
+}
 #endif
 
 #if 0

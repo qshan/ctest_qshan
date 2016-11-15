@@ -40,6 +40,7 @@ typedef struct dlist_node{
 //QS_DLIST_NODE *struct_customer_pointer;
 
 #define datatype_queue int
+
 typedef struct qs_queue
 {
   //this struct need a cell to diff the full and empty
@@ -48,7 +49,12 @@ typedef struct qs_queue
   datatype_queue *q;
 } QS_QUEUE;
 
+#define lstack_datatype int
 
+typedef struct lStackNode{
+  lstack_datatype data;
+  struct lStackNode *next;
+} LSTACK_NODE, *LSTACK_NODE_PTR;
 
 //////// function name list here
 
@@ -79,7 +85,11 @@ int qs_PrintQueue(QS_QUEUE *Q);
 //qs_IsQueueFull
 
 
-//stack##### FILO
+//linked stack##### LIFO Last In First Out.
+int qs_lStackInit(LSTACK_NODE_PTR head);
+int qs_lStackPush(LSTACK_NODE_PTR head, lstack_datatype data);
+lstack_datatype qs_lStackPop(LSTACK_NODE_PTR head);
+int qs_lStackPrint(LSTACK_NODE_PTR head);
 
 //tree#####
 //BFS - Dreadth First Search

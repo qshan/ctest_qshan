@@ -146,7 +146,7 @@ default :
 
 #endif
 
-#if 1
+#if 0
 //queue##### FIFO
   QS_QUEUE Q;
   qs_InitQueue(&Q, 5);
@@ -183,9 +183,41 @@ default :
 #endif
 
 
+#if 1
+//linked stack#####
+  LSTACK_NODE temp_lstack;
+  LSTACK_NODE_PTR temp_lstack_ptr = &temp_lstack;
+  qs_lStackInit(temp_lstack_ptr);
+  qs_lStackPop(temp_lstack_ptr);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPush(temp_lstack_ptr, 1);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPush(temp_lstack_ptr, 2);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPush(temp_lstack_ptr, 3);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPush(temp_lstack_ptr, 4);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPush(temp_lstack_ptr, 5);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPop(temp_lstack_ptr);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPop(temp_lstack_ptr);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPop(temp_lstack_ptr);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPop(temp_lstack_ptr);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPop(temp_lstack_ptr);
+  qs_lStackPrint(temp_lstack_ptr);
+  qs_lStackPop(temp_lstack_ptr);
+  qs_lStackPrint(temp_lstack_ptr);
+
+#endif
+
 
 //================================================================//
-  printf("\n\n ##this is end of %s in %s##", __func__, __FILE__);
+  printf("\n\n##this is end of %s in %s##", __func__, __FILE__);
   printf("\n\n^-^ ##this is end of ctest_qshan## ^-^\n");
 return 0;
 }
