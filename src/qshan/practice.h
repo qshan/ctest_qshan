@@ -42,6 +42,7 @@ typedef struct dlist_node{
 #define datatype_queue int
 typedef struct qs_queue
 {
+  //this struct need a cell to diff the full and empty
   int queuesize;
   int head,tail;
   datatype_queue *q;

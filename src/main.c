@@ -149,7 +149,7 @@ default :
 #if 1
 //queue##### FIFO
   QS_QUEUE Q;
-  qs_InitQueue(&Q, 6);
+  qs_InitQueue(&Q, 5);
   qs_PrintQueue(&Q);
   qs_EnQueue(&Q, 1);
   qs_PrintQueue(&Q);

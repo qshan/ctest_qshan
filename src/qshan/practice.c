@@ -271,7 +271,7 @@ int qs_dlist_find_R()
 
 int qs_InitQueue(QS_QUEUE *Q, int queuesize)
 {
-  Q->queuesize = queuesize;
+  Q->queuesize = (queuesize +1);
   Q->q = (datatype_queue *)malloc(sizeof(datatype_queue)*(Q->queuesize));
   Q->head = 0;
   Q->tail = 0;
@@ -287,6 +287,7 @@ int qs_EnQueue(QS_QUEUE *Q, datatype_queue key)
   if (tail == Q->head)
     {
       printf("this queue is full\n");
+      printf("not qs_EnQueue %d \n", key);
       return 1;
     }else
       {
@@ -320,7 +321,7 @@ int qs_PrintQueue(QS_QUEUE *Q)
   int i;
   if(Q->head == Q->tail)
     {
-      printf("this queue is empty!\n");
+      printf("empty queue now!\n");
       return 1;
     }
   printf("This queue is: {");
