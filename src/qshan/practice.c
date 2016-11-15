@@ -52,10 +52,10 @@ void print_int_array(int Array[], int size_array)
 
 
 //list#####
-QS_DLIST_PTR qs_dlist_create()
+qs_DLIST_PTR qs_dlist_create()
 {
   //create the dlist head
-  QS_DLIST_PTR qs_dlist_new_ptr = (QS_DLIST_PTR)malloc(sizeof(QS_DLIST_NODE));
+  qs_DLIST_PTR qs_dlist_new_ptr = (qs_DLIST_PTR)malloc(sizeof(qs_DLIST_NODE));
   qs_dlist_new_ptr->next = qs_dlist_new_ptr;
   qs_dlist_new_ptr->piror = qs_dlist_new_ptr;
   printf("\n%s is ##dlist with head##\n", __func__);
@@ -63,17 +63,17 @@ QS_DLIST_PTR qs_dlist_create()
   return qs_dlist_new_ptr;
 }
 
-int qs_dlist_insert_R(QS_DLIST_PTR listptr, qs_DListDataType pos, qs_DListDataType data)
+int qs_dlist_insert_R(qs_DLIST_PTR listptr, qs_DListDataType pos, qs_DListDataType data)
 {
   //add code here
-  QS_DLIST_PTR p = listptr;
-  QS_DLIST_PTR newnodeptr;
+  qs_DLIST_PTR p = listptr;
+  qs_DLIST_PTR newnodeptr;
   //if list is empty
   if ((p->next == p) && (p->piror == p))
     {
       printf("current list is empty\n");
       printf("insert %d\n", data);
-      newnodeptr = (QS_DLIST_PTR)malloc(sizeof(QS_DLIST_NODE));
+      newnodeptr = (qs_DLIST_PTR)malloc(sizeof(qs_DLIST_NODE));
       newnodeptr->data = data;
       newnodeptr->next = newnodeptr;
       newnodeptr->piror = p;
@@ -97,7 +97,7 @@ int qs_dlist_insert_R(QS_DLIST_PTR listptr, qs_DListDataType pos, qs_DListDataTy
                 printf("find %d in end, insert %d \n", pos, data);
               }
 
-          newnodeptr = (QS_DLIST_PTR)malloc(sizeof(QS_DLIST_NODE));
+          newnodeptr = (qs_DLIST_PTR)malloc(sizeof(qs_DLIST_NODE));
           newnodeptr->data = data;
           newnodeptr->next = newnodeptr;
           newnodeptr->piror = p;
@@ -110,7 +110,7 @@ int qs_dlist_insert_R(QS_DLIST_PTR listptr, qs_DListDataType pos, qs_DListDataTy
             {
               //insert node
               printf("find %d, insert %d \n", pos, data);
-              newnodeptr = (QS_DLIST_PTR)malloc(sizeof(QS_DLIST_NODE));
+              newnodeptr = (qs_DLIST_PTR)malloc(sizeof(qs_DLIST_NODE));
               newnodeptr->data = data;
               newnodeptr->next = p->next;
               newnodeptr->piror = p;
@@ -134,11 +134,11 @@ int qs_dlist_insert_L()
   return 0;
 }
 
-int qs_dlist_delete(QS_DLIST_PTR listptr, qs_DListDataType data)
+int qs_dlist_delete(qs_DLIST_PTR listptr, qs_DListDataType data)
 {
   //add code here
-  QS_DLIST_PTR p = listptr;
-  QS_DLIST_PTR newnodeptr;
+  qs_DLIST_PTR p = listptr;
+  qs_DLIST_PTR newnodeptr;
   //if list is empty
   if ((p->next == p) && (p->piror == p))
     {
@@ -206,10 +206,10 @@ int qs_dlist_delete_R()
   return 0;
 }
 
-int qs_dlist_print(QS_DLIST_PTR listptr)
+int qs_dlist_print(qs_DLIST_PTR listptr)
 {
   //add code here
-  QS_DLIST_PTR p = listptr;
+  qs_DLIST_PTR p = listptr;
   printf("current list is: {");
   if ((p->next == p) & (p->piror == p))
     {
@@ -269,7 +269,7 @@ int qs_dlist_find_R()
 #if 1
 //queue##### FIFO
 
-int qs_InitQueue(QS_QUEUE *Q, int queuesize)
+int qs_InitQueue(qs_QUEUE *Q, int queuesize)
 {
   Q->queuesize = (queuesize +1);
   Q->q = (qs_QueueDataType *)malloc(sizeof(qs_QueueDataType)*(Q->queuesize));
@@ -280,7 +280,7 @@ int qs_InitQueue(QS_QUEUE *Q, int queuesize)
 }
 
 
-int qs_EnQueue(QS_QUEUE *Q, qs_QueueDataType key)
+int qs_EnQueue(qs_QUEUE *Q, qs_QueueDataType key)
 {
   //add code here
   int tail = ((Q->tail+1) % Q->queuesize);
@@ -298,7 +298,7 @@ int qs_EnQueue(QS_QUEUE *Q, qs_QueueDataType key)
       }
 }
 
-qs_QueueDataType qs_DeQueue(QS_QUEUE *Q)
+qs_QueueDataType qs_DeQueue(qs_QUEUE *Q)
 {
   //add code here
   qs_QueueDataType key;
@@ -315,7 +315,7 @@ qs_QueueDataType qs_DeQueue(QS_QUEUE *Q)
       }
 }
 
-int qs_PrintQueue(QS_QUEUE *Q)
+int qs_PrintQueue(qs_QUEUE *Q)
 {
   //add code here
   int i;
@@ -346,18 +346,18 @@ int qs_PrintQueue(QS_QUEUE *Q)
 
 #if 1
 //linked stack##### LIFO Last In First Out.
-int qs_lStackInit(LSTACK_NODE_PTR head)
+int qs_lStackInit(qs_LSTACK_NODE_PTR head)
 {
   //add code here
-  //head =(LSTACK_NODE_PTR)malloc(sizeof(LSTACK_NODE));
+  //head =(qs_LSTACK_NODE_PTR)malloc(sizeof(qs_LSTACK_NODE));
   head->next = head;
   printf("Hello from %s\n", __func__);
   return 0;
 }
 
-int qs_lStackPush(LSTACK_NODE_PTR head, qs_LStackType data)
+int qs_lStackPush(qs_LSTACK_NODE_PTR head, qs_LStackType data)
 {
-  LSTACK_NODE_PTR tempptr = (LSTACK_NODE_PTR)malloc(sizeof(LSTACK_NODE));
+  qs_LSTACK_NODE_PTR tempptr = (qs_LSTACK_NODE_PTR)malloc(sizeof(qs_LSTACK_NODE));
   if (head->next == head)
     {
       tempptr->data =data;
@@ -373,9 +373,9 @@ int qs_lStackPush(LSTACK_NODE_PTR head, qs_LStackType data)
   return 0;
 }
 
-qs_LStackType qs_lStackPop(LSTACK_NODE_PTR head)
+qs_LStackType qs_lStackPop(qs_LSTACK_NODE_PTR head)
 {
-  LSTACK_NODE_PTR tempptr = head;
+  qs_LSTACK_NODE_PTR tempptr = head;
   qs_LStackType tempdata;
 
   if(tempptr->next == tempptr)
@@ -400,9 +400,9 @@ qs_LStackType qs_lStackPop(LSTACK_NODE_PTR head)
       }
 }
 
-int qs_lStackPrint(LSTACK_NODE_PTR head)
+int qs_lStackPrint(qs_LSTACK_NODE_PTR head)
 {
-  LSTACK_NODE_PTR tempptr = head;
+  qs_LSTACK_NODE_PTR tempptr = head;
   if(tempptr->next == tempptr)
     {
       printf("no print, lStack empty!\n");

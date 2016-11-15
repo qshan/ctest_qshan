@@ -110,10 +110,10 @@ default :
 #if 0
 //dlist
   //declare a struct
-  QS_DLIST_NODE qs_dlist;
+  qs_DLIST_NODE qs_dlist;
   //declare a pointer of struct
-  QS_DLIST_PTR qs_dlistptr;
-  //QS_DLIST_NODE *qs_dlistptr;
+  qs_DLIST_PTR qs_dlistptr;
+  //qs_DLIST_NODE *qs_dlistptr;
 
 #if 0
   printf("\n [integer]: sizeof(int) is %d", sizeof(int));
@@ -148,7 +148,7 @@ default :
 
 #if 0
 //queue##### FIFO
-  QS_QUEUE Q;
+  qs_QUEUE Q;
   qs_InitQueue(&Q, 5);
   qs_PrintQueue(&Q);
   qs_EnQueue(&Q, 1);
@@ -185,8 +185,8 @@ default :
 
 #if 1
 //linked stack#####
-  LSTACK_NODE temp_lstack;
-  LSTACK_NODE_PTR temp_lstack_ptr = &temp_lstack;
+  qs_LSTACK_NODE temp_lstack;
+  qs_LSTACK_NODE_PTR temp_lstack_ptr = &temp_lstack;
   qs_lStackInit(temp_lstack_ptr);
   qs_lStackPop(temp_lstack_ptr);
   qs_lStackPrint(temp_lstack_ptr);
