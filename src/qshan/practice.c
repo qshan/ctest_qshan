@@ -63,7 +63,7 @@ QS_DLIST_PTR qs_dlist_create()
   return qs_dlist_new_ptr;
 }
 
-int qs_dlist_insert_R(QS_DLIST_PTR listptr, data_dlinst_node pos, data_dlinst_node data)
+int qs_dlist_insert_R(QS_DLIST_PTR listptr, qs_DListDataType pos, qs_DListDataType data)
 {
   //add code here
   QS_DLIST_PTR p = listptr;
@@ -134,7 +134,7 @@ int qs_dlist_insert_L()
   return 0;
 }
 
-int qs_dlist_delete(QS_DLIST_PTR listptr, data_dlinst_node data)
+int qs_dlist_delete(QS_DLIST_PTR listptr, qs_DListDataType data)
 {
   //add code here
   QS_DLIST_PTR p = listptr;
@@ -272,7 +272,7 @@ int qs_dlist_find_R()
 int qs_InitQueue(QS_QUEUE *Q, int queuesize)
 {
   Q->queuesize = (queuesize +1);
-  Q->q = (datatype_queue *)malloc(sizeof(datatype_queue)*(Q->queuesize));
+  Q->q = (qs_QueueDataType *)malloc(sizeof(qs_QueueDataType)*(Q->queuesize));
   Q->head = 0;
   Q->tail = 0;
   printf("Hello from %s \n", __func__);
@@ -280,7 +280,7 @@ int qs_InitQueue(QS_QUEUE *Q, int queuesize)
 }
 
 
-int qs_EnQueue(QS_QUEUE *Q, datatype_queue key)
+int qs_EnQueue(QS_QUEUE *Q, qs_QueueDataType key)
 {
   //add code here
   int tail = ((Q->tail+1) % Q->queuesize);
@@ -298,10 +298,10 @@ int qs_EnQueue(QS_QUEUE *Q, datatype_queue key)
       }
 }
 
-datatype_queue qs_DeQueue(QS_QUEUE *Q)
+qs_QueueDataType qs_DeQueue(QS_QUEUE *Q)
 {
   //add code here
-  datatype_queue key;
+  qs_QueueDataType key;
   if (Q->tail == Q->head)
     {
       printf("not DeQueue, queue is empty\n");
@@ -355,7 +355,7 @@ int qs_lStackInit(LSTACK_NODE_PTR head)
   return 0;
 }
 
-int qs_lStackPush(LSTACK_NODE_PTR head, lstack_datatype data)
+int qs_lStackPush(LSTACK_NODE_PTR head, qs_LStackType data)
 {
   LSTACK_NODE_PTR tempptr = (LSTACK_NODE_PTR)malloc(sizeof(LSTACK_NODE));
   if (head->next == head)
@@ -373,10 +373,10 @@ int qs_lStackPush(LSTACK_NODE_PTR head, lstack_datatype data)
   return 0;
 }
 
-lstack_datatype qs_lStackPop(LSTACK_NODE_PTR head)
+qs_LStackType qs_lStackPop(LSTACK_NODE_PTR head)
 {
   LSTACK_NODE_PTR tempptr = head;
-  lstack_datatype tempdata;
+  qs_LStackType tempdata;
 
   if(tempptr->next == tempptr)
     {

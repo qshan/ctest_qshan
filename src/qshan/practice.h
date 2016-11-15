@@ -19,9 +19,10 @@
 
 //define the dlinst
 #if 1
-#define data_dlinst_node int
+//qs_DListDataType
+#define qs_DListDataType int
 struct dlist_node{
-  data_dlinst_node data;
+  qs_DListDataType data;
   struct dlist_node *piror, *next;
 };
 typedef struct dlist_node QS_DLIST_NODE;
@@ -29,7 +30,7 @@ typedef struct dlist_node *QS_DLIST_PTR;
 //typedef QS_DLIST_NODE *QS_DLIST_PTR;
 #else
 typedef struct dlist_node{
-  data_dlinst_node data;
+  qs_DListDataType data;
   struct dlist_node *piror, *next;
 } QS_DLIST_NODE, *QS_DLIST_PTR;
 #endif
@@ -38,23 +39,30 @@ typedef struct dlist_node{
 //declare a pointer of struct
 //QS_DLIST_PTR struct_customer_pointer;
 //QS_DLIST_NODE *struct_customer_pointer;
-
-#define datatype_queue int
+//qs_QueueDataType
+#define qs_QueueDataType int
 
 typedef struct qs_queue
 {
   //this struct need a cell to diff the full and empty
   int queuesize;
   int head,tail;
-  datatype_queue *q;
+  qs_QueueDataType *q;
 } QS_QUEUE;
 
-#define lstack_datatype int
-
+//qs_LStackType
+#define qs_LStackType int
 typedef struct lStackNode{
-  lstack_datatype data;
+  qs_LStackType data;
   struct lStackNode *next;
 } LSTACK_NODE, *LSTACK_NODE_PTR;
+
+#define qs_TreeDataType int
+typedef struct BiTNode
+{
+  qs_TreeDataType data;
+  struct BiTNode *parent, *lchild, *rchild;
+} qs_BiTNode, *qs_BiTree_ptr;
 
 //////// function name list here
 
@@ -64,9 +72,9 @@ void print_int_array(int Array[], int size_array);
 
 //list#####
 QS_DLIST_PTR qs_dlist_create();
-int qs_dlist_insert_R(QS_DLIST_PTR listptr, data_dlinst_node pos, data_dlinst_node data);
+int qs_dlist_insert_R(QS_DLIST_PTR listptr, qs_DListDataType pos, qs_DListDataType data);
 int qs_dlist_insert_L();
-int qs_dlist_delete(QS_DLIST_PTR listptr, data_dlinst_node data);
+int qs_dlist_delete(QS_DLIST_PTR listptr, qs_DListDataType data);
 int qs_dlist_delete_L();
 int qs_dlist_delete_R();
 int qs_dlist_print(QS_DLIST_PTR listptr);
@@ -78,8 +86,8 @@ int qs_dlist_find_R();
 
 //queue##### FIFO
 int qs_InitQueue(QS_QUEUE *Q, int queuesize);
-int qs_EnQueue(QS_QUEUE *Q, datatype_queue key);
-datatype_queue qs_DeQueue(QS_QUEUE *Q);
+int qs_EnQueue(QS_QUEUE *Q, qs_QueueDataType key);
+qs_QueueDataType qs_DeQueue(QS_QUEUE *Q);
 int qs_PrintQueue(QS_QUEUE *Q);
 //qs_IsQueueEmpty
 //qs_IsQueueFull
@@ -87,8 +95,8 @@ int qs_PrintQueue(QS_QUEUE *Q);
 
 //linked stack##### LIFO Last In First Out.
 int qs_lStackInit(LSTACK_NODE_PTR head);
-int qs_lStackPush(LSTACK_NODE_PTR head, lstack_datatype data);
-lstack_datatype qs_lStackPop(LSTACK_NODE_PTR head);
+int qs_lStackPush(LSTACK_NODE_PTR head, qs_LStackType data);
+qs_LStackType qs_lStackPop(LSTACK_NODE_PTR head);
 int qs_lStackPrint(LSTACK_NODE_PTR head);
 
 //tree#####
