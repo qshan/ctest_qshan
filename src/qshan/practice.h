@@ -40,7 +40,7 @@ typedef struct dlist_node{
 //qs_DLIST_PTR struct_customer_pointer;
 //qs_DLIST_NODE *struct_customer_pointer;
 
-//qs_QueueDataType
+//qs_Queue
 #define qs_QueueDataType int
 typedef struct queue
 {
@@ -50,19 +50,94 @@ typedef struct queue
   qs_QueueDataType *q;
 } qs_QUEUE;
 
-//qs_LStackType
+//qs_LStack
 #define qs_LStackType int
 typedef struct lStackNode{
   qs_LStackType data;
   struct lStackNode *next;
 } qs_LSTACK_NODE, *qs_LSTACK_NODE_PTR;
 
+//qs_BiTree
 #define qs_TreeDataType int
 typedef struct BiTNode
 {
   qs_TreeDataType data;
   struct BiTNode *parent, *lchild, *rchild;
 } qs_BITREE_NODE, *qs_BITREE_PTR;
+
+//qs_BinarySearchTree
+#define qs_BSTreeDataType int
+typedef struct BinarySearchTreeNode
+{
+  //qs_BSTreeDataType data; //the data of this node
+  int data_index; //the location of data in data array
+  struct BinarySearchTreeNode *parent, *lchild, *rchild;
+} qs_BSTREE_NODE, *qs_BSTREE_PTR;
+
+
+
+//the storage format for Tree
+/////1)parent  format
+//qs_PTreeMaxDataSize is total node number of this tree.
+//nodes[r].parent is 0 when this node is root node
+//nodes[i].data is the data of this node
+//nodes[i].parent is the location of its parent. in the array?
+#define qs_PTreeMaxDataSize 100
+typedef int qs_PTreeElemDataType;
+typedef struct PTreeNode
+{
+  qs_PTreeElemDataType data; //data of this node
+  int parent_index; // the location of it parent in the array
+} qs_PTREENODE;
+
+typedef struct
+{
+  qs_PTREENODE nodes[qs_PTreeMaxDataSize]; //array for the data of tree nodes
+  int r, NumberOfNodes; //location of root node, and number of nodes
+} qs_PTREE;
+
+/////2)child format
+//qs_ChildTreeMaxDataSize is total number  of this tree's child lists.
+//suppose there is degree k for very parent node, that means there is k child for very parent node
+//there are multi-child in root node
+//there is list in every child node.
+//
+#define qs_ChildTreeMaxDataSize 100
+typedef int qs_ChildTreeElemDataType;
+typedef struct ChildTreeNode
+{
+  //qs_ChildTreeElemDataType data; //data of this child
+  int child_index;  //the location of child node
+  struct ChildTreeNode *next_ptr; //pointer to next child in this node
+} qs_CHILDTREENODE, *qs_CHILDTREENODE_PTR;
+
+typedef struct ChildTreeNodeBox  //head structure
+{
+  qs_ChildTreeElemDataType data;
+  qs_CHILDTREENODE_PTR firstchild_ptr; //the pointer of child list.
+  //int degree; //this is optional parameter
+} qs_ChildTreeNodeBox;
+
+typedef struct
+{
+  qs_ChildTreeNodeBox nodes[qs_ChildTreeMaxDataSize]; //array for child list
+  int root_index, NumberOfNodes; //location of root node, and number of total nodes
+} qs_CHILDTREE;
+
+/////3)child sibling format
+//#define qs_CSTreeMaxDataSize 100
+typedef int qs_CSTreeElemDataType;
+typedef struct CSTreeNode
+{
+  qs_CSTreeElemDataType data; //data of this node
+  struct CSTreeNode *firstchild, *rightsibling;
+  //int parent; // the location of it parent in the array
+} qs_CSTREENODE, *qs_CSTREE_PTR;
+
+
+
+
+
 
 //////// function name list here
 

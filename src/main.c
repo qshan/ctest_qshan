@@ -10,7 +10,7 @@
 
 int main()
 {
-
+  printf("\n##this is start of %s in %s##\n", __func__, __FILE__);
   int i=0;
 
 
@@ -26,9 +26,12 @@ int main()
   ptr3 = &array[0][1];
   //printf("array is %x\n", array);
   printf("sizeof(array) is %d \n", (sizeof(array)));
+  printf("sizeof(typeof(array)) is %d \n", (sizeof(typeof(array))));
   printf("sizeof(array[0]) is %d \n", (sizeof(array[0])));
+  printf("sizeof(typeof(array[0])) is %d \n", (sizeof(typeof(array[0]))));
   printf("sizeof(array[0][0]) is %d \n", (sizeof(array[0][0])));
   printf("sizeof(ptr1) is %d \n", (sizeof(ptr1)));
+  printf("sizeof(typeof(ptr1)) is %d \n", (sizeof(typeof(ptr1))));
   printf("sizeof(ptr2) is %d \n", (sizeof(ptr2)));
   printf("sizeof(ptr3) is %d \n", (sizeof(ptr3)));
   printf("sizeof(*ptr1) is %d \n", (sizeof(*ptr1)));
@@ -183,7 +186,7 @@ default :
 #endif
 
 
-#if 1
+#if 0
 //linked stack#####
   qs_LSTACK_NODE temp_lstack;
   qs_LSTACK_NODE_PTR temp_lstack_ptr = &temp_lstack;
@@ -217,7 +220,7 @@ default :
 
 
 //================================================================//
-  printf("\n\n##this is end of %s in %s##", __func__, __FILE__);
-  printf("\n\n^-^ ##this is end of ctest_qshan## ^-^\n");
+  printf("\n##this is end of %s in %s##\n", __func__, __FILE__);
+  printf("\n^-^ ##this is end of ctest_qshan## ^-^\n");
 return 0;
 }
