@@ -438,8 +438,135 @@ int qs_lStackPrint(qs_LSTACK_NODE_PTR head)
 //graph#####
 #endif
 
-#if 0
+#if 1
 //BST - Binary Search Tree
+qs_BSTREE_PTR qs_CreateBSTNode(qs_BSTreeDataType keynum)
+{
+  qs_BSTREE_PTR tree = NULL;
+  tree = (qs_BSTREE_PTR)malloc(sizeof(qs_BSTREE_NODE));
+  tree->data = keynum;
+  tree->lchild = NULL;
+  tree->rchild = NULL;
+  tree->parent = NULL;
+  return tree;
+}
+
+qs_BSTREE_PTR qs_SearchBSTNode(qs_BSTREE_PTR tree, qs_BSTreeDataType number)
+{
+  while(tree != NULL && number != tree->data)
+    {
+      if (number < tree->data)
+        tree = tree->lchild;
+      else
+        tree = tree->rchild;
+    }
+  return tree;
+}
+
+qs_BSTREE_PTR qs_MinBSTNode(qs_BSTREE_PTR tree)
+{
+  while(tree->lchild != NULL)
+    {
+      tree = tree->lchild;
+    }
+  return tree;
+}
+
+qs_BSTREE_PTR qs_MaxBSTNode(qs_BSTREE_PTR tree)
+{
+  while(tree->rchild != NULL)
+    {
+      tree = tree->rchild;
+    }
+  return tree;
+}
+
+qs_BSTREE_PTR qs_BSTSuccessor(qs_BSTREE_PTR tree)
+{
+  qs_BSTREE_PTR y;
+  if (tree->rchild != NULL)
+    return qs_MinBSTNode(tree->rchild);
+  y = tree->parent;
+  while(y != NULL && tree == y->rchild)
+    {
+      tree = y;
+      y = y->parent;
+    }
+  return y;
+}
+
+qs_BSTREE_PTR qs_BSTprecursor(qs_BSTREE_PTR tree)
+{
+  qs_BSTREE_PTR y;
+  if (tree->lchild != NULL)
+    return qs_MaxBSTNode(tree->lchild);
+  y = tree->parent;
+  while(y != NULL && tree == y->lchild)
+    {
+      tree = y;
+      y = y->parent;
+    }
+  return y;
+}
+
+int qs_InsertBSTNode(qs_BSTREE_PTR *tree, qs_BSTREE_PTR z)
+{
+  qs_BSTREE_PTR x, y;
+  y = NULL;
+  x = *tree;
+  while (x != NULL)
+    {
+      y = x;
+      if (z->data < x->data)
+        x = x->lchild;
+      else
+        x = x->rchild;
+    }
+  z->parent = y;
+  if (y == NULL)
+    *tree = z;
+  else if(z->data < y->data)
+    y->lchild = z;
+  else
+    y->rchild = z;
+  return 0;
+}
+
+//check here to get detail information
+//http://blog.csdn.net/fengchaokobe/article/details/7551055
+int qs_DeleteBSTNode(qs_BSTREE_PTR *tree, qs_BSTREE_PTR z)
+{
+  qs_BSTREE_PTR x, y;
+  if (z->lchild == NULL || z->rchild == NULL)
+    y = z;
+  else
+    y = qs_BSTSuccessor(&(**tree));  //??? why???
+
+  if (y->lchild != NULL)
+    x = y->lchild;
+  else
+    x = y->rchild;
+
+  if (x != NULL)
+    x->parent = y->parent;
+  if (y->parent == NULL)
+    {
+      (*tree) = x;
+    }
+  else if (y == y->parent->lchild)
+    y->parent->lchild = x;
+  else
+    y->parent->rchild = x;
+
+  if (y !=z )
+    z->data = y->data;
+  free(y);
+  y=NULL;
+
+  return 0;
+}
+
+//BST - Binary Search Tree end
 #endif
 
 #if 0

@@ -69,12 +69,19 @@ typedef struct BiTNode
 #define qs_BSTreeDataType int
 typedef struct BinarySearchTreeNode
 {
-  //qs_BSTreeDataType data; //the data of this node
-  int data_index; //the location of data in data array
+  qs_BSTreeDataType data; //the data of this node
+  //int data_index; //the location of data in data array
   struct BinarySearchTreeNode *parent, *lchild, *rchild;
 } qs_BSTREE_NODE, *qs_BSTREE_PTR;
 
-
+qs_BSTREE_PTR qs_CreateBSTNode(qs_BSTreeDataType keynum);
+qs_BSTREE_PTR qs_SearchBSTNode(qs_BSTREE_PTR tree, qs_BSTreeDataType number);
+qs_BSTREE_PTR qs_MinBSTNode(qs_BSTREE_PTR tree);
+qs_BSTREE_PTR qs_MaxBSTNode(qs_BSTREE_PTR tree);
+qs_BSTREE_PTR qs_BSTSuccessor(qs_BSTREE_PTR tree);
+qs_BSTREE_PTR qs_BSTprecursor(qs_BSTREE_PTR tree);
+int qs_InsertBSTNode(qs_BSTREE_PTR *tree, qs_BSTREE_PTR z);
+int qs_DeleteBSTNode(qs_BSTREE_PTR *tree, qs_BSTREE_PTR z);
 
 //the storage format for Tree
 /////1)parent  format
