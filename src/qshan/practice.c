@@ -125,6 +125,7 @@ int qs_dlist_insert_R(qs_DLIST_PTR listptr, qs_DListDataType pos, qs_DListDataTy
     }while(1);
 
   printf("\n Here is the end of %s \n", __func__);
+  return 0;
 }
 
 int qs_dlist_insert_L()
@@ -190,6 +191,7 @@ int qs_dlist_delete(qs_DLIST_PTR listptr, qs_DListDataType data)
     }while(1);
 
   printf("\n Here is the end of %s \n", __func__);
+  return 0;
 }
 
 int qs_dlist_delete_L()
@@ -495,7 +497,7 @@ qs_BSTREE_PTR qs_BSTSuccessor(qs_BSTREE_PTR tree)
   return y;
 }
 
-qs_BSTREE_PTR qs_BSTprecursor(qs_BSTREE_PTR tree)
+qs_BSTREE_PTR qs_BSTPredecessor(qs_BSTREE_PTR tree)
 {
   qs_BSTREE_PTR y;
   if (tree->lchild != NULL)

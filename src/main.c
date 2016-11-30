@@ -5,8 +5,8 @@
  *    Author: qshan
  */
 #include <stdio.h>
-#include <practice.h>
 #include <stdlib.h>
+#include <practice.h>
 
 int main()
 {
@@ -220,6 +220,7 @@ default :
 
 
 //================================================================//
+  i++;
   printf("\n##this is end of %s in %s##\n", __func__, __FILE__);
   printf("\n^-^ ##this is end of ctest_qshan## ^-^\n");
 return 0;

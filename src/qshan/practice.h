@@ -79,7 +79,7 @@ qs_BSTREE_PTR qs_SearchBSTNode(qs_BSTREE_PTR tree, qs_BSTreeDataType number);
 qs_BSTREE_PTR qs_MinBSTNode(qs_BSTREE_PTR tree);
 qs_BSTREE_PTR qs_MaxBSTNode(qs_BSTREE_PTR tree);
 qs_BSTREE_PTR qs_BSTSuccessor(qs_BSTREE_PTR tree);
-qs_BSTREE_PTR qs_BSTprecursor(qs_BSTREE_PTR tree);
+qs_BSTREE_PTR qs_BSTPredecessor(qs_BSTREE_PTR tree);
 int qs_InsertBSTNode(qs_BSTREE_PTR *tree, qs_BSTREE_PTR z);
 int qs_DeleteBSTNode(qs_BSTREE_PTR *tree, qs_BSTREE_PTR z);
 
