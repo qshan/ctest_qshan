@@ -433,6 +433,11 @@ int qs_lStackPrint(qs_LSTACK_NODE_PTR head)
 //BFS - Dreadth First Search
 //DFS - Depth First Search
 //Tree Traversals, Expression Tree
+
+//print node when come to N; N -> node, L -> left child, R -L right child
+//PreOrderTraversal -> N>L>R
+//InOrderTraversal -> L>N>R
+//PostOrderTraversal -> L>R>N
 #endif
 
 #if 0
