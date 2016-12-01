@@ -10,6 +10,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifndef NULL
+
+#ifdef(__cplusplus)
+#define NULL 0
+#else
+#define NULL ((void *)0)
+#endif
+
+#endif
+
 #define NUMBEROFARRAYD1(x)  (int)(sizeof(x)/sizeof(x[0]))
 
 
