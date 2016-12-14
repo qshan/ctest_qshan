@@ -218,18 +218,27 @@ default :
 
 #endif
 
-  extern int SOC_SYSTEM_POWER_STATE;
+  extern int SocSystemPowerState;
+  extern int LoadCPUImageReady;
+  extern int LoadCPUImageRequest;
+  extern int LoadWifiReady;
+  extern int LoadWifiRequest;
+
   extern int SystemError;
   extern int SystemNum;
-  SOC_SYSTEM_POWER_STATE = 0;
+  SocSystemPowerState = 0;
   SystemError = 0;
   SystemNum = 0;
+  LoadCPUImageReady = 0;
+  LoadCPUImageRequest = 0;
+  LoadWifiReady = 0;
+  LoadWifiRequest = 0;
 
   while(1)
     {
-      switch(SOC_SYSTEM_POWER_STATE)
+      switch(SocSystemPowerState)
       {
-      case PowerOff:
+      case POWER_OFF:
           printf("here is Power Off state");
           if (PowerOnEnable)
             {
@@ -242,7 +251,7 @@ default :
                   printf("do not power on initial");
               }
           break;
-      case PowerOn:
+      case POWER_ON:
           printf("here is PowerOn state");
           if(LowPowerEnterEnable)
             {
@@ -256,7 +265,7 @@ default :
                    printf("do those function test in power on state");
               }
           break;
-      case LowPower:
+      case LOW_POWER:
           printf("here is LowPower state");
           if(LowPowerEnterEnable)
             {

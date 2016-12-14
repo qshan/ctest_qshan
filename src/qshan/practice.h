@@ -23,14 +23,19 @@
 #define NUMBEROFARRAYD1(x)  (int)(sizeof(x)/sizeof(x[0]))
 
 //there is 3 power state definition here:
-#define PowerOff 0
-#define PowerOn  1
-#define LowPower 3
+#define POWER_OFF 0
+#define POWER_ON  1
+#define LOW_POWER 3
 #define PowerOnEnable           1
 #define LowPowerEnterEnable     1
 #define LowPowerExitEnable      1
 //here is a global power state definition
-  int SOC_SYSTEM_POWER_STATE;
+  int SocSystemPowerState;
+
+  int LoadCPUImageReady; //just for Core1~3,set by cmm
+  int LoadCPUImageRequest; //set by Core0 in C
+  int LoadWifiReady; //set by cmm, to load wifi image, how get the wifi feedback?
+  int LoadWifiRequest; //set by Core0 in C
 
   int SystemError;
   int SystemNum;
