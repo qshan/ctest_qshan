@@ -218,6 +218,64 @@ default :
 
 #endif
 
+  extern int SOC_SYSTEM_POWER_STATE;
+  extern int SystemError;
+  extern int SystemNum;
+  SOC_SYSTEM_POWER_STATE = 0;
+  SystemError = 0;
+  SystemNum = 0;
+
+  while(1)
+    {
+      switch(SOC_SYSTEM_POWER_STATE)
+      {
+      case PowerOff:
+          printf("here is Power Off state");
+          if (PowerOnEnable)
+            {
+          //power mode transition from power off to power on function// initial function
+          //normal basic check for next power state(power on)
+          //SystemError = SOCPowerOnBasicCheck();
+          //if succeed, set the power state as Power on state
+            }else
+              {
+                  printf("do not power on initial");
+              }
+          break;
+      case PowerOn:
+          printf("here is PowerOn state");
+          if(LowPowerEnterEnable)
+            {
+          //power mode transition from power on to low power function
+          //SystemError = SOCLowPowerEnter();
+          //normal basic check for next power state(low power)
+          //SystemError = SOCLowPowerBasicCheck();
+          //if succeed, set the power state as low power state
+            }else
+              {
+                   printf("do those function test in power on state");
+              }
+          break;
+      case LowPower:
+          printf("here is LowPower state");
+          if(LowPowerEnterEnable)
+            {
+          //power mode transition from low power to power on  function
+          //SystemError = SOCLowPowerExit();
+          //normal basic check for next power state(low power)
+          //SystemError = SOCPowerOnBasicCheck();
+          //if succeed, set the power state as PowerOn state
+            }else
+              {
+                   printf("do those function test in low power state");
+              }
+          break;
+      default :
+          printf("abnormal branch in system power state case");
+          break;
+      }
+    }
+
 
 //================================================================//
   i++;

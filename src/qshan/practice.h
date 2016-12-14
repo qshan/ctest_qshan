@@ -22,6 +22,15 @@
 
 #define NUMBEROFARRAYD1(x)  (int)(sizeof(x)/sizeof(x[0]))
 
+#define PowerOff 0
+#define PowerOn  1
+#define LowPower 3
+#define PowerOnEnable           1
+#define LowPowerEnterEnable     1
+#define LowPowerExitEnable      1
+  int SOC_SYSTEM_POWER_STATE;
+  int SystemError;
+  int SystemNum;
 
 
 
