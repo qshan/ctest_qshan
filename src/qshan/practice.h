@@ -30,15 +30,15 @@
 #define LowPowerEnterEnable     1
 #define LowPowerExitEnable      1
 //here is a global power state definition
-  int SocSystemPowerState;
+  extern unsigned int SocSystemPowerState;
 
-  int LoadCPUImageReady; //just for Core1~3,set by cmm
-  int LoadCPUImageRequest; //set by Core0 in C
-  int LoadWifiReady; //set by cmm, to load wifi image, how get the wifi feedback?
-  int LoadWifiRequest; //set by Core0 in C
+  extern unsigned int LoadCPUImageReady; //just for Core1~3,set by cmm
+  extern unsigned int LoadCPUImageRequest; //set by Core0 in C
+  extern unsigned int LoadWifiReady; //set by cmm, to load wifi image, how get the wifi feedback?
+  extern unsigned int LoadWifiRequest; //set by Core0 in C
 
-  int SystemError;
-  int SystemNum;
+  extern unsigned int SystemError;
+  extern unsigned int SystemNum;
 
 
 

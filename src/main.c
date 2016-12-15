@@ -9,6 +9,7 @@
 #include <practice.h>
 
 int main()
+
 {
   printf("\n##this is start of %s in %s##\n", __func__, __FILE__);
   int i=0;
@@ -218,14 +219,20 @@ default :
 
 #endif
 
-  extern int SocSystemPowerState;
-  extern int LoadCPUImageReady;
-  extern int LoadCPUImageRequest;
-  extern int LoadWifiReady;
-  extern int LoadWifiRequest;
 
-  extern int SystemError;
-  extern int SystemNum;
+#if 1
+
+  //here is a global power state definition
+    unsigned int SocSystemPowerState;
+
+    unsigned int LoadCPUImageReady; //just for Core1~3,set by cmm
+    unsigned int LoadCPUImageRequest; //set by Core0 in C
+    unsigned int LoadWifiReady; //set by cmm, to load wifi image, how get the wifi feedback?
+    unsigned int LoadWifiRequest; //set by Core0 in C
+
+    unsigned int SystemError;
+    unsigned int SystemNum;
+
   SocSystemPowerState = 0;
   SystemError = 0;
   SystemNum = 0;
@@ -285,6 +292,7 @@ default :
       }
     }
 
+#endif
 
 //================================================================//
   i++;
