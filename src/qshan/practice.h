@@ -11,14 +11,14 @@
 #include <stdlib.h>
 
 #ifndef NULL
-
 #ifdef(__cplusplus)
 #define NULL 0
 #else
 #define NULL ((void *)0)
 #endif
-
 #endif
+
+
 
 #define NUMBEROFARRAYD1(x)  (int)(sizeof(x)/sizeof(x[0]))
 
@@ -26,9 +26,9 @@
 #define POWER_OFF 0
 #define POWER_ON  1
 #define LOW_POWER 3
-#define PowerOnEnable           1
-#define LowPowerEnterEnable     1
-#define LowPowerExitEnable      1
+#define POWER_MODE_TRAN_ENABLE 1
+#define POWER_MODE_TRAN_DISABLE 0
+
 //here is a global power state definition
   extern unsigned int SocSystemPowerState;
 
@@ -40,8 +40,12 @@
   extern unsigned int SystemError;
   extern unsigned int SystemNum;
 
+  extern unsigned int PowerOnEnable;
+  extern unsigned int LowPowerEnterEnable;
+  extern unsigned int LowPowerExitEnable;
 
 
+  typedef  long unsigned int  LUI_NUB;
 
 
 //define the dlinst

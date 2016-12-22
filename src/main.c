@@ -223,74 +223,97 @@ default :
 #if 1
 
   //here is a global power state definition
-    unsigned int SocSystemPowerState;
+    unsigned int SocSystemPowerState = POWER_OFF;
 
-    unsigned int LoadCPUImageReady; //just for Core1~3,set by cmm
-    unsigned int LoadCPUImageRequest; //set by Core0 in C
-    unsigned int LoadWifiReady; //set by cmm, to load wifi image, how get the wifi feedback?
-    unsigned int LoadWifiRequest; //set by Core0 in C
+    unsigned int LoadCPUImageReady = 0; //just for Core1~3,set by cmm
+    unsigned int LoadCPUImageRequest = 0; //set by Core0 in C
+    unsigned int LoadWifiReady = 0; //set by cmm, to load wifi image, how get the wifi feedback?
+    unsigned int LoadWifiRequest = 0; //set by Core0 in C
 
-    unsigned int SystemError;
-    unsigned int SystemNum;
+    unsigned int SystemError = 0;
+    unsigned int SystemNum = 0;
 
-  SocSystemPowerState = 0;
-  SystemError = 0;
-  SystemNum = 0;
-  LoadCPUImageReady = 0;
-  LoadCPUImageRequest = 0;
-  LoadWifiReady = 0;
-  LoadWifiRequest = 0;
+    unsigned int PowerOnEnable = POWER_MODE_TRAN_ENABLE;
+    unsigned int LowPowerEnterEnable = POWER_MODE_TRAN_ENABLE;
+    unsigned int LowPowerExitEnable = POWER_MODE_TRAN_ENABLE;
 
-  while(1)
+
+    i = 5;
+  while(i>0)
     {
+      i--;
       switch(SocSystemPowerState)
       {
       case POWER_OFF:
-          printf("here is Power Off state");
-          if (PowerOnEnable)
+          printf("here is Power Off state \n");
+          if (PowerOnEnable == POWER_MODE_TRAN_ENABLE)
             {
           //power mode transition from power off to power on function// initial function
           //normal basic check for next power state(power on)
           //SystemError = SOCPowerOnBasicCheck();
           //if succeed, set the power state as Power on state
+              SocSystemPowerState = POWER_ON;
             }else
               {
-                  printf("do not power on initial");
+                  printf("do not power on initial\n");
               }
           break;
       case POWER_ON:
-          printf("here is PowerOn state");
-          if(LowPowerEnterEnable)
+          printf("here is PowerOn state\n");
+          if(LowPowerEnterEnable == POWER_MODE_TRAN_ENABLE)
             {
           //power mode transition from power on to low power function
           //SystemError = SOCLowPowerEnter();
           //normal basic check for next power state(low power)
           //SystemError = SOCLowPowerBasicCheck();
           //if succeed, set the power state as low power state
+              SocSystemPowerState = LOW_POWER;
             }else
               {
-                   printf("do those function test in power on state");
+                   printf("do those function test in power on state\n");
               }
           break;
       case LOW_POWER:
-          printf("here is LowPower state");
-          if(LowPowerEnterEnable)
+          printf("here is LowPower state\n");
+          if(LowPowerExitEnable == POWER_MODE_TRAN_ENABLE)
             {
           //power mode transition from low power to power on  function
           //SystemError = SOCLowPowerExit();
           //normal basic check for next power state(low power)
           //SystemError = SOCPowerOnBasicCheck();
           //if succeed, set the power state as PowerOn state
+              SocSystemPowerState = POWER_ON;
             }else
               {
-                   printf("do those function test in low power state");
+                   printf("do those function test in low power state\n");
               }
           break;
       default :
-          printf("abnormal branch in system power state case");
+          printf("abnormal branch in system power state case\n");
           break;
       }
     }
+
+#endif
+
+
+#if 0
+  //to check a number list in lmbench
+  //typedef  long unsigned int  LUI_NUB
+  LUI_NUB LOWER = 512;
+  LUI_NUB len = 1024*1024;
+  LUI_NUB range = 0;
+  LUI_NUB step(LUI_NUB k);
+
+  printf("len is : %d (1024*1024)\n", len);
+
+  for (range = LOWER; range <= len; range = step(range)) {
+                            // loads(len, range, stride, parallel,
+                             //      warmup, repetitions);
+      printf("range is : %dk : %d\n", (range/1024),range);
+                       }
+
+
 
 #endif
 
@@ -299,4 +322,21 @@ default :
   printf("\n##this is end of %s in %s##\n", __func__, __FILE__);
   printf("\n^-^ ##this is end of ctest_qshan## ^-^\n");
 return 0;
+}
+
+//to check a number list in lmbench
+LUI_NUB step(LUI_NUB k)
+{
+       if (k < 1024) {
+              k = k * 2;
+        } else if (k < 4*1024) {
+              k += 1024;
+              } else {
+                  LUI_NUB s;
+
+                     for (s = 4 * 1024; s <= k; s *= 2)
+                           ;
+                     k += s / 4;
+              }
+       return (k);
 }
