@@ -21,7 +21,7 @@ all: clean $(TARGET)
 
 #test06 : ./src/say_hello_06.c ./src/test06.c
 $(TARGET): ./src/say_hello_06.c ./src/test06.c
-	$(CC) -o $@ $+  $(CFLAGS)
+	$(CC) -o $@ $^  $(CFLAGS)
 #	$(CC) -o test06 ./src/say_hello_06.c ./src/test06.c  $(CFLAGS)
 #	gcc -o test06 ./src/say_hello_06.c ./src/test06.c -I ./include
 
