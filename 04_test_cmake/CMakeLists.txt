@@ -4,30 +4,36 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 #####
 #####
 #####PROJECT (MATH)
+#Project Name
+#PROJECT (Test04_Hello)
+PROJECT (SayHello04)
+
+
 ###### 把当前工程目录下的 src 目录的下的所有 .cpp 和 .c 文件赋值给 SRC_LIST
 ###### AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src SRC_LIST)
 #####FILE(GLOB SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.cpp")
+# add file list, SET(SRC_LIST tested01.c testates02.c)
+#SET(SRC_LIST ./src/test04.c)
+FILE(GLOB SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.c")
 ###### 打印 SRC_LIST 文件列表
 ###### MESSAGE(STATUS ${SRC_LIST})
+
 ###### 指定头文件目录
 #####INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
-###### 指定输出 .so 动态库的目录位置
-#####SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-###### 指定生成动态库
-#####ADD_LIBRARY(math SHARED ${SRC_LIST})
+# include path
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
+
+# 指定输出 .so 动态库的目录位置
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+
+# 指定生成动态库
+ADD_LIBRARY(SayHello04 SHARED ${SRC_LIST})
 ###### 指定生成版本号，VERSION指代动态库版本，SOVERSION指代API版本
 ###### SET_TARGET_PROPERTIES(math PROPERTIES VERSION 1.2 SOVERSION 1)
 
 
-#Project Name
-PROJECT (Test04_Hello)
 
-# add file list, SET(SRC_LIST tested01.c testates02.c)
-#SET(SRC_LIST ./src/test04.c)
-FILE(GLOB SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.c")
 
-# include path
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
 
 #print check the variable content in env
 # 输出打印构建目录
