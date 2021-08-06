@@ -1,10 +1,18 @@
 #
+# 指定 cmake 最低编译版本
+CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
+
 #Project Name
 PROJECT (Test03_Hello)
 
 
 # add file list, SET(SRC_LIST tested01.c testates02.c)
-SET(SRC_LIST ./src/test03.c)
+#SET(SRC_LIST ./src/test03.c)
+
+FILE(GLOB SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.c")
+
+# include path
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
 
 #print check the variable content in env
 # 输出打印构建目录
