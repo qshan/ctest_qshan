@@ -1,4 +1,5 @@
 # run like this
+#cmake -G "Unix Makefiles" ..
 cmake ..
 make
 echo "please makesure the lib is in ../lib path"
