@@ -1,0 +1,3 @@
+#gcc test01.c
+gcc ./src/test01.c -g -o test01.out
+./test01.out

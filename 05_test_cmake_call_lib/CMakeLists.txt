@@ -19,3 +19,5 @@ ADD_EXECUTABLE(Test05_Hello ./src/test05.c)
 
 #为hello添加共享库链接
 TARGET_LINK_LIBRARIES(Test05_Hello SayHello04)
+#just for static lib
+#TARGET_LINK_LIBRARIES(Test05_Hello SayHello04.a)

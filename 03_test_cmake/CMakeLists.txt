@@ -14,8 +14,8 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
 #SET(SRC_LIST ./src/test03.c)
 
 #search source file
-FILE(GLOB SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.c")
-#AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src, src1)
+#FILE(GLOB SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.c")
+AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src src3)
 
 
 #print check the variable content in env
@@ -31,5 +31,5 @@ MESSAGE(STATUS "This is CMAKE_SOURCE_DIR " ${CMAKE_SOURCE_DIR})
 MESSAGE(STATUS "This is PROJECT " ${PROJECT})
 
 # 生成可执行文件 hello ，${SRC_LIST}是引用变量，也就是源文件 hello.c
-ADD_EXECUTABLE(Test03_Hello ${SRC_LIST})
-#ADD_EXECUTABLE(Test03_Hello ${src1})
+#ADD_EXECUTABLE(Test03_Hello ${SRC_LIST})
+ADD_EXECUTABLE(Test03_Hello ${src3})
