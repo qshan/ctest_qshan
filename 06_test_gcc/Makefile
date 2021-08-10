@@ -41,14 +41,16 @@
 #update_content#  rm $(TARGET)
 
 
-CC=gcc
+#CC=gcc
+CC=clang
 
 TARGET_EXEC ?= test06
 
-#all: $(TARGET_EXEC)
 
 BUILD_DIR ?= ./build_gcc
 SRC_DIRS ?= ./src
+
+#all: $(TARGET_EXEC)
 
 #source code info
 #SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
@@ -81,6 +83,8 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
+run:
+	$(BUILD_DIR)/$(TARGET_EXEC)
 
 .PHONY: clean
 
