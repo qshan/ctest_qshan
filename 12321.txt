@@ -1,0 +1,8 @@
+[master c9bea1a] update and optimize the cmakefile
+ 6 files changed, 7 insertions(+), 72 deletions(-)
+ create mode 100644 03_test_cmake/src/say_hello_03.c
+ delete mode 100644 06_test_gcc/Makefile
+ delete mode 100644 06_test_gcc/include/say_hello_06.h
+ delete mode 100644 06_test_gcc/readme.txt
+ delete mode 100644 06_test_gcc/src/say_hello_06.c
+ delete mode 100644 06_test_gcc/src/test06.c
