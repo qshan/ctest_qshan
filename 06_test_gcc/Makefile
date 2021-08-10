@@ -19,23 +19,74 @@
 # %.o: %.c
 #
 # %.o: %.c
-# 	gcc -g -o $@ -c $<
+#   gcc -g -o $@ -c $<
 #
+#update_content#CC=gcc
+#update_content#CFLAGS = -I ./include
+#update_content#DEPS = say_hello_06.h
+#update_content#
+#update_content#TARGET=test06
+#update_content#
+#update_content##all: test06
+#update_content#all: $(TARGET)
+#update_content#
+#update_content##test06 : ./src/say_hello_06.c ./src/test06.c
+#update_content#$(TARGET): ./src/say_hello_06.c ./src/test06.c
+#update_content#  $(CC) -g -o $@ $^  $(CFLAGS)
+#update_content##	$(CC) -o test06 ./src/say_hello_06.c ./src/test06.c  $(CFLAGS)
+#update_content##	gcc -o test06 ./src/say_hello_06.c ./src/test06.c -I ./include
+#update_content#
+#update_content#clean:
+#update_content##	rm test06
+#update_content#  rm $(TARGET)
+
+
 CC=gcc
-CFLAGS = -I ./include
-DEPS = say_hello_06.h
 
-TARGET=test06
+TARGET_EXEC ?= test06
 
-#all: test06
-all: $(TARGET)
+#all: $(TARGET_EXEC)
 
-#test06 : ./src/say_hello_06.c ./src/test06.c
-$(TARGET): ./src/say_hello_06.c ./src/test06.c
-	$(CC) -g -o $@ $^  $(CFLAGS)
-#	$(CC) -o test06 ./src/say_hello_06.c ./src/test06.c  $(CFLAGS)
-#	gcc -o test06 ./src/say_hello_06.c ./src/test06.c -I ./include
+BUILD_DIR ?= ./build_gcc
+SRC_DIRS ?= ./src
+
+#source code info
+#SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
+SRCS := $(shell find $(SRC_DIRS)  -name *.c -or -name *.s)
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+DEPS := $(OBJS:.o=.d)
+
+#include/HeadhFile path info
+INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+INC_DIRS += ./include
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+
+CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
+
+$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+
+# assembly
+$(BUILD_DIR)/%.s.o: %.s
+	$(MKDIR_P) $(dir $@)
+	$(AS) $(ASFLAGS) -c $< -o $@
+
+# c source
+$(BUILD_DIR)/%.c.o: %.c
+	$(MKDIR_P) $(dir $@)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+# c++ source
+$(BUILD_DIR)/%.cpp.o: %.cpp
+	$(MKDIR_P) $(dir $@)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+
+
+.PHONY: clean
 
 clean:
-#	rm test06
-	rm $(TARGET)
+	$(RM) -r $(BUILD_DIR)
+
+-include $(DEPS)
+
+MKDIR_P ?= mkdir -p
