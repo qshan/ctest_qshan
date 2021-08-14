@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-#include "say_hello_08.h"
-#include "test08.h"
+#include "say_hello_09.h"
 
 int main()
 {
   printf("-------------------------------------------------- \n");
-  printf("hello test08 \n");
-  say_hello08();
+  printf("hello test09 \n");
+  say_hello09();
 
 
   char ustring1[] = "This_is_string1";
@@ -18,10 +17,6 @@ int main()
   char *ustring5;     /*char pointer*/
 
   char (*ustring6[])[] = { &"blah", &"hmm" };  /*pointer point to string array*/// only since you brought up the syntax -
-
-  char ustring_array_07[20][600]; /*pointer array, the element is point to constant string*/
-  //char (*ustring_array_07[20])[600]; /*pointer array, the element is point to constant string*/
-
 
   printf("the contents of string1 is %s \n", ustring1);
 
@@ -50,17 +45,7 @@ int main()
   printf("the contents of string6-0 is %s \n", *ustring6[0]);
   printf("the contents of string6-1 is %s \n", *ustring6[1]);
 
-  printf("the contents of ustring_array_test08-9 is [%s] \n", ustring_array_test08[9]);
-
-  //char *ustring_array_07[]= /*pointer array, the element is point to constant string*/
-  sprintf(ustring_array_07[0], "Contents Start: ");
-  sprintf(ustring_array_07[0], ", [0x%x] ", uarray_test08[0]);
-  strcat(ustring_array_07[0], ustring_array_test08[0]);
-  //strcpy(ustring_array_07[0], ustring_array_test08[0]);
-  printf("the contents of ustring_array_test08-0 is [%s] \n", ustring_array_07[0]);
-
-
-  printf("Bye test08 \n");
+  printf("Bye test09 \n");
   printf("-------------------------------------------------- \n");
   return 0;
 
