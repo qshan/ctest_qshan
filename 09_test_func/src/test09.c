@@ -12,12 +12,17 @@ int main()
   printf("\n");
   say_hello09();
 
-  int (*p2f_1a) (int);
+  int (*p2f_1a) (int); /*define a pointer point to a function*/
+  int (*p2f_2a) (int, int); /*define a pointer point to a function*/
 
+  //p2f_1a = function01_test09;
+  p2f_1a = &function01_test09;
 
-  p2f_1a = function01_test09;
+  p2f_2a = &function02_test09;
 
-  printf("Try run p2f_1a, get result: 0x%x\n", function01_test09(5));
+  printf("Try run p2f_1a, get result: 0x%x\n", p2f_1a(5));
+
+  printf("Try run p2f_2a, get result: 0x%x\n", p2f_2a(5, 1));
 
   printf("\n");
   printf("Bye test09 \n");
@@ -37,4 +42,17 @@ int function01_test09(int arg0)
   printf("Exit the %s\n", __func__);
   printf("-------------------------------------------------- \n");
   return (arg0+1);
+}
+
+int function02_test09(int arg0, int arg1)
+{
+  printf("-------------------------------------------------- \n");
+  printf("Run the %s\n", __func__);
+
+  printf("The arg0 0x%x\n", arg0);
+  printf("The arg1 0x%x\n", arg1);
+
+  printf("Exit the %s\n", __func__);
+  printf("-------------------------------------------------- \n");
+  return (arg0 + arg1 + 1);
 }
