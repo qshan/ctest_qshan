@@ -23,5 +23,7 @@
 //function declearation here
 int function01_test09(int arg0);
 int function02_test09(int arg0, int arg1);
+int function03_test09(int arg0, int arg1);
+int function04_d_var_test09(int arg0, ...);
 
 #endif

@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h> /*for va_list*/
 #include "say_hello_09.h"
 #include "test09.h"
+
 
 
 int main()
@@ -19,10 +21,16 @@ int main()
   p2f_1a = &function01_test09;
 
   p2f_2a[0] = &function02_test09;
+  p2f_2a[1] = &function03_test09;
 
   printf("Try run p2f_1a, get result: 0x%x\n", p2f_1a(5));
 
   printf("Try run p2f_2a[0], get result: 0x%x\n", p2f_2a[0](5, 1));
+  printf("Try run p2f_2a[1], get result: 0x%x\n", p2f_2a[1](5, 2));
+
+  printf("Try run function04_d_var_test09(1, 1), get result: 0x%x\n", function04_d_var_test09(1, 1));
+  printf("Try run function04_d_var_test09(2 ,1 ,1), get result: 0x%x\n", function04_d_var_test09(2 ,1 ,1));
+  printf("Try run function04_d_var_test09(3 ,1 ,1 ,1), get result: 0x%x\n", function04_d_var_test09(3 ,1 ,1 ,1));
 
   printf("\n");
   printf("Bye test09 \n");
@@ -55,4 +63,42 @@ int function02_test09(int arg0, int arg1)
   printf("Exit the %s\n", __func__);
   printf("-------------------------------------------------- \n");
   return (arg0 + arg1 + 1);
+}
+
+int function03_test09(int arg0, int arg1)
+{
+  printf("-------------------------------------------------- \n");
+  printf("Run the %s\n", __func__);
+
+  printf("The arg0 0x%x\n", arg0);
+  printf("The arg1 0x%x\n", arg1);
+
+  printf("Exit the %s\n", __func__);
+  printf("-------------------------------------------------- \n");
+  return (arg0 + arg1 + 1);
+}
+
+int function04_d_var_test09(int arg0, ...)
+{
+  /*add arguments as a example*/
+  printf("-------------------------------------------------- \n");
+  printf("Run the %s\n", __func__);
+
+  printf("The arg0 0x%x\n", arg0);
+  int i;
+  int sum =0;
+  va_list argptr;
+  /*void va_start(va_list argptr, lastparam);*/
+  va_start (argptr, arg0);
+  for(i=0;i<arg0;++i)
+  {
+    /*type va_arg(va_list argptr, type);*/
+    sum += va_arg(argptr, int);
+  }
+  /*void va_end(va_list argptr);*/
+  va_end(argptr);
+
+  printf("Exit the %s\n", __func__);
+  printf("-------------------------------------------------- \n");
+  return sum;
 }

@@ -8,6 +8,12 @@
 # $+ the dependance items with space islated, but do not remove the repeated item
 # $? the dependance items with space islated, but just have the new item
 #
+#automatic variables          descriptions
+#       $@                    The file name of the target
+#       $<                    The name of the first prerequisite
+#       $^                    The names of all the prerequisites
+#       $+                    prerequisites listed more than once are duplicated in the order
+#
 # define a variable, Var=xx , and the methods of using variable is $(Var)
 #
 #search path
@@ -40,6 +46,7 @@
 #update_content##	rm test09
 #update_content#  rm $(TARGET)
 
+#.PHONY: all
 
 #CC=gcc
 CC=clang
@@ -49,6 +56,12 @@ TARGET_EXEC ?= test09
 
 BUILD_DIR ?= ./build_gcc
 SRC_DIRS ?= ./src
+BUILD_LOG_FILE ?= $(BUILD_DIR)/$(TARGET_EXEC).log
+
+#$(BUILD_LOG_FILE):
+#	$(MKDIR_P) $(BUILD_DIR)
+#	touch $(BUILD_DIR)/$(TARGET_EXEC).log
+
 
 #all: $(TARGET_EXEC)
 
@@ -86,7 +99,9 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 run:
 	$(BUILD_DIR)/$(TARGET_EXEC)
 
-.PHONY: clean
+all : clean
+
+#.PHONY: clean
 
 clean:
 	$(RM) -r $(BUILD_DIR)

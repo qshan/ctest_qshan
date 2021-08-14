@@ -1,6 +1,8 @@
 # run like this
 #for gcc make
+make clean
 make
+make run
 
 #for cmake + make case
 #cd ./build
