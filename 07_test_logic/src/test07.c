@@ -2,7 +2,10 @@
 #include "say_hello_07.h"
 int main()
 {
+  printf("\n");
+  printf("===================================================\n");
   printf("hello test07 \n");
+  printf("\n");
   say_hello07();
 
   unsigned int udata1, udata2, udata3;
@@ -24,5 +27,9 @@ int main()
 
 
 
+  printf("\n");
+  printf("Bye test07 \n");
+  printf("===================================================\n");
+  printf("\n");
   return 0;
 }

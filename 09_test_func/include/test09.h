@@ -1,5 +1,9 @@
 #ifndef __TEST09_STRING_H__
 #define __TEST09_STRING_H__
+
+//data type definition here
+
+//variable definition here
   char *ustring_array_test09[]= /*pointer array, the element is point to constant string*/
   {
       "00 This is contents of element of string array test09"
@@ -15,5 +19,8 @@
     , "10           This is contents of element of string array test09"
     , "11            This is contents of element of string array test09"
   };
+
+//function declearation here
+int function01_test09(int arg0);
 
 #endif

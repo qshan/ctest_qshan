@@ -5,8 +5,10 @@
 
 int main()
 {
-  printf("-------------------------------------------------- \n");
+  printf("\n");
+  printf("===================================================\n");
   printf("hello test08 \n");
+  printf("\n");
   say_hello08();
 
 
@@ -60,8 +62,10 @@ int main()
   printf("the contents of ustring_array_test08-0 is [%s] \n", ustring_array_07[0]);
 
 
+  printf("\n");
   printf("Bye test08 \n");
-  printf("-------------------------------------------------- \n");
+  printf("===================================================\n");
+  printf("\n");
   return 0;
 
 }
