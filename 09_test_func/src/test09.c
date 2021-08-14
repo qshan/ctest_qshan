@@ -13,16 +13,16 @@ int main()
   say_hello09();
 
   int (*p2f_1a) (int); /*define a pointer point to a function*/
-  int (*p2f_2a) (int, int); /*define a pointer point to a function*/
+  int (*p2f_2a[5]) (int, int); /*define a array of pointer point to a function with two arguments*/
 
   //p2f_1a = function01_test09;
   p2f_1a = &function01_test09;
 
-  p2f_2a = &function02_test09;
+  p2f_2a[0] = &function02_test09;
 
   printf("Try run p2f_1a, get result: 0x%x\n", p2f_1a(5));
 
-  printf("Try run p2f_2a, get result: 0x%x\n", p2f_2a(5, 1));
+  printf("Try run p2f_2a[0], get result: 0x%x\n", p2f_2a[0](5, 1));
 
   printf("\n");
   printf("Bye test09 \n");
