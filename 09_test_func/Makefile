@@ -7,6 +7,7 @@
 #*# $^ the dependance items with space islated and remove the repeated item
 # $+ the dependance items with space islated, but do not remove the repeated item
 # $? the dependance items with space islated, but just have the new item
+# %
 #
 #automatic variables          descriptions
 #       $@                    The file name of the target
@@ -78,6 +79,10 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 
+#DEBFLAGS ?= -O2 -g
+DEBFLAGS ?= -O -g # "-O" is needed to expand inlines
+#DEBFLAGS ?= -O -g -DSCULL_DEBUG # "-O" is needed to expand inlines
+
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $@ $(LDFLAGS)
 
@@ -89,7 +94,7 @@ $(BUILD_DIR)/%.s.o: %.s
 # c source
 $(BUILD_DIR)/%.c.o: %.c
 	$(MKDIR_P) $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
 
 # c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp

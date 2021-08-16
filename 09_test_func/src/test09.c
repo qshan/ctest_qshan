@@ -78,6 +78,31 @@ int function03_test09(int arg0, int arg1)
   return (arg0 + arg1 + 1);
 }
 
+
+/*
+Macros Defined in header <stdarg.h>
+
+va_start   enables access to variadic function arguments (function macro)
+va_arg     accesses the next variadic function argument (function macro)
+va_copy    (C99) makes a copy of the variadic function arguments (function macro)
+va_end     ends traversal of the variadic function arguments (function macro)
+Type
+va_list    holds the information needed by va_start, va_arg, va_end, and va_copy (typedef)
+
+typedef void *va_list;
+#define va_arg(ap,type) (*((type *)(ap))++) //获取指针ap指向的值，然后ap=ap+1，即ap指向下一个值，
+                                               其中<u>type</u>是 变参数的类型，可以是char(cter), int(eger), float等。
+#define va_start(ap,lastfix) (ap=…)
+#define va_end(ap) // 清理/cleanup 指针ap
+
+in linux
+#define va_start(v,l)   __builtin_va_start(v,l)
+#define va_end(v)       __builtin_va_end(v)
+#define va_arg(v,l)     __builtin_va_arg(v,l)
+#define va_copy(d,s)    __builtin_va_copy(d,s)
+
+*/
+
 int function04_d_var_test09(int arg0, ...)
 {
   /*add arguments as a example*/
@@ -90,7 +115,8 @@ int function04_d_var_test09(int arg0, ...)
   va_list argptr;
   /*void va_start(va_list argptr, lastparam);*/
   va_start (argptr, arg0);
-  for(i=0;i<arg0;++i)
+  //for(i=0;i<arg0;++i)
+  for(i=0;i<arg0;i++)
   {
     /*type va_arg(va_list argptr, type);*/
     sum += va_arg(argptr, int);

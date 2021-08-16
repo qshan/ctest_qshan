@@ -5,6 +5,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 #Project Name
 PROJECT (Test09_Hello)
 
+#Add -D define flags to the compilation of source files.
+ADD_DEFINITIONS( -DMacroName=1 -DMacroName)
+
+#Add options to the compilation of source files.
+ADD_COMPILE_OPTIONS(-Wall -g)
 
 # include path
 #INCLUDE_DIRECTORIES(./include)
