@@ -93,15 +93,16 @@ CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 DEBFLAGS ?= -O -g # "-O" is needed to expand inlines
 #DEBFLAGS ?= -O -g -DSCULL_DEBUG # "-O" is needed to expand inlines
 
-compile: $(BUILD_DIR)/$(TARGET_EXEC)
+compile: $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/$(TOP_OBJ_SHARED)
 #compile:  $(BUILD_DIR)/$(TOP_OBJ_SHARED)
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(OBJ_SHARED)
 	$(CC) $(OBJS) $(OBJ_SHARED) -o $@ $(LDFLAGS)
 
 ### shared lib
-#$(BUILD_DIR)/$(TOP_OBJ_SHARED): $(OBJ_SHARED)
-#	$(CC) $(OBJ_SHARED) -o $@ $^ $(LDFLAGS)
+$(BUILD_DIR)/$(TOP_OBJ_SHARED): $(SRC_SHARED)
+	$(CC) $(SRC_SHARED) -o $@ -fPIC -shared
+#	$(CC) $(OBJ_SHARED) -o $@ $^ $(LDFLAGS) 
 #	$(MKDIR_P) $(dir $@)
 ##	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
 

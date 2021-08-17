@@ -12,7 +12,9 @@ FILE(GLOB SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.c")
 ###### 打印 SRC_LIST 文件列表
 ###### MESSAGE(STATUS ${SRC_LIST})
 
+#add the shared source code of the file path
 FILE(GLOB SRC_SHARED_LIST "${PROJECT_SOURCE_DIR}/src_shared/*.c")
+###### MESSAGE(STATUS ${SRC_SHARED_LIST})
 
 ###### 指定头文件目录
 #####INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
@@ -24,7 +26,7 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
 SET(LIBRARY_OUTPUT_PATH ./libShared)
 
 # 指定生成动态库
-ADD_LIBRARY(SayHello10 SHARED ${SRC_LIST})
+#ADD_LIBRARY(SayHello10 SHARED ${SRC_LIST})
 
 ADD_LIBRARY(Test10Shared SHARED ${SRC_SHARED_LIST})
 
@@ -43,4 +45,5 @@ MESSAGE(STATUS "This is PROJECT_SOURCE_DIR " ${PROJECT_SOURCE_DIR})
 MESSAGE(STATUS "This is CMAKE_SOURCE_DIR " ${CMAKE_SOURCE_DIR})
 
 # 生成可执行文件 hello ，${SRC_LIST}是引用变量，也就是源文件 hello.cpp
-ADD_EXECUTABLE(Test10_Hello ${SRC_LIST})
+# gen ext file, list the dependancy file here
+ADD_EXECUTABLE(Test10_Hello ${SRC_LIST} ${SRC_SHARED_LIST})
