@@ -43,7 +43,9 @@
 
 CC?=gcc
 #CC?=clang
-DEBFLAGS ?= -O -g -m64
+DEBFLAGS ?= -O -g -m64 -Wall
+#Wall    : Warning all
+#Werror  : Warning error
 # $(DEBFLAGS)
 
 DEBUG_TOOL?=gdb64
