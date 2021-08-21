@@ -89,6 +89,9 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 
+CFLAGS          ?= $(INC_FLAGS) -MMD -MP
+CFLAGS_SHARED   ?= -fPIC -shared
+
 #DEBFLAGS ?= -O2 -g
 DEBFLAGS ?= -O -g # "-O" is needed to expand inlines
 #DEBFLAGS ?= -O -g -DSCULL_DEBUG # "-O" is needed to expand inlines
@@ -101,7 +104,9 @@ $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(OBJ_SHARED)
 
 ### shared lib
 $(BUILD_DIR)/$(TOP_OBJ_SHARED): $(SRC_SHARED)
-	$(CC) $(SRC_SHARED) -o $@ -fPIC -shared
+	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) -o $@
+#	$(CC) $(SRC_SHARED) $(CFLAGS)  $(CFLAGS_SHARED) -o $@
+#	$(CC) $(SRC_SHARED) -o $@ -fPIC -shared
 #	$(CC) $(OBJ_SHARED) -o $@ $^ $(LDFLAGS) 
 #	$(MKDIR_P) $(dir $@)
 ##	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
@@ -115,7 +120,7 @@ $(BUILD_DIR)/%.s.o: %.s
 #$(BUILD_DIR)/%.c.o: %.c
 $(BUILD_DIR)/%.c.o: %.c
 	$(MKDIR_P) $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
+	$(CC)  $(CFLAGS) $(DEBFLAGS) -c $< -o $@
 
 # c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp
@@ -133,7 +138,7 @@ run:
 .PHONY: run
 
 #all : clean $(BUILD_DIR)/$(TARGET_EXEC)
-all : clean compile
+all : clean compile run
 
 .PHONY: all
 

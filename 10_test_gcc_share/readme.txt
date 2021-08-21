@@ -3,7 +3,7 @@
 #make clean
 make all
 #./build_gcc/test10
-make run
+#make run
 
 #for cmake + make case
 #cd ./build

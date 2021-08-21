@@ -56,7 +56,9 @@ int main()
 
   //char *ustring_array_07[]= /*pointer array, the element is point to constant string*/
   sprintf(ustring_array_07[0], "Contents Start: ");
-  sprintf(ustring_array_07[0], ", [0x%x] ", uarray_test08[0]);
+  //snprintf(ustring_array_07[0] ,30 ,", [0x%x] " ,uarray_test08[0]);
+  sprintf(ustring_array_07[0], ", [0x%x] " ,uarray_test08[0]);
+  //strlcat(ustring_array_07[0] ,ustring_array_test08[0] ,30);
   strcat(ustring_array_07[0], ustring_array_test08[0]);
   //strcpy(ustring_array_07[0], ustring_array_test08[0]);
   printf("the contents of ustring_array_test08-0 is [%s] \n", ustring_array_07[0]);

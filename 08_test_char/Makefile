@@ -41,13 +41,19 @@
 #update_content#  rm $(TARGET)
 
 
-#CC=gcc
-CC=clang
+CC?=gcc
+#CC?=clang
+DEBFLAGS ?= -O -g -m64
+# $(DEBFLAGS)
+
+DEBUG_TOOL?=gdb64
 
 TARGET_EXEC ?= test08
 
 
-BUILD_DIR ?= ./build_gcc
+#BUILD_DIR ?= ./build_gcc
+#for Makefile
+BUILD_DIR ?= ./buildm
 SRC_DIRS ?= ./src
 
 #all: $(TARGET_EXEC)
@@ -65,31 +71,44 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 
+compile: $(BUILD_DIR)/$(TARGET_EXEC)
+
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $@ $(LDFLAGS)
 
 # assembly
 $(BUILD_DIR)/%.s.o: %.s
 	$(MKDIR_P) $(dir $@)
-	$(AS) $(ASFLAGS) -c $< -o $@
+	$(AS) $(ASFLAGS) $(DEBFLAGS) -c $< -o $@
 
 # c source
 $(BUILD_DIR)/%.c.o: %.c
 	$(MKDIR_P) $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
 
 # c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEBFLAGS) -c $< -o $@
+
+.PHONY: compile
 
 run:
 	$(BUILD_DIR)/$(TARGET_EXEC)
+.PHONY: run
 
-.PHONY: clean
+all : clean compile run
+
+.PHONY: all
+
 
 clean:
 	$(RM) -r $(BUILD_DIR)
+.PHONY: clean
+
+debug:
+	$(DEBUG_TOOL) $(BUILD_DIR)/$(TARGET_EXEC)
+.PHONY: debug
 
 -include $(DEPS)
 

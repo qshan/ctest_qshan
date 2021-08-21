@@ -5,6 +5,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 #Project Name
 PROJECT (Test08_Hello)
 
+#set here or set in the cmake argument in shell, one time is enough
+SET(CMAKE_BUILD_TYPE Debug)
+#SET(CMAKE_BUILD_TYPE RelWithDebInfo)
+#SET(CMAKE_BUILD_TYPE Release)
+
 
 # include path
 #INCLUDE_DIRECTORIES(./include)
