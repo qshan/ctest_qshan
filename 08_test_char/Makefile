@@ -50,6 +50,8 @@ DEBFLAGS ?= -O -g -m64 -Wall
 
 DEBUG_TOOL?=gdb64
 
+DEBUG_TOOL_FLAGS+= -tui
+
 TARGET_EXEC ?= test08
 
 
@@ -109,7 +111,8 @@ clean:
 .PHONY: clean
 
 debug:
-	$(DEBUG_TOOL) $(BUILD_DIR)/$(TARGET_EXEC)
+	$(DEBUG_TOOL) $(DEBUG_TOOL_FLAGS) $(BUILD_DIR)/$(TARGET_EXEC)
+#	$(DEBUG_TOOL) $(BUILD_DIR)/$(TARGET_EXEC)
 .PHONY: debug
 
 -include $(DEPS)

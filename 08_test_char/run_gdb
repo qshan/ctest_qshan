@@ -1,0 +1,3 @@
+#gdb64 ./buildm/test08
+
+make debug
