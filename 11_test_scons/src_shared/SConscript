@@ -1,8 +1,8 @@
 #Library('',[])
 #Library('Test11SharedLib', ['../src_shared/test11_shared.c'])
-Library('Test11SharedLib', ['test11_shared.c'] ,CPPPATH=['../include'])
+#Library('Test11SharedLib', ['test11_shared.c'] ,CPPPATH=['../include'])
+Library('Test11SharedLib' ,Glob('*.c') ,CPPPATH=['../include'])
 
-#Program('',[])
 #Program('',[])
 
 #Program('test11' ,['../src/test11.c' ,CPPPATH=['../src' ,'../scr_shared' ,'../include'] ,['../src/say_hello_11.c'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['.'])

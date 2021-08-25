@@ -3,8 +3,8 @@
 #Library('Test11SharedLib', ['../src_shared/test11_shared.c'] ,CPPPATH=['../include'])
 
 #Program('',[])
-#Program('',[])
 
 #Program('test11' ,['../src/test11.c' ,CPPPATH=['../src' ,'../scr_shared' ,'../include'] ,['../src/say_hello_11.c'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['.'])
 #Program('test11' ,['../src/test11.c' ,'../src/say_hello_11.c'] ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['.'])
-Program('test11' ,['test11.c' ,'say_hello_11.c'] ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['../src_shared'])
+#Program('test11' ,['test11.c' ,'say_hello_11.c'] ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['../src_shared'])
+Program('test11' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['../src_shared'])

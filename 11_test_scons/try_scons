@@ -1,2 +1,4 @@
+scons -c
 scons
 ./src/test11
+#scons -c
