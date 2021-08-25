@@ -10,6 +10,29 @@
 #Program('test11' ,['../src/test11.c' ,'../src/say_hello_11.c'] ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['.'])
 
 #SConstruct
+
+#env = Environment(CC='gcc' ,CCFLAGS=[' -O2 -Wall -g'] ,CPPDEFINES=['MyDefine01'])
+#
+#env = Environment(CC='gcc')
+#env.Replace(CC='clang')
+#
+#env.Prepend(CPPDEFINES=['MyFirstDefine00'])
+#env.Append(CPPDEFINES=['MyDefine02'])
+#env.Append(MyVariableAdded01=['MyVariableAdded01'])
+##print("MyVariableAdded01 = %s" % env['MyVariableAdded01'])
+#
+#opt = env.Clone(CCFLAGS=[' -O2'])
+#dbg = env.Clone(CCFLAGS=[' -Wall -g'])
+#
+#env.Program('test11' ,['foo.c'])
+#
+#o = opt.Object('test11-o' ,['foo.c'])
+#opt.Program(o)
+##
+#d = dbg.Object('test11-d' ,['foo.c'])
+#dbg.Program(d)
+
+
 SConscript([
             'src_shared/SConscript'
             , 'src/SConscript'

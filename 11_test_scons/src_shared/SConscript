@@ -1,6 +1,7 @@
 #Library('',[])
 #Library('Test11SharedLib', ['../src_shared/test11_shared.c'])
 #Library('Test11SharedLib', ['test11_shared.c'] ,CPPPATH=['../include'])
+#StaticLibrary('Test11SharedLib' ,Glob('*.c') ,CPPPATH=['../include'])
 Library('Test11SharedLib' ,Glob('*.c') ,CPPPATH=['../include'])
 
 #Program('',[])
