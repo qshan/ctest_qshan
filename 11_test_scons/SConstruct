@@ -1,0 +1,18 @@
+#Library('',[])
+#Library('Test11SharedLib', ['../src_shared/test11_shared.c'])
+#Library('Test11SharedLib', ['../src_shared/test11_shared.c'] ,CPPPATH=['../include'])
+
+#Program('',[])
+#Program('',[])
+
+#Program('test11' ,['../src/test11.c' ,CPPPATH=['../src' ,'../scr_shared' ,'../include'] ,['../src/say_hello_11.c'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['.'])
+#Program('test11' ,['../src/test11.c' ,'../src/say_hello_11.c'] ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['.'])
+#Program('test11' ,['../src/test11.c' ,'../src/say_hello_11.c'] ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['.'])
+
+#SConstruct
+SConscript([
+            'src_shared/SConscript'
+            , 'src/SConscript'
+           ]
+#            , variant_dir='build_sc'
+          )
