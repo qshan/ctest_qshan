@@ -11,18 +11,20 @@
 
 #SConstruct
 
-#env = Environment(CC='gcc' ,CCFLAGS=[' -O2 -Wall -g'] ,CPPDEFINES=['MyDefine01'])
+#env = Environment(CC='gcc' ,CCFLAGS=' -O2 -Wall -g' ,CPPDEFINES=['MyDefine01'])
 #
-#env = Environment(CC='gcc')
-#env.Replace(CC='clang')
+env = Environment(CC='gcc')
+env.Replace(CC='clang')
+#env.Append(CCFLAGS=' -Wall -g')
+env.Append(CCFLAGS=' -O2 -Wall -g')
 #
-#env.Prepend(CPPDEFINES=['MyFirstDefine00'])
-#env.Append(CPPDEFINES=['MyDefine02'])
-#env.Append(MyVariableAdded01=['MyVariableAdded01'])
-##print("MyVariableAdded01 = %s" % env['MyVariableAdded01'])
+env.Prepend(CPPDEFINES=['MyFirstDefine00'])
+env.Append(CPPDEFINES=['MyDefine02'])
+env.Append(MyVariableAdded01=['MyVariableAdded01'])
+print("MyVariableAdded01 = %s" % env['MyVariableAdded01'])
 #
-#opt = env.Clone(CCFLAGS=[' -O2'])
-#dbg = env.Clone(CCFLAGS=[' -Wall -g'])
+opt = env.Clone(CCFLAGS=[' -O2'])
+dbg = env.Clone(CCFLAGS=[' -Wall -g'])
 #
 #env.Program('test11' ,['foo.c'])
 #
@@ -31,6 +33,10 @@
 ##
 #d = dbg.Object('test11-d' ,['foo.c'])
 #dbg.Program(d)
+
+Export ("env")
+Export ("opt")
+Export ("dbg")
 
 
 SConscript([
