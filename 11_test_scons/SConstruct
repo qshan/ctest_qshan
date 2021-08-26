@@ -41,10 +41,13 @@ Export ("dbg")
 
 #SConscript(['src_shared/SConscript']
 #            , variant_dir='build_sc_shared'
+#            , duplicate=False
 #          )
 #SConscript(['src/SConscript']
 #            , variant_dir='build_sc'
+#            , duplicate=False
 #          )
+
 
 SConscript(['src_shared/SConscript']
 #            , variant_dir='build_sc_shared'
