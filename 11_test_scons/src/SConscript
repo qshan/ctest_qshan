@@ -13,6 +13,8 @@ Import("env")
 Import("opt")
 Import("dbg")
 #
+#env.Program('test11' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['../build_sc_shared'])
 env.Program('test11' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['../src_shared'])
+
 #opt.Program('test11-opt' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['../src_shared'])
 #dbg.Program('test11-dbg' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test11SharedLib'] ,LIBPATH=['../src_shared'])
