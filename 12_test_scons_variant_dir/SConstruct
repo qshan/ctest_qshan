@@ -1,3 +1,5 @@
+#good doc #https://scons.org/doc/production/HTML/scons-user.html#app-functions
+
 #Library('',[])
 #Library('Test12SharedLib', ['../src_shared/test12_shared.c'])
 #Library('Test12SharedLib', ['../src_shared/test12_shared.c'] ,CPPPATH=['../include'])
