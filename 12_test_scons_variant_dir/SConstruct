@@ -1,0 +1,57 @@
+#Library('',[])
+#Library('Test12SharedLib', ['../src_shared/test12_shared.c'])
+#Library('Test12SharedLib', ['../src_shared/test12_shared.c'] ,CPPPATH=['../include'])
+
+#Program('',[])
+#Program('',[])
+
+#Program('test12' ,['../src/test12.c' ,CPPPATH=['../src' ,'../scr_shared' ,'../include'] ,['../src/say_hello_12.c'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['.'])
+#Program('test12' ,['../src/test12.c' ,'../src/say_hello_12.c'] ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['.'])
+#Program('test12' ,['../src/test12.c' ,'../src/say_hello_12.c'] ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['.'])
+
+#SConstruct
+
+#env = Environment(CC='gcc' ,CCFLAGS=' -O2 -Wall -g' ,CPPDEFINES=['MyDefine01'])
+#
+env = Environment(CC='gcc')
+env.Replace(CC='clang')
+#env.Append(CCFLAGS=' -Wall -g')
+env.Append(CCFLAGS=' -O2 -Wall -g')
+#
+env.Prepend(CPPDEFINES=['MyFirstDefine00'])
+env.Append(CPPDEFINES=['MyDefine02'])
+env.Append(MyVariableAdded01=['MyVariableAdded01'])
+print("MyVariableAdded01 = %s" % env['MyVariableAdded01'])
+#
+opt = env.Clone(CCFLAGS=[' -O2'])
+dbg = env.Clone(CCFLAGS=[' -Wall -g'])
+#
+#env.Program('test12' ,['foo.c'])
+#
+#o = opt.Object('test12-o' ,['foo.c'])
+#opt.Program(o)
+##
+#d = dbg.Object('test12-d' ,['foo.c'])
+#dbg.Program(d)
+
+Export ("env")
+Export ("opt")
+Export ("dbg")
+
+
+#SConscript(['src_shared/SConscript']
+#            , variant_dir='build_sc_shared'
+#            , duplicate=False
+#          )
+#SConscript(['src/SConscript']
+#            , variant_dir='build_sc'
+#            , duplicate=False
+#          )
+
+
+SConscript(['src_shared/SConscript']
+#            , variant_dir='build_sc_shared'
+          )
+SConscript(['src/SConscript']
+#            , variant_dir='build_sc'
+          )

@@ -1,0 +1,8 @@
+# run like this
+#cmake -G "Unix Makefiles" ..
+cd build_cmake
+cmake ..
+make clean
+make
+./Test12_Hello
+cd -

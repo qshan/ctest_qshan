@@ -1,0 +1,6 @@
+scons -c
+#scons
+#scons --tree=all
+scons --tree=status
+./src/test12
+#scons -c
