@@ -13,8 +13,9 @@ Import("env")
 Import("opt")
 Import("dbg")
 #
-#env.Program('test12' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../build_sc_shared'])
-env.Program('test12' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../src_shared'])
+#env.Program('test12' ,Glob('*.c') ,CPPPATH=['../../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../BuildOutputFilePath/build_sc_shared'])
+env.Program('test12' ,Glob('*.c') ,CPPPATH=['../../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../build_sc_shared'])
+#env.Program('test12' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../src_shared'])
 
 #opt.Program('test12-opt' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../src_shared'])
 #dbg.Program('test12-dbg' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../src_shared'])

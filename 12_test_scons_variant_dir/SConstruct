@@ -38,20 +38,25 @@ Export ("env")
 Export ("opt")
 Export ("dbg")
 
-
-#SConscript(['src_shared/SConscript']
-#            , variant_dir='build_sc_shared'
-#            , duplicate=False
-#          )
-#SConscript(['src/SConscript']
-#            , variant_dir='build_sc'
-#            , duplicate=False
-#          )
-
+BuildOutputFilePath='build_sc'
+Export ("BuildOutputFilePath")
+print("BuildOutputFilePath = %s" % BuildOutputFilePath)
 
 SConscript(['src_shared/SConscript']
-#            , variant_dir='build_sc_shared'
+            , variant_dir=BuildOutputFilePath + "/build_sc_shared"
+#            , variant_dir=BuildOutputFilePath
+            , duplicate=False
           )
 SConscript(['src/SConscript']
-#            , variant_dir='build_sc'
+            , variant_dir=BuildOutputFilePath + "/build_sc"
+#            , variant_dir=BuildOutputFilePath
+            , duplicate=False
           )
+
+
+#SConscript(['src_shared/SConscript']
+##            , variant_dir='build_sc_shared'
+#          )
+#SConscript(['src/SConscript']
+##            , variant_dir='build_sc'
+#          )
