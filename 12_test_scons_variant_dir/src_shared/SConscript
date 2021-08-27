@@ -4,7 +4,7 @@
 #StaticLibrary('Test12SharedLib' ,Glob('*.c') ,CPPPATH=['../include'])
 #Library('Test12SharedLib' ,Glob('*.c') ,CPPPATH=['../include'])
 
-Import("env")
+Import('env')
 env.Library('Test12SharedLib' ,Glob('*.c') ,CPPPATH=['../include'])
 
 #Program('',[])

@@ -9,12 +9,17 @@
 #Program('test12' ,['test12.c' ,'say_hello_12.c'] ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../src_shared'])
 #Program('test12' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../src_shared'])
 
-Import("env")
-Import("opt")
-Import("dbg")
+Import('env')
+Import('opt')
+Import('dbg')
+Import ('BuildOutputFilePath')
 #
 #env.Program('test12' ,Glob('*.c') ,CPPPATH=['../../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../BuildOutputFilePath/build_sc_shared'])
-env.Program('test12' ,Glob('*.c') ,CPPPATH=['../../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../build_sc_shared'])
+#env.Program('test12' ,Glob('*.c') ,CPPPATH=['../../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../build_sc_shared'])
+#env.Program('test12' ,Glob('*.c') ,CPPPATH=['../../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../' + BuildOutputFilePath + '/build_sc_shared'])
+#env.Program('test12' ,Glob('*.c') ,CPPPATH=['../../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../build_sc_shared'])
+env.Program('test12' ,Glob('*.c') ,CPPPATH=['../../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../src_shared'])
+
 #env.Program('test12' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../src_shared'])
 
 #opt.Program('test12-opt' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test12SharedLib'] ,LIBPATH=['../src_shared'])

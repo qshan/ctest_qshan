@@ -34,21 +34,27 @@ dbg = env.Clone(CCFLAGS=[' -Wall -g'])
 #d = dbg.Object('test12-d' ,['foo.c'])
 #dbg.Program(d)
 
-Export ("env")
-Export ("opt")
-Export ("dbg")
+Export ('env')
+#Export ("opt", "dbg")
+#Export ('opt dbg')
+Export ('opt', 'dbg')
+#Export ('dbg')
 
-BuildOutputFilePath='build_sc'
-Export ("BuildOutputFilePath")
+BuildOutputFilePath="build_sco"
+Export ('BuildOutputFilePath')
 print("BuildOutputFilePath = %s" % BuildOutputFilePath)
 
 SConscript(['src_shared/SConscript']
-            , variant_dir=BuildOutputFilePath + "/build_sc_shared"
+#            , variant_dir=BuildOutputFilePath + "/build_sc_shared"
+            , variant_dir=BuildOutputFilePath + "/src_shared"
 #            , variant_dir=BuildOutputFilePath
             , duplicate=False
           )
+
+
 SConscript(['src/SConscript']
-            , variant_dir=BuildOutputFilePath + "/build_sc"
+#            , variant_dir=BuildOutputFilePath + "/build_sc"
+            , variant_dir=BuildOutputFilePath + "/src"
 #            , variant_dir=BuildOutputFilePath
             , duplicate=False
           )
