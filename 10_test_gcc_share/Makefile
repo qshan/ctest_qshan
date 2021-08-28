@@ -95,12 +95,12 @@ CFLAGS          ?= $(INC_FLAGS) -MMD -MP
 CFLAGS_SHARED   ?= -fPIC -shared
 
 #DEBFLAGS ?= -O2 -g
-DEBFLAGS ?= -O -g # "-O" is needed to expand inlines
+DEBFLAGS ?= -O -g -Wall # "-O" is needed to expand inlines
 #DEBFLAGS ?= -O -g -DSCULL_DEBUG # "-O" is needed to expand inlines
 
 .DEFAULT: compile
 
-compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/$(TOP_OBJ_SHARED)
+compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs/$(TOP_OBJ_SHARED)
 	echo "Here get : " $(BUILD_DIR)/$(TOP_OBJ_SHARED)
 	$(BUILD_DIR)/$(TARGET_EXEC)
 #compile:  $(BUILD_DIR)/$(TOP_OBJ_SHARED)
@@ -108,8 +108,9 @@ compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/$(TOP_OBJ_SHARED)
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(OBJ_SHARED)
 	$(CC) $(OBJS) $(OBJ_SHARED) -o $@ $(LDFLAGS)
 
-### shared lib
-$(BUILD_DIR)/$(TOP_OBJ_SHARED): $(SRC_SHARED)
+### shared lib, the name of libs is set by manual.
+$(BUILD_DIR)/libs/$(TOP_OBJ_SHARED): $(SRC_SHARED)
+	$(MKDIR_P) $(dir $@)
 	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) -o $@
 #	$(CC) $(SRC_SHARED) $(CFLAGS)  $(CFLAGS_SHARED) -o $@
 #	$(CC) $(SRC_SHARED) -o $@ -fPIC -shared
