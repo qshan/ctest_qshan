@@ -1,7 +1,8 @@
 # run like this
 #for gcc make
 #make clean
-make all
+#make all
+make
 #./build_gcc/test11
 #make run
 

@@ -1,8 +1,9 @@
 # run like this
 #for gcc make
 #make clean
-make all
-#./build_gcc/test12
+#make all
+make
+#./build_gcc/test11
 #make run
 
 #for cmake + make case

@@ -93,17 +93,22 @@ CFLAGS          ?= $(INC_FLAGS) -MMD -MP
 CFLAGS_SHARED   ?= -fPIC -shared
 
 #DEBFLAGS ?= -O2 -g
-DEBFLAGS ?= -O -g # "-O" is needed to expand inlines
+DEBFLAGS ?= -O -g -Wall # "-O" is needed to expand inlines
 #DEBFLAGS ?= -O -g -DSCULL_DEBUG # "-O" is needed to expand inlines
 
-compile: $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/$(TOP_OBJ_SHARED)
+.DEFAULT: compile
+
+compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs/$(TOP_OBJ_SHARED)
+	echo "Here get : " $(BUILD_DIR)/$(TOP_OBJ_SHARED)
+	$(BUILD_DIR)/$(TARGET_EXEC)
 #compile:  $(BUILD_DIR)/$(TOP_OBJ_SHARED)
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(OBJ_SHARED)
 	$(CC) $(OBJS) $(OBJ_SHARED) -o $@ $(LDFLAGS)
 
-### shared lib
-$(BUILD_DIR)/$(TOP_OBJ_SHARED): $(SRC_SHARED)
+### shared lib, the name of libs is set by manual.
+$(BUILD_DIR)/libs/$(TOP_OBJ_SHARED): $(SRC_SHARED)
+	$(MKDIR_P) $(dir $@)
 	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) -o $@
 #	$(CC) $(SRC_SHARED) $(CFLAGS)  $(CFLAGS_SHARED) -o $@
 #	$(CC) $(SRC_SHARED) -o $@ -fPIC -shared
@@ -112,7 +117,7 @@ $(BUILD_DIR)/$(TOP_OBJ_SHARED): $(SRC_SHARED)
 ##	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
 
 # assembly
-$(BUILD_DIR)/%.s.o: %.s
+$(BUILD_DIR)/%.s.o : %.s
 	$(MKDIR_P) $(dir $@)
 	$(AS) $(ASFLAGS) -c $< -o $@
 
@@ -127,7 +132,7 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-.PHONY: compile
+#.PHONY: compile
 
 
 #$(info "run $(BUILD_DIR)/$(TARGET_EXEC)")
@@ -135,16 +140,18 @@ run:
 #	echo "run $(BUILD_DIR)/$(TARGET_EXEC) .........."
 	$(BUILD_DIR)/$(TARGET_EXEC)
 
-.PHONY: run
+#.PHONY: run
 
 #all : clean $(BUILD_DIR)/$(TARGET_EXEC)
-all : clean compile run
+#all : clean compile run
+all : clean compile
 
-.PHONY: all
+#.DEFAULT: all
+#.PHONY: all
 
+.PHONY: clean
 clean:
 	$(RM) -r $(BUILD_DIR)
-.PHONY: clean
 
 -include $(DEPS)
 
