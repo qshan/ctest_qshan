@@ -112,7 +112,7 @@ $(BUILD_DIR)/libs/$(TOP_OBJ_SHARED): $(SRC_SHARED)
 	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) -o $@
 #	$(CC) $(SRC_SHARED) $(CFLAGS)  $(CFLAGS_SHARED) -o $@
 #	$(CC) $(SRC_SHARED) -o $@ -fPIC -shared
-#	$(CC) $(OBJ_SHARED) -o $@ $^ $(LDFLAGS) 
+#	$(CC) $(OBJ_SHARED) -o $@ $^ $(LDFLAGS)
 #	$(MKDIR_P) $(dir $@)
 ##	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
 

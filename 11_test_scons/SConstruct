@@ -1,3 +1,5 @@
+#good doc #https://scons.org/doc/production/HTML/scons-user.html#app-functions
+
 #Library('',[])
 #Library('Test11SharedLib', ['../src_shared/test11_shared.c'])
 #Library('Test11SharedLib', ['../src_shared/test11_shared.c'] ,CPPPATH=['../include'])
@@ -34,9 +36,11 @@ dbg = env.Clone(CCFLAGS=[' -Wall -g'])
 #d = dbg.Object('test11-d' ,['foo.c'])
 #dbg.Program(d)
 
-Export ("env")
-Export ("opt")
-Export ("dbg")
+Export ('env')
+#Export ("opt", "dbg")
+#Export ('opt dbg')
+Export ('opt', 'dbg')
+#Export ('dbg')
 
 
 #SConscript(['src_shared/SConscript']
