@@ -1,5 +1,6 @@
 #
 #
+# detail here: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables
 #meaning of specific strings
 #*# $@ all of FileNameWithExtension produced
 # $* all of FileNameWithoutExtension produced
@@ -7,6 +8,7 @@
 #*# $^ the dependance items with space islated and remove the repeated item
 # $+ the dependance items with space islated, but do not remove the repeated item
 # $? the dependance items with space islated, but just have the new item
+# $| The names of all the order-only prerequisites, with spaces between them.
 # %
 #
 #automatic variables          descriptions

@@ -5,12 +5,12 @@ if [ ! -d ./build_cmake ]; then
 fi
 
 if [ -d ./build_cmake ]; then
-  #cmake -G "Unix Makefiles" ..
   cd build_cmake
+  #cmake -G "Unix Makefiles" ..
   cmake ..
   make clean
   make
-  ./Test10_Hello
+  ./Test04_Hello
   cd -
 #  mkdir build_cmake
 fi

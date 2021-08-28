@@ -12,16 +12,23 @@ FILE(GLOB SRC_LIST "${PROJECT_SOURCE_DIR}/src/*.c")
 ###### 打印 SRC_LIST 文件列表
 ###### MESSAGE(STATUS ${SRC_LIST})
 
+#add the shared source code of the file path
+#FILE(GLOB SRC_SHARED_LIST "${PROJECT_SOURCE_DIR}/src_shared/*.c")
+###### MESSAGE(STATUS ${SRC_SHARED_LIST})
+
 ###### 指定头文件目录
 #####INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
 # include path
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
 
 # 指定输出 .so 动态库的目录位置
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/libShared)
+#SET(LIBRARY_OUTPUT_PATH ./libShared)
 
 # 指定生成动态库
 ADD_LIBRARY(SayHello04 SHARED ${SRC_LIST})
+
+#ADD_LIBRARY(Test04Shared SHARED ${SRC_SHARED_LIST})
 
 ###### 指定生成静态库
 #####ADD_LIBRARY(SayHello04 ${SRC_LIST})
@@ -39,3 +46,5 @@ MESSAGE(STATUS "This is CMAKE_SOURCE_DIR " ${CMAKE_SOURCE_DIR})
 
 # 生成可执行文件 hello ，${SRC_LIST}是引用变量，也就是源文件 hello.cpp
 ADD_EXECUTABLE(Test04_Hello ${SRC_LIST})
+## gen ext file, list the dependancy file here
+#ADD_EXECUTABLE(Test04_Hello ${SRC_LIST} ${SRC_SHARED_LIST})
