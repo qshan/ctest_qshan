@@ -55,7 +55,7 @@ CC=clang
 TARGET_EXEC ?= test10
 
 
-BUILD_DIR ?= ./buildm
+BUILD_DIR ?= ./build_make
 SRC_DIRS ?= ./src
 #log define
 BUILD_LOG_FILE ?= $(BUILD_DIR)/$(TARGET_EXEC).log
