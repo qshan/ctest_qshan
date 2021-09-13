@@ -27,9 +27,11 @@ int main()
 
   printf("the contents of string1 is %s \n", ustring1);
 
-  strcpy(ustring2, ustring1);
+  //strlcpy is not ANSI C lib yet now
+  //strcpy(ustring2, ustring1);
   //strlcpy(ustring2, ustring1, sizeof(ustring1[]));
   //strlcpy(ustring2, ustring1, 100);
+  strncpy(ustring2, ustring1, 100);
   printf("the contents of string2 is %s \n", ustring2);
 
   strcpy(ustring3, ustring1);
@@ -58,8 +60,11 @@ int main()
   sprintf(ustring_array_07[0], "Contents Start: ");
   //snprintf(ustring_array_07[0] ,30 ,", [0x%x] " ,uarray_test08[0]);
   sprintf(ustring_array_07[0], ", [0x%x] " ,uarray_test08[0]);
+
   //strlcat(ustring_array_07[0] ,ustring_array_test08[0] ,30);
-  strcat(ustring_array_07[0], ustring_array_test08[0]);
+  strncat(ustring_array_07[0] ,ustring_array_test08[0] ,30);
+  //strcat(ustring_array_07[0], ustring_array_test08[0]);
+
   //strcpy(ustring_array_07[0], ustring_array_test08[0]);
   printf("the contents of ustring_array_test08-0 is [%s] \n", ustring_array_07[0]);
 

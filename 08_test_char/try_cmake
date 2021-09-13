@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# run like this
+
+if [ ! -d ./build_cmake ]; then
+   mkdir build_cmake
+fi
+
+if [ -d ./build_cmake ]; then
+  cd build_cmake
+
+  #cmake -G "Unix Makefiles" ..
+  #cmake ..
+  cmake -DCMAKE_BUILD_TYPE=Debug ..
+  #cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+  #cmake -DCMAKE_BUILD_TYPE=Release ..
+  make clean
+  make
+  ./Test08_Hello
+
+  cd -
+#  mkdir build_cmake
+fi
