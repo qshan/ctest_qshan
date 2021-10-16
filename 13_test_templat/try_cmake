@@ -1,0 +1,17 @@
+# run like this
+
+if [ ! -d ./build_cmake ]; then
+   mkdir build_cmake
+fi
+
+if [ -d ./build_cmake ]; then
+  cd build_cmake
+  #cmake -G "Unix Makefiles" ..
+  cmake ..
+  make clean
+  make
+#  ./Test13_Hello
+  ./Test13
+  cd -
+#  mkdir build_cmake
+fi
