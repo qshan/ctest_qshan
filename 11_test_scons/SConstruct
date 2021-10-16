@@ -42,6 +42,11 @@ Export ('env')
 Export ('opt', 'dbg')
 #Export ('dbg')
 
+#check the env setting here
+print("[env.CC]       is  %s" % env['CC'])
+print("[env.CXX]      is  %s" % env['CXX'])
+print("[env.CCFLAGS]  is  %s" % env['CCFLAGS'])
+
 
 #SConscript(['src_shared/SConscript']
 #            , variant_dir='build_sc_shared'

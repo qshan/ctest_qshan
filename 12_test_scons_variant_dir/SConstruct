@@ -42,6 +42,12 @@ Export ('env')
 Export ('opt', 'dbg')
 #Export ('dbg')
 
+#check the env setting here
+print("[env.CC]       is  %s" % env['CC'])
+print("[env.CXX]      is  %s" % env['CXX'])
+print("[env.CCFLAGS]  is  %s" % env['CCFLAGS'])
+
+
 BuildOutputFilePath="build_sco"
 Export ('BuildOutputFilePath')
 print("BuildOutputFilePath = %s" % BuildOutputFilePath)

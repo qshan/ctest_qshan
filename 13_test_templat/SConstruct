@@ -47,9 +47,9 @@ Export ('opt', 'dbg')
 #Export ('dbg')
 
 #check the env setting here
-print("[env.CC] is %s" % env['CC'])
-print("[env.CXX] is %s" % env['CXX'])
-print("[env.CCFLAGS] is %s" % env['CCFLAGS'])
+print("[env.CC]       is  %s" % env['CC'])
+print("[env.CXX]      is  %s" % env['CXX'])
+print("[env.CCFLAGS]  is  %s" % env['CCFLAGS'])
 
 objs  = []
 header_file_path  = []
