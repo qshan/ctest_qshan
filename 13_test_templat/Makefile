@@ -30,23 +30,32 @@
 #
 
 #.PHONY: all
-
+#------------------------------
 #CC=gcc
 #CXX=g++
 CC=clang
 CXX=clang++
-
+#------------------------------
+#set target name
 TARGET_EXEC ?= test13
-
-
-BUILD_DIR ?= ./build_make
-#SRC_DIRS ?= ./src
-SRC_DIRS ?= test/src
+#------------------------------
+#set project/code root path
+PRO_ROOT_PATH = .
+#set the build path, the temp file path
+BUILD_DIR ?= $(PRO_ROOT_PATH)/build_make
+#------------------------------
+#test code
+SRC_DIRS ?= $(PRO_ROOT_PATH)/test/src
+#libs code
 #INC_DIRS							:= $(shell find $(SRC_DIRS) -type d)
-SRC_DIRS += libs/say_hello/src
-#SRC_DIRS += libs/practice/src
+#TODO#Add the src by manual
+SRC_DIRS += $(PRO_ROOT_PATH)/libs/say_hello/src
+#SRC_DIRS += $(PRO_ROOT_PATH)/libs/practice/src
+#Add the src by searching
 #TODO#conflicted with shared#SRC_DIRS += $(shell find ./libs -type d -iname "*src")
-SRC_SHARED_DIRS ?= libs/shared/src
+#shared libs code
+#get the shared path here
+SRC_SHARED_DIRS ?= $(PRO_ROOT_PATH)/libs/shared/src
 
 #log define
 BUILD_LOG_FILE ?= $(BUILD_DIR)/$(TARGET_EXEC).log
@@ -69,7 +78,7 @@ OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 
 #ToCheck
 #include/HeadhFile path for shared lib generating info
-INC_DIRS_SHARED       := ./libs/shared/header
+INC_DIRS_SHARED       := $(PRO_ROOT_PATH)/libs/shared/header
 INC_FLAGS_SHARED      := $(addprefix -I,$(INC_DIRS_SHARED))
 
 CFLAGS_SHARED         ?= $(INC_FLAGS_SHARED) -fPIC -shared
@@ -82,19 +91,34 @@ DEPS                  := $(OBJS:.o=.d)
 
 #include/HeadhFile path for source code info
 INC_DIRS              := $(shell find $(SRC_DIRS) -type d)
-INC_DIRS              +=  ./test/header \
-													./libs/say_hello/header \
+INC_DIRS              +=  $(PRO_ROOT_PATH)/test/header \
+                          $(PRO_ROOT_PATH)/libs/say_hello/header \
 
-#													./libs/practice/header
+#                          $(PRO_ROOT_PATH)/libs/practice/header
 INC_DIRS              += $(INC_DIRS_SHARED)
 INC_FLAGS             := $(addprefix -I,$(INC_DIRS))
 
 CFLAGS                ?= $(INC_FLAGS) -MMD -MP
 CPPFLAGS              ?= $(INC_FLAGS) -MMD -MP
 
-#DEBFLAGS ?= -O2 -g
-DEBFLAGS ?= -O -g -Wall # "-O" is needed to expand inlines
-#DEBFLAGS ?= -O -g -DSCULL_DEBUG # "-O" is needed to expand inlines
+#------------------------------
+#compile option here
+# '-g' is for dgb support
+DEBFLAGS += -g
+# '-O0' is optimize for faster compilation and build time
+#DEBFLAGS ?= -O0
+# '-O3' is optimize for performance
+#DEBFLAGS ?= -O3
+# '-Omin' is optimize for code size
+DEBFLAGS ?= -Omin
+# '-Wall' is to enable the all warning
+DEBFLAGS += -Wall
+# '-Werror' is to make all warnings into errors
+DEBFLAGS += -Werror
+# '-Wfatal-errors' is to make compile abort when the hit the errors firstly
+DEBFLAGS += -Wfatal-errors
+#DEBFLAGS ?= -O -g -DSCULL_DEBUG	# "-O" is needed to expand inlines
+#------------------------------
 
 #.DEFAULT: compile
 .DEFAULT: all
@@ -105,13 +129,13 @@ compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs/$(TOP_OBJ_SHARED)
 #compile:  $(BUILD_DIR)/$(TOP_OBJ_SHARED)
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(OBJ_SHARED)
-	$(CC) $(OBJS) $(OBJ_SHARED) -o $@ $(LDFLAGS)
+	$(CC) $(OBJS) $(OBJ_SHARED) $(DEBFLAGS) -o $@ $(LDFLAGS)
 #	$(CXX) $(OBJS) $(OBJ_SHARED) -o $@ $(LDFLAGS)
 
 ### shared lib, the name of libs is set by manual.
 $(BUILD_DIR)/libs/$(TOP_OBJ_SHARED): $(SRC_SHARED)
 	$(MKDIR_P) $(dir $@)
-	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) -o $@
+	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) $(DEBFLAGS) -o $@
 #	$(CC) $(SRC_SHARED) $(CFLAGS)  $(CFLAGS_SHARED) -o $@
 ##	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
 
@@ -129,7 +153,7 @@ $(BUILD_DIR)/%.c.o: %.c
 # c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEBFLAGS) -c $< -o $@
 
 #.PHONY: compile
 
