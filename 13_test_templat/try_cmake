@@ -1,17 +1,14 @@
+#!/bin/bash
+
 # run like this
 
-if [ ! -d ./build_cmake ]; then
-   mkdir build_cmake
-fi
+export Test13BuildPath="./build_cmake"
+export Test13SourcePath="."
 
-if [ -d ./build_cmake ]; then
-  cd build_cmake
-  #cmake -G "Unix Makefiles" ..
-  cmake ..
+  #cmake3.13#cmake -B${Test13BuildPath} -S${Test13SourcePath}
+  cmake -B${Test13BuildPath} -H${Test13SourcePath}
+  cd ${Test13BuildPath}
   make clean
   make
-#  ./Test13_Hello
   ./Test13
   cd -
-#  mkdir build_cmake
-fi

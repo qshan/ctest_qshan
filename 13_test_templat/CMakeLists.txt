@@ -10,9 +10,14 @@ PROJECT (Test13 VERSION 1.0)
 
 
 #------------------------------
+#SET(OutputPathQshan    build_cmake_cmake)
+#MAKE_DIRECTORY(${OutputPathQshan})
+#SET(PROJECT_BINARY_DIR ${OutputPathQshan})
+#set(CMAKE_BUILD_DIR ${OutputPathQshan})
+#set(CMAKE_BINARY_DIR ${OutputPathQshan})
 #------------------------------
-set(CMAKE_C_COMPILER    clang)
-set(CMAKE_CPP_COMPILER  clang++)
+SET(CMAKE_C_COMPILER    clang)
+SET(CMAKE_CPP_COMPILER  clang++)
 #set(CMAKE_C_COMPILER    iccarm)
 #set(CMAKE_CPP_COMPILER  iccarm)
 #------------------------------
