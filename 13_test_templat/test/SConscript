@@ -15,9 +15,9 @@ Import("dbg")
 obj = env.Object([Glob('./src/*.c')]
                   ,CCFLAGS=''
                   ,CPPPATH=[
-                            './header'
-                            ,'../libs/shared/header'
-                            ,'../libs/say_hello/header'])
+                              './header'
+                            , '../libs/shared/header'
+                            , '../libs/say_hello/header'])
 
 #                            ,'../libs/practice/header'
 Return('obj')

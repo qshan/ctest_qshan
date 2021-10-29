@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include "say_hello_13.h"
-#include "test13_shared.h"
+#include "test13.h"
+//#include "say_hello_13.h"
+//#include "test13_shared.h"
 int main()
 {
   printf("\n");
