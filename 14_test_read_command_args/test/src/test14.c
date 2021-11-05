@@ -69,12 +69,12 @@ int main(int argc, char *argv[])
 
   #if 1
   {
+    //ToCheck
     #define MAX_STRING_LENGTH 100
-    //char input_arg_list[30][100]=
     char input_arg_list[][2][MAX_STRING_LENGTH]=
     {
-       {"--port", "need_input"}
-      ,{"--file", "need_input"}
+       {"--port", ""}
+      ,{"--file", ""}
       ,{"--end--", "--end--"}
     };
     printf("------------------------------\n");
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
         {
           //printf("#####get input_arg_list[j][0] info: %s\n", argv[i+1]);
           //strcpy(input_arg_list[j][1], argv[i+1]);
-          //strncpy(input_arg_list[j][1], argv[i+1] ,100);
+          //strncpy(input_arg_list[j][1], argv[i+1] ,MAX_STRING_LENGTH);
           strncpy(input_arg_list[j][1], argv[i+1] ,strlen(argv[i+1]));
           printf("#####Get %s info: %s\n" ,input_arg_list[j][0] ,input_arg_list[j][1]);
         }
@@ -110,6 +110,7 @@ int main(int argc, char *argv[])
     printf("\n");
     #endif
 
+  printf("------------------------------\n");
   printf("value_returned is %d\n" ,value_returned);
   return value_returned;
 

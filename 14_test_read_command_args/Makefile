@@ -72,8 +72,8 @@ TOP_OBJ_SHARED ?= Test14SharedLib.o
 
 #source code for shared lib
 SRC_SHARED  = $(wildcard \
-                $(SRC_SHARED_DIRS)/*.c \
-                $(SRC_SHARED_DIRS)/*.cpp)
+								$(SRC_SHARED_DIRS)/*.c \
+								$(SRC_SHARED_DIRS)/*.cpp)
 OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 
 #ToCheck
@@ -92,7 +92,7 @@ DEPS                  := $(OBJS:.o=.d)
 #include/HeadhFile path for source code info
 INC_DIRS              := $(shell find $(SRC_DIRS) -type d)
 INC_DIRS              +=  $(PRO_ROOT_PATH)/test/header \
-                          $(PRO_ROOT_PATH)/libs/say_hello/header \
+													$(PRO_ROOT_PATH)/libs/say_hello/header \
 
 #                          $(PRO_ROOT_PATH)/libs/practice/header
 INC_DIRS              += $(INC_DIRS_SHARED)
@@ -162,7 +162,8 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 run:
 	$(info "####################")
 	$(info "run $(BUILD_DIR)/$(TARGET_EXEC) ..........")
-	$(BUILD_DIR)/$(TARGET_EXEC)
+#	$(BUILD_DIR)/$(TARGET_EXEC)
+	$(BUILD_DIR)/$(TARGET_EXEC) arg1 arg2 arg3 arg4 arg5 arg6 --port /dev/usb0 --File /home/data/outputdata.txt
 
 #.PHONY: run
 
