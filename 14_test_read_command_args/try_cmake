@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# run like this
+
+export Test14BuildPath="./build_cmake"
+export Test14SourcePath="."
+
+  #cmake3.14#cmake -B${Test14BuildPath} -S${Test14SourcePath}
+  cmake -B${Test14BuildPath} -H${Test14SourcePath}
+  cd ${Test14BuildPath}
+  make clean
+  make
+  ./Test14 arg1 arg2 arg3 arg4 arg5
+  cd -

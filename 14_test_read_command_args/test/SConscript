@@ -1,0 +1,26 @@
+#Library('',[])
+#Library('Test14SharedLib', ['../src_shared/test14_shared.c'])
+#Library('Test14SharedLib', ['../src_shared/test14_shared.c'] ,CPPPATH=['../include'])
+
+#Program('',[])
+
+Import("env")
+Import("opt")
+Import("dbg")
+#
+#env.Program('test14' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test14SharedLib'] ,LIBPATH=['../build_sc_shared'])
+#obj = env.Object([Glob('./src/*.c[cp]*')])
+#obj = env.Object([Glob('./src/*.c[cp]*')] ,CCFLAGS='' ,CPPPATH=['./header'])
+#obj = env.Object([Glob('./src/*.c[cp]*')] ,CCFLAGS='' ,CPPPATH=['./header' ,'../libs/shared/header' ,'../libs/say_hello/header' ,'../libs/practice/header'])
+obj = env.Object([Glob('./src/*.c')]
+                  ,CCFLAGS=''
+                  ,CPPPATH=[
+                              './header'
+                            , '../libs/shared/header'
+                            , '../libs/say_hello/header'])
+
+#                            ,'../libs/practice/header'
+Return('obj')
+
+#opt.Program('test14-opt' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test14SharedLib'] ,LIBPATH=['../src_shared'])
+#dbg.Program('test14-dbg' ,Glob('*.c') ,CPPPATH=['../include'] ,LIBS=['Test14SharedLib'] ,LIBPATH=['../src_shared'])

@@ -1,0 +1,13 @@
+#Import('env')
+Import('*')
+
+#env.Library('Test14SharedLib' ,Glob('*.c[cp]*') ,CPPPATH=['../header'])
+#env.StaticLibrary('Test14StaticSharedLib' ,Glob('./src/*.c[cp]*') ,CPPPATH=['./header'])
+#env.SharedLibrary('Test14SharedSharedLib' ,Glob('./src/*.c[cp]*') ,CPPPATH=['./header'])
+#env.SharedLibrary('Test14SharedSharedLib' ,Glob('./src/*.c[cp]*') ,CPPPATH=['./header'])
+env.SharedLibrary('Test14SharedSharedLib' ,Glob('./src/*.c') ,CPPPATH=['./header'])
+
+#obj = env.Object([Glob('./src/*.c[cp]*')])
+#obj = env.Object([Glob('./src/*.c[cp]*')] ,CCFLAGS='' ,CPPPATH=['./header'])
+obj = env.Object([Glob('./src/*.c')] ,CCFLAGS='' ,CPPPATH=['./header'])
+Return('obj')
