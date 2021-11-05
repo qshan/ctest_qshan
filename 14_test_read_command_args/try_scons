@@ -5,5 +5,7 @@ scons -c
 #scons --tree=all
 scons --tree=status
 #./test14
-./Test14 arg1 arg2 arg3 arg4 arg5
+#./Test14 arg1 arg2 arg3 arg4 arg5 arg6
+#./test14 arg1 arg2 arg3 arg4 arg5 arg6 --port /dev/usb0
+./test14 arg1 arg2 arg3 arg4 arg5 arg6 --port /dev/usb0 --File /home/data/outputdata.txt
 #scons -c

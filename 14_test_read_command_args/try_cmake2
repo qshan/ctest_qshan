@@ -14,7 +14,8 @@ if [ -d ${Test14BuildPath} ]; then
   make clean
   make
 #  ./Test14_Hello
-  ./Test14
+#  ./test14
+  ./test14 arg1 arg2 arg3 arg4 arg5 arg6 --port /dev/usb0 --File /home/data/outputdata.txt
   cd -
 #  mkdir build_cmake
 fi

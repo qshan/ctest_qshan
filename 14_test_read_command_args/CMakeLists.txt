@@ -6,7 +6,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 #PROJECT (Test14_Hello)
 #PROJECT (SayHello14)
 #PROJECT (Test14)
-PROJECT (Test14 VERSION 1.0)
+PROJECT (test14 VERSION 1.0)
 
 
 #------------------------------

@@ -10,5 +10,7 @@ export Test14SourcePath="."
   cd ${Test14BuildPath}
   make clean
   make
-  ./Test14 arg1 arg2 arg3 arg4 arg5
+#  ./Test14 arg1 arg2 arg3 arg4 arg5 arg6
+#  ./Test14 arg1 arg2 arg3 arg4 arg5 arg6 --port /dev/usb0
+  ./test14 arg1 arg2 arg3 arg4 arg5 arg6 --port /dev/usb0 --File /home/data/outputdata.txt
   cd -
