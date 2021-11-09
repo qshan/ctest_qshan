@@ -17,6 +17,7 @@ obj = env.Object([Glob('./src/*.c')]
                   ,CPPPATH=[
                               './header'
                             , '../libs/shared/header'
+                            , '../libs/arg_read/header'
                             , '../libs/say_hello/header'])
 
 #                            ,'../libs/practice/header'

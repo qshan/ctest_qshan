@@ -60,6 +60,7 @@ objs.append( SConscript(['./test/SConscript']           , exports='env')  )
 objs.append( SConscript(['./libs/shared/SConscript']    , exports='env')  )
 #objs.append( SConscript(['./libs/practice/SConscript']  , exports='env')  )
 objs.append( SConscript(['./libs/say_hello/SConscript'] , exports='env')  )
+objs.append( SConscript(['./libs/arg_read/SConscript'] , exports='env')  )
 
 #env.Program('test14' , objs)
 #env.Program('test14' ,objs ,CPPPATH=['./include' ,'./libs/shared/header' ,'./libs/say_hello/header' ,'./libs/practice/header'])
@@ -68,6 +69,7 @@ env.Program('test14'
             ,CPPPATH=[
                         './test/header'
                       , './libs/shared/header'
+                      , './libs/arg_read/header'
                       , './libs/say_hello/header'
                       ])
 

@@ -60,6 +60,7 @@ INCLUDE_DIRECTORIES(
   ${PROJECT_SOURCE_DIR}/test/header
   #     ${PROJECT_SOURCE_DIR}/libs/practice/header
 #TODO#  ${PROJECT_SOURCE_DIR}/libs/*/header
+  ${PROJECT_SOURCE_DIR}/libs/arg_read/header
   ${PROJECT_SOURCE_DIR}/libs/say_hello/header)
 # include path for shared
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/libs/shared/header)

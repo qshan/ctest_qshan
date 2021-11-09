@@ -50,6 +50,7 @@ SRC_DIRS ?= $(PRO_ROOT_PATH)/test/src
 #INC_DIRS							:= $(shell find $(SRC_DIRS) -type d)
 #TODO#Add the src by manual
 SRC_DIRS += $(PRO_ROOT_PATH)/libs/say_hello/src
+SRC_DIRS += $(PRO_ROOT_PATH)/libs/arg_read/src
 #SRC_DIRS += $(PRO_ROOT_PATH)/libs/practice/src
 #Add the src by searching
 #TODO#conflicted with shared#SRC_DIRS += $(shell find ./libs -type d -iname "*src")
@@ -93,6 +94,7 @@ DEPS                  := $(OBJS:.o=.d)
 INC_DIRS              := $(shell find $(SRC_DIRS) -type d)
 INC_DIRS              +=  $(PRO_ROOT_PATH)/test/header \
 													$(PRO_ROOT_PATH)/libs/say_hello/header \
+													$(PRO_ROOT_PATH)/libs/arg_read/header \
 
 #                          $(PRO_ROOT_PATH)/libs/practice/header
 INC_DIRS              += $(INC_DIRS_SHARED)
