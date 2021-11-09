@@ -11,10 +11,9 @@ int arg_read(int argc ,char *argv[] ,char input_arg_list[][3][MAX_STRING_LENGTH]
   int value_returned=0;
 
   #if PRINT_DEBUG_ENABLE
-    printf("\n");
     printf("--------------------------------------------------\n");
-    printf("Running in %s\n", __func__);
-    printf("\n");
+    printf("Running the %s() in %s\n" ,__func__ ,__FILE__);
+    printf("--------------------------------------------------\n");
   #endif
 
   #if 1
@@ -84,6 +83,12 @@ int print_arg_list(char input_arg_list[][3][MAX_STRING_LENGTH])
 {
   int value_returned =0;
   int i=0;
+
+  #if PRINT_DEBUG_ENABLE
+    printf("--------------------------------------------------\n");
+    printf("Running the %s() in %s\n" ,__func__ ,__FILE__);
+    printf("--------------------------------------------------\n");
+  #endif
 
   printf("------------------------------\n");
   printf("check the input_arg_list info\n");

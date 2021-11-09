@@ -141,10 +141,12 @@ int main(int argc ,char *argv[])
     };
 
     #if 1
+      //check the argument list contents before updated
       print_arg_list(input_arg_list1);
     #endif
 
     printf("------------------------------\n");
+
     printf("Start call arg_read function\n");
     value_returned  = arg_read(argc ,argv ,input_arg_list1);
     printf("exit arg_read function now\n");
@@ -161,6 +163,7 @@ int main(int argc ,char *argv[])
     #endif
 
     #if 1
+      //check the argument list contents updated
       print_arg_list(input_arg_list1);
     #endif
 
