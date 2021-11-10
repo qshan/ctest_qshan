@@ -5,7 +5,7 @@
 #make clean
 make all
 #make
-#./build_gcc/test13
+#./build_gcc/test_uart
 #make run
 
 #for cmake + make case
@@ -13,4 +13,4 @@ make all
 #cmake -G "Unix Makefiles" ..
 #cmake ..
 #make
-#./Test13_Hello
+#./Test_uart_Hello

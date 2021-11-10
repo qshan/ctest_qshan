@@ -1,11 +1,11 @@
 #Import('env')
 Import('*')
 
-#env.Library('Test13SharedLib' ,Glob('*.c[cp]*') ,CPPPATH=['../header'])
-#env.StaticLibrary('Test13StaticSharedLib' ,Glob('./src/*.c[cp]*') ,CPPPATH=['./header'])
-#env.SharedLibrary('Test13SharedSharedLib' ,Glob('./src/*.c[cp]*') ,CPPPATH=['./header'])
-#env.SharedLibrary('Test13SharedSharedLib' ,Glob('./src/*.c[cp]*') ,CPPPATH=['./header'])
-env.SharedLibrary('Test13SharedSharedLib' ,Glob('./src/*.c') ,CPPPATH=['./header'])
+#env.Library('TestUartSharedLib' ,Glob('*.c[cp]*') ,CPPPATH=['../header'])
+#env.StaticLibrary('TestUartStaticSharedLib' ,Glob('./src/*.c[cp]*') ,CPPPATH=['./header'])
+#env.SharedLibrary('TestUartSharedSharedLib' ,Glob('./src/*.c[cp]*') ,CPPPATH=['./header'])
+#env.SharedLibrary('TestUartSharedSharedLib' ,Glob('./src/*.c[cp]*') ,CPPPATH=['./header'])
+env.SharedLibrary('TestUartSharedSharedLib' ,Glob('./src/*.c') ,CPPPATH=['./header'])
 
 #obj = env.Object([Glob('./src/*.c[cp]*')])
 #obj = env.Object([Glob('./src/*.c[cp]*')] ,CCFLAGS='' ,CPPPATH=['./header'])

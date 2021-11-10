@@ -2,12 +2,12 @@
 #need run in test/build_scon folder
 #
 #Library('',[])
-#Library('Test13SharedLib', ['../src_shared/test13_shared.c'])
-Library('Test13SharedLib', ['../src_shared/test13_shared.c'] ,CPPPATH=['../include'])
+#Library('Test_uartSharedLib', ['../src_shared/test_uart_shared.c'])
+Library('TestUartSharedLib', ['../src_shared/test_uart_shared.c'] ,CPPPATH=['../include'])
 
 #Program('',[])
 #Program('',[])
 
-#Program('test13' ,['../src/test13.c' ,CPPPATH=['../src' ,'../scr_shared' ,'../include'] ,['../src/say_hello_13.c'] ,LIBS=['Test13SharedLib'] ,LIBPATH=['.'])
-#Program('test13' ,['../src/test13.c' ,'../src/say_hello_13.c'] ,CPPPATH=['../include'] ,LIBS=['Test13SharedLib'] ,LIBPATH=['.'])
-Program('test13' ,['../src/test13.c' ,'../src/say_hello_13.c'] ,CPPPATH=['../include'] ,LIBS=['Test13SharedLib'] ,LIBPATH=['.'])
+#Program('test_uart' ,['../src/test_uart.c' ,CPPPATH=['../src' ,'../scr_shared' ,'../include'] ,['../src/say_hello_uart.c'] ,LIBS=['Test_uartSharedLib'] ,LIBPATH=['.'])
+#Program('test_uart' ,['../src/test_uart.c' ,'../src/say_hello_uart.c'] ,CPPPATH=['../include'] ,LIBS=['Test_uartSharedLib'] ,LIBPATH=['.'])
+Program('test_uart' ,['../src/test_uart.c' ,'../src/say_hello_uart.c'] ,CPPPATH=['../include'] ,LIBS=['Test_uartSharedLib'] ,LIBPATH=['.'])

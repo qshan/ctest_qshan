@@ -2,13 +2,13 @@
 
 # run like this
 
-export Test13BuildPath="./build_cmake"
-export Test13SourcePath="."
+export TestUartBuildPath="./build_cmake"
+export TestUartSourcePath="."
 
-  #cmake3.13#cmake -B${Test13BuildPath} -S${Test13SourcePath}
-  cmake -B${Test13BuildPath} -H${Test13SourcePath}
-  cd ${Test13BuildPath}
+  #cmake3._uart#cmake -B${Test_uartBuildPath} -S${Test_uartSourcePath}
+  cmake -B${TestUartBuildPath} -H${TestUartSourcePath}
+  cd ${TestUartBuildPath}
   make clean
   make
-  ./Test13
+  ./test_uart
   cd -

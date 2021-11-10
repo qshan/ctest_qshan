@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-int say_hello13()
+int say_hello_uart()
 {
-  printf("hi, test13 \n");
+  printf("hi, test_uart \n");
   return 0;
 }

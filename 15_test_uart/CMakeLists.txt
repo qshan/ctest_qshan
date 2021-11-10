@@ -3,10 +3,10 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 
 #Project Name
-#PROJECT (Test13_Hello)
-#PROJECT (SayHello13)
-#PROJECT (Test13)
-PROJECT (Test13 VERSION 1.0)
+#PROJECT (Test_Uart_Hello)
+#PROJECT (SayHello_Uart)
+#PROJECT (Test_Uart)
+PROJECT (test_uart VERSION 1.0)
 
 
 #------------------------------
@@ -69,16 +69,16 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/libs/shared/header)
 SET(LIBRARY_OUTPUT_PATH ./libShared)
 
 # 指定生成动态库
-#ADD_LIBRARY(SayHello13 SHARED ${SRC_LIST})
+#ADD_LIBRARY(SayHelloUart SHARED ${SRC_LIST})
 
-ADD_LIBRARY(Test13Shared SHARED ${SRC_SHARED_LIST})
-#ADD_LIBRARY(Test13Shared STATIC ${SRC_SHARED_LIST})
-#ADD_LIBRARY(Test13Shared MODULE ${SRC_SHARED_LIST})
-#TARGET_INCLUDE_DIRECTORIES(Test13Shared PRIVATE ${PROJECT_SOURCE_DIR}/libs/shared/header)
-#TARGET_INCLUDE_DIRECTORIES(Test13Shared PUBLIC ${PROJECT_SOURCE_DIR}/libs/shared/header)
+ADD_LIBRARY(TestUartShared SHARED ${SRC_SHARED_LIST})
+#ADD_LIBRARY(TestUartShared STATIC ${SRC_SHARED_LIST})
+#ADD_LIBRARY(TestUartShared MODULE ${SRC_SHARED_LIST})
+#TARGET_INCLUDE_DIRECTORIES(TestUartShared PRIVATE ${PROJECT_SOURCE_DIR}/libs/shared/header)
+#TARGET_INCLUDE_DIRECTORIES(TestUartShared PUBLIC ${PROJECT_SOURCE_DIR}/libs/shared/header)
 
 ###### 指定生成静态库
-#####ADD_LIBRARY(SayHello13 ${SRC_LIST})
+#####ADD_LIBRARY(SayHelloUart ${SRC_LIST})
 
 
 #print check the variable content in env
@@ -111,7 +111,7 @@ MESSAGE(STATUS "------------------------------------------------------------")
 # gen ext file, list the dependancy file here
 #ADD_EXECUTABLE("${PROJECT_NAME}" ${SRC_LIST} ${SRC_SHARED_LIST})
 ADD_EXECUTABLE(
-#  Test13
+#  Test_Uart
   ${PROJECT_NAME}
   ${SRC_LIST}
   ${SRC_SHARED_LIST})

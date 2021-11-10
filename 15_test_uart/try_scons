@@ -4,5 +4,5 @@ scons -c
 #scons
 #scons --tree=all
 scons --tree=status
-./test13
+./test_uart
 #scons -c

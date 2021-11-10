@@ -37,7 +37,7 @@ CC=clang
 CXX=clang++
 #------------------------------
 #set target name
-TARGET_EXEC ?= test13
+TARGET_EXEC ?= test_uart
 #------------------------------
 #set project/code root path
 PRO_ROOT_PATH = .
@@ -61,7 +61,7 @@ SRC_SHARED_DIRS ?= $(PRO_ROOT_PATH)/libs/shared/src
 BUILD_LOG_FILE ?= $(BUILD_DIR)/$(TARGET_EXEC).log
 
 #share lib name defined
-TOP_OBJ_SHARED ?= Test13SharedLib.o
+TOP_OBJ_SHARED ?= TestUartSharedLib.o
 
 #$(BUILD_LOG_FILE):
 #	$(MKDIR_P) $(BUILD_DIR)
