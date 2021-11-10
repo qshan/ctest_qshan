@@ -1,0 +1,74 @@
+#good doc #https://scons.org/doc/production/HTML/scons-user.html#app-functions
+
+#Library('',[])
+#Library('Test13SharedLib', ['../src_shared/test13_shared.c'])
+#Library('Test13SharedLib', ['../src_shared/test13_shared.c'] ,CPPPATH=['../include'])
+
+#Program('',[])
+#Program('',[])
+
+#Program('test13' ,['../src/test13.c' ,CPPPATH=['../src' ,'../scr_shared' ,'../include'] ,['../src/say_hello_13.c'] ,LIBS=['Test13SharedLib'] ,LIBPATH=['.'])
+#Program('test13' ,['../src/test13.c' ,'../src/say_hello_13.c'] ,CPPPATH=['../include'] ,LIBS=['Test13SharedLib'] ,LIBPATH=['.'])
+#Program('test13' ,['../src/test13.c' ,'../src/say_hello_13.c'] ,CPPPATH=['../include'] ,LIBS=['Test13SharedLib'] ,LIBPATH=['.'])
+
+#SConstruct
+
+#env = Environment(CC='gcc' ,CCFLAGS=' -O2 -Wall -g' ,CPPDEFINES=['MyDefine02'])
+#
+#env = Environment(CC='gcc')
+#env = Environment(CXX='g++')
+env = Environment(CC='clang')
+env = Environment(CXX='clang++')
+#
+#env.Append(CCFLAGS=' -Wall -g')
+env.Append(CCFLAGS=' -O2 -Wall -g')
+#
+env.Replace(CC='clang')
+env.Replace(CXX='clang++')
+#
+env.Prepend(CPPDEFINES=['MyFirstDefine00'])
+env.Append(CPPDEFINES=['MyDefine02'])
+env.Append(MyVariableAdded01=['MyVariableAdded01'])
+print("MyVariableAdded01 = %s" % env['MyVariableAdded01'])
+#
+opt = env.Clone(CCFLAGS=[' -O2'])
+dbg = env.Clone(CCFLAGS=[' -Wall -g'])
+#
+#o = opt.Object('test13-o' ,['foo.c'])
+#opt.Program(o)
+##
+#d = dbg.Object('test13-d' ,['foo.c'])
+#dbg.Program(d)
+
+Export ('env')
+#Export ("opt", "dbg")
+#Export ('opt dbg')
+Export ('opt', 'dbg')
+#Export ('dbg')
+
+#check the env setting here
+print("[env.CC]       is  %s" % env['CC'])
+print("[env.CXX]      is  %s" % env['CXX'])
+print("[env.CCFLAGS]  is  %s" % env['CCFLAGS'])
+
+objs  = []
+header_file_path  = []
+
+#            , variant_dir='build_sc'
+
+objs.append( SConscript(['./test/SConscript']           , exports='env')  )
+objs.append( SConscript(['./libs/shared/SConscript']    , exports='env')  )
+#objs.append( SConscript(['./libs/practice/SConscript']  , exports='env')  )
+objs.append( SConscript(['./libs/say_hello/SConscript'] , exports='env')  )
+
+#env.Program('test13' , objs)
+#env.Program('test13' ,objs ,CPPPATH=['./include' ,'./libs/shared/header' ,'./libs/say_hello/header' ,'./libs/practice/header'])
+env.Program('test13'
+            ,objs
+            ,CPPPATH=[
+                        './test/header'
+                      , './libs/shared/header'
+                      , './libs/say_hello/header'
+                      ])
+
+#            ,'./libs/practice/header'
