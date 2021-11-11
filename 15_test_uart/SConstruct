@@ -59,6 +59,7 @@ header_file_path  = []
 objs.append( SConscript(['./test/SConscript']           , exports='env')  )
 objs.append( SConscript(['./libs/shared/SConscript']    , exports='env')  )
 #objs.append( SConscript(['./libs/practice/SConscript']  , exports='env')  )
+objs.append( SConscript(['./libs/uart/SConscript'] , exports='env')  )
 objs.append( SConscript(['./libs/say_hello/SConscript'] , exports='env')  )
 
 #env.Program('test_uart' , objs)
@@ -66,9 +67,10 @@ objs.append( SConscript(['./libs/say_hello/SConscript'] , exports='env')  )
 env.Program('test_uart'
             ,objs
             ,CPPPATH=[
-                        './test/header'
-                      , './libs/shared/header'
-                      , './libs/say_hello/header'
+#                        './libs/shared/header'
+#                       ,'./test/header'
                       ])
 
+#                      , './libs/uart/header'
+#                      , './libs/say_hello/header'
 #            ,'./libs/practice/header'
