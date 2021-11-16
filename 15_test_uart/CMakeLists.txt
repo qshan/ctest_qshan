@@ -49,9 +49,12 @@ FILE(GLOB SRC_LIST
 
 #add the shared source code of the file path
 FILE(GLOB SRC_SHARED_LIST
-  "${PROJECT_SOURCE_DIR}/libs/shared/src/*.c"
-  "${PROJECT_SOURCE_DIR}/libs/shared/src/*.cpp"
-  "${PROJECT_SOURCE_DIR}/libs/shared/src/*.s")
+#  "${PROJECT_SOURCE_DIR}/libs/shared/src/*.c"
+#  "${PROJECT_SOURCE_DIR}/libs/shared/src/*.cpp"
+#  "${PROJECT_SOURCE_DIR}/libs/shared/src/*.s")
+  "${PROJECT_SOURCE_DIR}/libs_shared/*/src/*.c"
+  "${PROJECT_SOURCE_DIR}/libs_shared/*/src/*.cpp"
+  "${PROJECT_SOURCE_DIR}/libs_shared/*/src/*.s")
 ###### MESSAGE(STATUS ${SRC_SHARED_LIST})
 
 # include path for project
@@ -59,11 +62,16 @@ FILE(GLOB SRC_SHARED_LIST
 INCLUDE_DIRECTORIES(
   ${PROJECT_SOURCE_DIR}/test/header
   #     ${PROJECT_SOURCE_DIR}/libs/practice/header
-#TODO#  ${PROJECT_SOURCE_DIR}/libs/*/header
+#  ${PROJECT_SOURCE_DIR}/libs/*/header
   ${PROJECT_SOURCE_DIR}/libs/uart/header
-  ${PROJECT_SOURCE_DIR}/libs/say_hello/header)
+  ${PROJECT_SOURCE_DIR}/libs/say_hello/header
+  )
+
 # include path for shared
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/libs/shared/header)
+INCLUDE_DIRECTORIES(
+  ${PROJECT_SOURCE_DIR}/libs_shared/shared/header
+  #${PROJECT_SOURCE_DIR}/libs_shared/*/header
+  )
 
 # 指定输出 .so 动态库的目录位置
 #SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/libShared)

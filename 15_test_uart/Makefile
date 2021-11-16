@@ -49,14 +49,15 @@ SRC_DIRS ?= $(PRO_ROOT_PATH)/test/src
 #libs code
 #INC_DIRS							:= $(shell find $(SRC_DIRS) -type d)
 #TODO#Add the src by manual
-SRC_DIRS += $(PRO_ROOT_PATH)/libs/say_hello/src
-SRC_DIRS += $(PRO_ROOT_PATH)/libs/uart/src
+#SRC_DIRS += $(PRO_ROOT_PATH)/libs/say_hello/src
+#SRC_DIRS += $(PRO_ROOT_PATH)/libs/uart/src
 #SRC_DIRS += $(PRO_ROOT_PATH)/libs/practice/src
 #Add the src by searching
-#TODO#conflicted with shared#SRC_DIRS += $(shell find ./libs -type d -iname "*src")
+SRC_DIRS += $(shell find ./libs -type d -iname "*src")
 #shared libs code
 #get the shared path here
-SRC_SHARED_DIRS ?= $(PRO_ROOT_PATH)/libs/shared/src
+#SRC_SHARED_DIRS ?= $(PRO_ROOT_PATH)/libs_shared/shared/src
+SRC_SHARED_DIRS ?= $(shell find ./libs_shared -type d -iname "*src")
 
 #log define
 BUILD_LOG_FILE ?= $(BUILD_DIR)/$(TARGET_EXEC).log
@@ -79,7 +80,7 @@ OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 
 #ToCheck
 #include/HeadhFile path for shared lib generating info
-INC_DIRS_SHARED       := $(PRO_ROOT_PATH)/libs/shared/header
+INC_DIRS_SHARED       := $(PRO_ROOT_PATH)/libs_shared/shared/header
 INC_FLAGS_SHARED      := $(addprefix -I,$(INC_DIRS_SHARED))
 
 CFLAGS_SHARED         ?= $(INC_FLAGS_SHARED) -fPIC -shared

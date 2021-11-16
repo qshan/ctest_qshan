@@ -57,7 +57,7 @@ header_file_path  = []
 #            , variant_dir='build_sc'
 
 objs.append( SConscript(['./test/SConscript']           , exports='env')  )
-objs.append( SConscript(['./libs/shared/SConscript']    , exports='env')  )
+objs.append( SConscript(['./libs_shared/shared/SConscript']    , exports='env')  )
 #objs.append( SConscript(['./libs/practice/SConscript']  , exports='env')  )
 objs.append( SConscript(['./libs/uart/SConscript'] , exports='env')  )
 objs.append( SConscript(['./libs/say_hello/SConscript'] , exports='env')  )
