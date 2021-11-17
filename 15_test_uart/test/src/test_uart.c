@@ -3,7 +3,9 @@
 //#include "say_hello_uart.h"
 //#include "test_uart_shared.h"
 
+#include <stdio.h>
 #include <stdlib.h>     /*  */
+#include "test_uart.h"
 #include <unistd.h>     /* UNIX Standard Definitions         */
 #include <termios.h>    /* POSIX Terminal Control Definitions */
 #include <sys/file.h>   /*  */
@@ -15,6 +17,7 @@
 #include <sys/stat.h>   /* stat - display file or file system status */
 #include <strings.h>    /* strings - print the strings of printable characters in files */
 #include <string.h>     /* string operations */
+#include <poll.h>       /* poll, ppoll - wait for some event on a file descriptor */
 
 int _fd = -1;
 char *_cl_port = NULL;
@@ -65,6 +68,11 @@ int main()
       #if PRINT_DEBUG_EN
         printf("#####start setup_serial_port\n");
       #endif
+      /*
+        //strdup is in string.h
+        The strdup() function shall return a pointer to a new string on success. Otherwise, it shall return a null pointer and set errno to indicate the error.
+        char *strdup(const char *s);
+      */
       _cl_port = strdup("/dev/ttyUSB1");
       //_cl_port="/dev/ttyUSB1";
       int baud = B115200;
@@ -104,6 +112,12 @@ int main()
       newtio.c_cflag &= ~CSTOPB;
 #endif
 
+      #if PRINT_DEBUG_ENABLE
+        printf("current newtio.c_cflag is 0x%x\n" ,newtio.c_cflag);
+        printf("current CRTSCTS is 0x%x\n"  ,(newtio.c_cflag&CRTSCTS));
+        printf("current CSTOPB is 0x%x\n"   ,(newtio.c_cflag&CSTOPB));
+      #endif
+
       newtio.c_iflag = 0;
       newtio.c_oflag = 0;
       newtio.c_lflag = 0;
@@ -111,6 +125,7 @@ int main()
       newtio.c_cc[VMIN] = 128;
       // 0.5 seconds read timeout
       newtio.c_cc[VTIME] = 5;
+
 
       /* now clean the modem line and activate the settings for the port */
       //ToCheck
@@ -156,6 +171,7 @@ int main()
     }
 #endif
 
+    //write operation_string()
     {
       #if PRINT_DEBUG_ENABLE
         printf("#####start try to send one string\n");
@@ -181,6 +197,60 @@ int main()
         fprintf(stderr, "ERROR: write() returned %d, not %d\n", written, string_number);
         exit(-EIO);
       }
+    }
+
+    //try to pull the status
+    {
+      //ToCheck
+      struct pollfd serial_poll;
+      serial_poll.fd = _fd;
+      serial_poll.events |= POLLIN;
+      //serial_poll.events |= POLLOUT;
+      serial_poll.events &= ~POLLOUT;
+      ///* Event types that can be polled for.  These bits may be set in `events'
+         //to indicate the interesting event types; they will appear in `revents'
+         //to indicate the status of the file descriptor.  */
+      //#define POLLIN    0x001     /* There is data to read.  */
+      //#define POLLPRI   0x002     /* There is urgent data to read.  */
+      //#define POLLOUT   0x004     /* Writing now will not block.  */
+
+      #if PRINT_DEBUG_ENABLE
+        printf("current is serial_poll.events 0x%x\n" ,serial_poll.events);
+        printf("current is serial_poll.revents 0x%x\n" ,serial_poll.revents);
+      #endif
+
+      //try to poll status
+      while(1)
+      {
+        int retval = poll(&serial_poll, 1, 1000);
+        #if PRINT_DEBUG_ENABLE
+          printf("Check retval : serial_poll.revents is %d:0x%x\n" ,retval ,serial_poll.revents);
+        #endif
+
+        if (serial_poll.revents & POLLIN)
+        {
+          #if PRINT_DEBUG_ENABLE
+            printf("Read data now\n");
+          #endif
+          //read operation here
+          {
+            #define RECEIVED_BUFFER_SIZE   1024
+            unsigned char rb[RECEIVED_BUFFER_SIZE];
+            //ToCheck
+            int c = read(_fd, &rb, sizeof(rb));
+
+            #if PRINT_DEBUG_ENABLE
+              printf("Get data, number is 0x%x, rb is \"%s\"\n" ,c ,rb);
+            #endif
+          }
+          break;
+
+        }
+
+        //Debug//break;
+      }
+
+
     }
 
 
