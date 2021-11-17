@@ -65,7 +65,7 @@ int main()
 
     //setup_serial_port()
     {
-      #if PRINT_DEBUG_EN
+      #if PRINT_DEBUG_ENABLE
         printf("#####start setup_serial_port\n");
       #endif
       /*
@@ -178,7 +178,7 @@ int main()
       #endif
 
       int written;
-      unsigned char hello_string[]="hello uart test!\n";
+      unsigned char hello_string[]="hello from uart_test!\n";
       int string_number = sizeof(hello_string);
       written = write(_fd, &hello_string ,string_number);
 
@@ -252,7 +252,6 @@ int main()
 
         //Debug//break;
       }
-
 
     }
 
