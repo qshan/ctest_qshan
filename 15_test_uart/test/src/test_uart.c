@@ -222,7 +222,10 @@ int main()
       //try to poll status
       while(1)
       {
-        int retval = poll(&serial_poll, 1, 1000);
+        int serial_port_timeout_number = 1000;
+        //extern int poll (struct pollfd *__fds, nfds_t __nfds, int __timeout);
+        //int retval = poll(&serial_poll, 1, 1000);
+        int retval = poll(&serial_poll, 1, serial_port_timeout_number);
         #if PRINT_DEBUG_ENABLE
           printf("Check retval : serial_poll.revents is %d:0x%x\n" ,retval ,serial_poll.revents);
         #endif
