@@ -19,11 +19,19 @@
 #include <string.h>     /* string operations */
 #include <poll.h>       /* poll, ppoll - wait for some event on a file descriptor */
 
-int _fd = -1;
-char *_cl_port = NULL;
+#if 0
+  int _fd = -1;
+  char *_cl_port = NULL;
+#endif
+
+  extern int _fd;
+  extern char *_cl_port;
+
 unsigned char * _write_data;
 
-static void exit_handler(void)
+#if 0
+//static void exit_handler(void)
+void exit_handler()
 {
   if (_fd >= 0) {
     flock(_fd, LOCK_UN);
@@ -40,6 +48,7 @@ static void exit_handler(void)
 //    _write_data = NULL;
 //  }
 }
+#endif
 
 int main()
 {
@@ -61,9 +70,19 @@ int main()
 
   #if 1
     //uart operation here start
-    atexit(&exit_handler);
+    char serial_port_name[]="/dev/ttyUSB1";
+    int serial_speed = B115200;
 
-    //setup_serial_port()
+    #if PRINT_DEBUG_ENABLE
+      printf("check %s, get _fd is %d\n" ,_cl_port ,_fd);
+    #endif
+    setup_serial_port(serial_port_name, serial_speed);
+    #if PRINT_DEBUG_ENABLE
+      printf("open %s, get _fd is %d\n" ,_cl_port ,_fd);
+    #endif
+
+    #if 0
+    //setup_serial_port(char port_name[], int serial_speed)
     {
       #if PRINT_DEBUG_ENABLE
         printf("#####start setup_serial_port\n");
@@ -112,6 +131,10 @@ int main()
       newtio.c_cflag &= ~CSTOPB;
 #endif
 
+      newtio.c_cflag &= ~CRTSCTS;
+      newtio.c_cflag &= ~CSTOPB;
+      //two_stop_bit//newtio.c_cflag |= CSTOPB;
+
       #if PRINT_DEBUG_ENABLE
         printf("current newtio.c_cflag is 0x%x\n" ,newtio.c_cflag);
         printf("current CRTSCTS is 0x%x\n"  ,(newtio.c_cflag&CRTSCTS));
@@ -137,8 +160,10 @@ int main()
       #endif
 
     }
+    #endif
 
-#if 0
+    clear_custom_speed_flag();
+    #if 0
     //clear_custom_speed_flag()
     {
       #if PRINT_DEBUG_ENABLE
@@ -169,9 +194,11 @@ int main()
       }
       //TODO//return 0;
     }
-#endif
+    #endif
 
-    //write operation_string()
+    write_hello_string();
+    #if 0
+    //int write_hello_string()
     {
       #if PRINT_DEBUG_ENABLE
         printf("#####start try to send one string\n");
@@ -198,8 +225,12 @@ int main()
         exit(-EIO);
       }
     }
+    #endif
 
+    read_one_time_string();
+    #if 0
     //try to pull the status
+    //int read_one_time_string()
     {
       //ToCheck
       struct pollfd serial_poll;
@@ -254,8 +285,9 @@ int main()
       }
 
     }
+    #endif
 
-
+    atexit(&exit_handler);
   #endif
 
 
