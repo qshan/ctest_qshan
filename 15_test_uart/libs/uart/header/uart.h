@@ -10,7 +10,6 @@
 
   #include <stdio.h>
   #include <stdlib.h>     /*  */
-  #include "test_uart.h"
   #include <unistd.h>     /* UNIX Standard Definitions         */
   #include <termios.h>    /* POSIX Terminal Control Definitions */
   #include <sys/file.h>   /*  */
@@ -24,7 +23,9 @@
   #include <string.h>     /* string operations */
   #include <poll.h>       /* poll, ppoll - wait for some event on a file descriptor */
 
+  //for returned hander of serial port open
   extern int _fd;
+  //for the port name on pc hardware view, like"/dev/ttyUSB0"
   extern char *_cl_port;
 
   int setup_serial_port(char port_name[], int serial_speed);
