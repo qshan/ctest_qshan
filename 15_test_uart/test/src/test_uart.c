@@ -33,15 +33,18 @@ int main()
     #if PRINT_DEBUG_ENABLE
       printf("check %s, get _fd is %d\n" ,_cl_port ,_fd);
     #endif
+    //init the port
     setup_serial_port(serial_port_name, serial_speed);
     #if PRINT_DEBUG_ENABLE
       printf("open %s, get _fd is %d\n" ,_cl_port ,_fd);
     #endif
-
+    //clear the status of serial
     clear_custom_speed_flag();
 
+    //try to write hello string
     write_hello_string();
 
+    //try to read the data from serial port
     read_one_time_string();
 
     atexit(&exit_handler);
