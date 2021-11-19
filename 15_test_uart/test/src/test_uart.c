@@ -54,7 +54,7 @@ int main()
     //write_out_hex_with_reorder(0x7654321 ,0xfedcba98);
 
     //TODO//worked
-    #if 0
+    #if 1
     write_out_hex_with_reorder(0x01234567 ,0x89abcdef);
     #endif
 
@@ -67,7 +67,7 @@ int main()
     //try to read the data from serial port
     //TODO//read_one_time_string();
 
-    #if 1
+    #if 0
     clock_gettime(CLOCK_MONOTONIC, &last_timeout);
     //for time_log check here
     check_time_stamp_log_data();

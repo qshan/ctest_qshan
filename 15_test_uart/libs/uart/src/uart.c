@@ -77,7 +77,9 @@ int setup_serial_port(char port_name[], int serial_speed)
   bzero(&newtio, sizeof(newtio)); /* clear struct for new port settings */
 
   /* man termios get more info on below settings */
-  newtio.c_cflag = baud | CS8 | CLOCAL | CREAD;
+  //newtio.c_cflag = baud | CS8 | CLOCAL | CREAD;
+  newtio.c_cflag = baud | CS8 | CLOCAL | CREAD | PARENB;
+  //newtio.c_cflag = baud | CS8 | CLOCAL | CREAD | PARENB | PARODD;
 
 #if 0
   newtio.c_cflag &= ~CRTSCTS;
@@ -286,6 +288,12 @@ int write_out_hex_with_reorder(int addr ,int data)
       exit(-EIO);
     }
   #endif
+
+  #if 1
+    //read ack info
+    poll_data_one_time_without_while();
+  #endif
+
   return 0;
 }
 
@@ -310,9 +318,10 @@ int read_one_time_string()
   #endif
 
   //try to poll status
+  //TODO//
   while(1)
   {
-    int serial_port_timeout_number = 1000;
+    int serial_port_timeout_number = 1000; //unit is milliseconds
     //extern int poll (struct pollfd *__fds, nfds_t __nfds, int __timeout);
     //int retval = poll(&serial_poll, 1, 1000);
     int retval = poll(&serial_poll, 1, serial_port_timeout_number);
@@ -341,13 +350,11 @@ int read_one_time_string()
             printf("%02x ", rb[j]);
           }
           printf("\n");
-
         #endif
+
       }
       break;
-
     }
-
     //Debug//break;
   }
 
@@ -356,6 +363,135 @@ int read_one_time_string()
 
 //read the contents from register with uart
 int read_in_hex_with_reorder(int addr)
+{
+  #if PRINT_DEBUG_ENABLE
+    printf("#####Run in %s\n" ,__func__);
+    //printf("#####start try to send 0x%x 0x%x\n" ,addr ,data);
+    printf("#####start try to read 0x%x\n" ,addr);
+  #endif
+
+//#define CMD_CODE_WRITE            0x01
+#define CMD_CODE_READ             0x11
+#define CMD_READ_PACKAGE_LEN      0x5
+
+  //int data ,read_count;
+  int written;
+  //unsigned char hello_string[]="01FEDCBA9876543210";
+  //unsigned char hello_string[]="010123456789abcdef";
+  //unsigned char hello_hex[]={0x30 ,0x31 ,0x32 ,0x33 ,0x34 ,0x35 ,0x36 ,0x37 ,0x38 ,0x39 ,0x3a ,0x3b ,0x3c ,0x3d ,0x3e ,0x3f};
+  //unsigned int hello_hex[9]={0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
+  //unsigned char hello_hex[9]={0x01 ,0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
+  unsigned char hello_hex[5]={0x11 ,0x01 ,0x23 ,0x45 ,0x67};
+  hello_hex[0]    = CMD_CODE_WRITE;
+  hello_hex[1]    = ((addr >>  0) & 0xff);
+  hello_hex[2]    = ((addr >>  8) & 0xff);
+  hello_hex[3]    = ((addr >> 16) & 0xff);
+  hello_hex[4]    = ((addr >> 24) & 0xff);
+  //hello_hex[5]    = ((data >>  0) & 0xff);
+  //hello_hex[6]    = ((data >>  8) & 0xff);
+  //hello_hex[7]    = ((data >> 16) & 0xff);
+  //hello_hex[8]    = ((data >> 24) & 0xff);
+
+  #if 0
+    int i;
+    for (i=0;i<CMD_WRITE_PACKAGE_LEN;i++)
+    {
+      hello_hex[i] = ((hello_hex[i] >> 4) & 0xf) | ((hello_hex[i] << 4) & 0xf0);
+    }
+  #endif
+
+  //int hello_hex[]={0x01 ,0x76543210 ,0xfedcba98};
+  int hello_hex_number = sizeof(hello_hex);
+  //written = write(_fd, &hello_string ,string_number);
+  written = write(_fd, hello_hex, hello_hex_number);
+
+
+  #if PRINT_DEBUG_ENABLE
+    printf("#####send %d byte out\n" ,written);
+  #endif
+
+  #if PRINT_DEBUG_ENABLE
+    int k;
+    printf("Send data: hex format is\n");
+    for (k=0; k < written; k++)
+    {
+      printf("%02x ", hello_hex[k]);
+    }
+    printf("\n");
+    //printf("#####send \"%s\"\n" ,hello_hex);
+  #endif
+
+  #if PRINT_DEBUG_ENABLE
+    if (written < 0)
+    {
+      int ret = errno;
+      perror("write()");
+      exit(ret);
+    }
+    else if (written != hello_hex_number)
+    {
+      fprintf(stderr, "ERROR: write() returned %d, not %d\n", written, hello_hex_number);
+      exit(-EIO);
+    }
+  #endif
+
+  return poll_data_one_time_without_while();
+
+  //return 0;
+}
+
+
+unsigned int poll_data_one_time_without_while()
+{
+
+  struct pollfd serial_poll;
+  serial_poll.fd = _fd;
+  serial_poll.events &= ~POLLOUT;
+  //int retval = poll(&serial_poll, 1, 1000);
+  //int retval = poll(&serial_poll, 1, 100);
+  poll(&serial_poll, 1, 100);
+
+  #if PRINT_DEBUG_ENABLE
+    printf("current is serial_poll.events 0x%x\n" ,serial_poll.events);
+    printf("current is serial_poll.revents 0x%x\n" ,serial_poll.revents);
+  #endif
+
+  if (serial_poll.revents & POLLIN)
+  {
+    unsigned char rb[1024];
+    int c = read(_fd, &rb, sizeof(rb));
+    #if PRINT_DEBUG_ENABLE
+      int j;
+      printf("get data: hex format is\n");
+      for (j=0; j < c; j++)
+      {
+        printf("%02x ", rb[j]);
+      }
+      printf("\n");
+    #endif
+    if(c<4)
+    {
+      #if 1
+        printf("received data error %d\n" ,c);
+      #endif
+    }
+    //unsigned char data_get_hex[5]={0x11 ,0x01 ,0x23 ,0x45 ,0x67};
+    unsigned char data_get_hex[4]={0x01 ,0x23 ,0x45 ,0x67};
+    data_get_hex[0] = rb[c];
+    data_get_hex[1] = rb[c-1];
+    data_get_hex[2] = rb[c-2];
+    data_get_hex[3] = rb[c-3];
+    #if PRINT_DEBUG_ENABLE
+      printf("get the data 0x%x in %s\n" ,(unsigned int) data_get_hex ,__func__);
+    #endif
+    return (unsigned int) data_get_hex;
+  }
+
+  return 0;
+}
+
+
+int read_in_hex_with_reorder_send_comand_only(int addr)
 {
   #if PRINT_DEBUG_ENABLE
     printf("#####Run in %s\n" ,__func__);

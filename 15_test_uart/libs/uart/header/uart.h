@@ -22,6 +22,7 @@
   #include <strings.h>    /* strings - print the strings of printable characters in files */
   #include <string.h>     /* string operations */
   #include <poll.h>       /* poll, ppoll - wait for some event on a file descriptor */
+//  #include <time.h>
 
   //for returned hander of serial port open
   extern int _fd;
@@ -35,6 +36,7 @@
   int write_out_hex_with_reorder(int addr ,int data);
   int read_one_time_string();
   int read_in_hex_with_reorder(int addr);
+  unsigned int poll_data_one_time_without_while();
   void exit_handler();
 
 #endif
