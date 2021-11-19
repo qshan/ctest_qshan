@@ -31,7 +31,10 @@
   int setup_serial_port(char port_name[], int serial_speed);
   void clear_custom_speed_flag();
   int write_hello_string();
+  int write_order_hex();
+  int write_out_hex_with_reorder(int addr ,int data);
   int read_one_time_string();
+  int read_in_hex_with_reorder(int addr);
   void exit_handler();
 
 #endif

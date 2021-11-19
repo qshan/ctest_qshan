@@ -56,11 +56,16 @@ header_file_path  = []
 
 #            , variant_dir='build_sc'
 
+#TODO#
+#test_main
 objs.append( SConscript(['./test/SConscript']           , exports='env')  )
+#libs_shared
 objs.append( SConscript(['./libs_shared/shared/SConscript']    , exports='env')  )
-#objs.append( SConscript(['./libs/practice/SConscript']  , exports='env')  )
+#libs
 objs.append( SConscript(['./libs/uart/SConscript'] , exports='env')  )
+objs.append( SConscript(['./libs/time_stamp_log/SConscript'] , exports='env')  )
 objs.append( SConscript(['./libs/say_hello/SConscript'] , exports='env')  )
+#objs.append( SConscript(['./libs/practice/SConscript']  , exports='env')  )
 
 #env.Program('test_uart' , objs)
 #env.Program('test_uart' ,objs ,CPPPATH=['./include' ,'./libs/shared/header' ,'./libs/say_hello/header' ,'./libs/practice/header'])

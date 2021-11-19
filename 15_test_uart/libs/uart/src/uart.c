@@ -152,6 +152,9 @@ int write_hello_string()
   #if PRINT_DEBUG_ENABLE
     printf("#####send %d byte out\n" ,written);
   #endif
+  #if PRINT_DEBUG_ENABLE
+    printf("#####send \"%s\"\n" ,hello_string);
+  #endif
 
   if (written < 0)
   {
@@ -167,6 +170,125 @@ int write_hello_string()
 
   return 0;
 }
+
+int write_order_hex()
+{
+  #if PRINT_DEBUG_ENABLE
+    printf("#####start try to send one string\n");
+  #endif
+
+  int written;
+  //unsigned char hello_string[]="01FEDCBA9876543210";
+  //unsigned char hello_string[]="010123456789abcdef";
+  //unsigned char hello_hex[]={0x30 ,0x31 ,0x32 ,0x33 ,0x34 ,0x35 ,0x36 ,0x37 ,0x38 ,0x39 ,0x3a ,0x3b ,0x3c ,0x3d ,0x3e ,0x3f};
+  unsigned char hello_hex[]={0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
+  //int hello_hex[]={0x01 ,0x76543210 ,0xfedcba98};
+  int hello_hex_number = sizeof(hello_hex);
+  //written = write(_fd, &hello_string ,string_number);
+  written = write(_fd, hello_hex, hello_hex_number);
+
+
+  #if PRINT_DEBUG_ENABLE
+    printf("#####send %d byte out\n" ,written);
+  #endif
+  #if PRINT_DEBUG_ENABLE
+    int k;
+    printf("Send data: hex format is\n");
+    for (k=0; k < written; k++)
+    {
+      printf("%02x ", hello_hex[k]);
+    }
+    printf("\n");
+    //printf("#####send \"%s\"\n" ,hello_hex);
+  #endif
+
+  if (written < 0)
+  {
+    int ret = errno;
+    perror("write()");
+    exit(ret);
+  }
+  else if (written != hello_hex_number)
+  {
+    fprintf(stderr, "ERROR: write() returned %d, not %d\n", written, hello_hex_number);
+    exit(-EIO);
+  }
+
+  return 0;
+}
+
+//write the contents into register with uart
+int write_out_hex_with_reorder(int addr ,int data)
+{
+  #if PRINT_DEBUG_ENABLE
+    printf("#####Run in %s\n" ,__func__);
+    printf("#####start try to send 0x%x 0x%x\n" ,addr ,data);
+  #endif
+
+#define CMD_CODE_WRITE            0x01
+#define CMD_WRITE_PACKAGE_LEN     0x9
+
+  int written;
+  //unsigned char hello_string[]="01FEDCBA9876543210";
+  //unsigned char hello_string[]="010123456789abcdef";
+  //unsigned char hello_hex[]={0x30 ,0x31 ,0x32 ,0x33 ,0x34 ,0x35 ,0x36 ,0x37 ,0x38 ,0x39 ,0x3a ,0x3b ,0x3c ,0x3d ,0x3e ,0x3f};
+  //unsigned int hello_hex[9]={0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
+  unsigned char hello_hex[9]={0x01 ,0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
+  hello_hex[0]    = CMD_CODE_WRITE;
+  hello_hex[1]    = ((addr >>  0) & 0xff);
+  hello_hex[2]    = ((addr >>  8) & 0xff);
+  hello_hex[3]    = ((addr >> 16) & 0xff);
+  hello_hex[4]    = ((addr >> 24) & 0xff);
+  hello_hex[5]    = ((data >>  0) & 0xff);
+  hello_hex[6]    = ((data >>  8) & 0xff);
+  hello_hex[7]    = ((data >> 16) & 0xff);
+  hello_hex[8]    = ((data >> 24) & 0xff);
+
+  #if 0
+    int i;
+    for (i=0;i<CMD_WRITE_PACKAGE_LEN;i++)
+    {
+      hello_hex[i] = ((hello_hex[i] >> 4) & 0xf) | ((hello_hex[i] << 4) & 0xf0);
+    }
+  #endif
+
+  //int hello_hex[]={0x01 ,0x76543210 ,0xfedcba98};
+  int hello_hex_number = sizeof(hello_hex);
+  //written = write(_fd, &hello_string ,string_number);
+  written = write(_fd, hello_hex, hello_hex_number);
+
+
+  #if PRINT_DEBUG_ENABLE
+    printf("#####send %d byte out\n" ,written);
+  #endif
+
+  #if PRINT_DEBUG_ENABLE
+    int k;
+    printf("Send data: hex format is\n");
+    for (k=0; k < written; k++)
+    {
+      printf("%02x ", hello_hex[k]);
+    }
+    printf("\n");
+    //printf("#####send \"%s\"\n" ,hello_hex);
+  #endif
+
+  #if PRINT_DEBUG_ENABLE
+    if (written < 0)
+    {
+      int ret = errno;
+      perror("write()");
+      exit(ret);
+    }
+    else if (written != hello_hex_number)
+    {
+      fprintf(stderr, "ERROR: write() returned %d, not %d\n", written, hello_hex_number);
+      exit(-EIO);
+    }
+  #endif
+  return 0;
+}
+
 int read_one_time_string()
 {
   //ToCheck
@@ -212,6 +334,14 @@ int read_one_time_string()
 
         #if PRINT_DEBUG_ENABLE
           printf("Get data, number is 0x%x, rb is \"%s\"\n" ,c ,rb);
+          int j;
+          printf("get data: hex format is\n");
+          for (j=0; j < c; j++)
+          {
+            printf("%02x ", rb[j]);
+          }
+          printf("\n");
+
         #endif
       }
       break;
@@ -223,6 +353,84 @@ int read_one_time_string()
 
   return 0;
 }
+
+//read the contents from register with uart
+int read_in_hex_with_reorder(int addr)
+{
+  #if PRINT_DEBUG_ENABLE
+    printf("#####Run in %s\n" ,__func__);
+    //printf("#####start try to send 0x%x 0x%x\n" ,addr ,data);
+    printf("#####start try to read 0x%x\n" ,addr);
+  #endif
+
+//#define CMD_CODE_WRITE            0x01
+#define CMD_CODE_READ             0x11
+#define CMD_READ_PACKAGE_LEN      0x5
+
+  //int data ,read_count;
+  int written;
+  //unsigned char hello_string[]="01FEDCBA9876543210";
+  //unsigned char hello_string[]="010123456789abcdef";
+  //unsigned char hello_hex[]={0x30 ,0x31 ,0x32 ,0x33 ,0x34 ,0x35 ,0x36 ,0x37 ,0x38 ,0x39 ,0x3a ,0x3b ,0x3c ,0x3d ,0x3e ,0x3f};
+  //unsigned int hello_hex[9]={0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
+  //unsigned char hello_hex[9]={0x01 ,0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
+  unsigned char hello_hex[5]={0x11 ,0x01 ,0x23 ,0x45 ,0x67};
+  hello_hex[0]    = CMD_CODE_WRITE;
+  hello_hex[1]    = ((addr >>  0) & 0xff);
+  hello_hex[2]    = ((addr >>  8) & 0xff);
+  hello_hex[3]    = ((addr >> 16) & 0xff);
+  hello_hex[4]    = ((addr >> 24) & 0xff);
+  //hello_hex[5]    = ((data >>  0) & 0xff);
+  //hello_hex[6]    = ((data >>  8) & 0xff);
+  //hello_hex[7]    = ((data >> 16) & 0xff);
+  //hello_hex[8]    = ((data >> 24) & 0xff);
+
+  #if 0
+    int i;
+    for (i=0;i<CMD_WRITE_PACKAGE_LEN;i++)
+    {
+      hello_hex[i] = ((hello_hex[i] >> 4) & 0xf) | ((hello_hex[i] << 4) & 0xf0);
+    }
+  #endif
+
+  //int hello_hex[]={0x01 ,0x76543210 ,0xfedcba98};
+  int hello_hex_number = sizeof(hello_hex);
+  //written = write(_fd, &hello_string ,string_number);
+  written = write(_fd, hello_hex, hello_hex_number);
+
+
+  #if PRINT_DEBUG_ENABLE
+    printf("#####send %d byte out\n" ,written);
+  #endif
+
+  #if PRINT_DEBUG_ENABLE
+    int k;
+    printf("Send data: hex format is\n");
+    for (k=0; k < written; k++)
+    {
+      printf("%02x ", hello_hex[k]);
+    }
+    printf("\n");
+    //printf("#####send \"%s\"\n" ,hello_hex);
+  #endif
+
+  #if PRINT_DEBUG_ENABLE
+    if (written < 0)
+    {
+      int ret = errno;
+      perror("write()");
+      exit(ret);
+    }
+    else if (written != hello_hex_number)
+    {
+      fprintf(stderr, "ERROR: write() returned %d, not %d\n", written, hello_hex_number);
+      exit(-EIO);
+    }
+  #endif
+  return 0;
+}
+
+
 //static void exit_handler(void)
 void exit_handler()
 {

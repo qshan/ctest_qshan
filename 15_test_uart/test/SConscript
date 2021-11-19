@@ -18,6 +18,7 @@ obj = env.Object([Glob('./src/*.c')]
                               './header'
                             , '../libs_shared/shared/header'
                             , '../libs/uart/header'
+                            , '../libs/time_stamp_log/header'
                             , '../libs/say_hello/header'])
 
 #                            ,'../libs/practice/header'
