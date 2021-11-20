@@ -37,6 +37,9 @@
   unsigned int read_one_time_string();
   unsigned int read_in_hex_with_reorder(int addr);
   unsigned int poll_data_one_time_without_while();
+  unsigned int read_in_hex_with_reorder(int addr);
+  unsigned int or_write_register(int addr ,int data);
+  unsigned int ir_read_register(int addr);
   void exit_handler();
 
 #endif

@@ -293,6 +293,7 @@ unsigned int write_out_hex_with_reorder(int addr ,int data)
     printf("Try to delay 100ms delay");
   #endif
   usleep(100000); //int usleep(useconds_t usec);
+  //int usleep(useconds_t usec); //<unistd.h>
 
   #if 1
     //read ack info
@@ -450,7 +451,6 @@ unsigned int read_in_hex_with_reorder(int addr)
   //return 0;
 }
 
-
 unsigned int poll_data_one_time_without_while()
 {
 
@@ -499,7 +499,6 @@ unsigned int poll_data_one_time_without_while()
 
   return 0;
 }
-
 
 unsigned int read_in_hex_with_reorder_send_comand_only(int addr)
 {
@@ -576,6 +575,19 @@ unsigned int read_in_hex_with_reorder_send_comand_only(int addr)
   return 0;
 }
 
+  unsigned int or_write_register(int addr ,int data)
+  {
+    #if PRINT_DEBUG_ENABLE
+      printf("#####Run in %s\n" ,__func__);
+      printf("#####Get addr:data 0x%x:0x%x in %s\n" ,addr ,data ,__func__);
+    #endif
+    return write_out_hex_with_reorder(addr ,data);
+  }
+
+  unsigned int ir_read_register(int addr)
+  {
+    return read_in_hex_with_reorder(addr);
+  }
 
 //static void exit_handler(void)
 void exit_handler()
