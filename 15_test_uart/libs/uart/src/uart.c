@@ -173,7 +173,7 @@ int write_hello_string()
   return 0;
 }
 
-int write_order_hex()
+unsigned int write_order_hex()
 {
   #if PRINT_DEBUG_ENABLE
     printf("#####start try to send one string\n");
@@ -220,7 +220,7 @@ int write_order_hex()
 }
 
 //write the contents into register with uart
-int write_out_hex_with_reorder(int addr ,int data)
+unsigned int write_out_hex_with_reorder(int addr ,int data)
 {
   #if PRINT_DEBUG_ENABLE
     printf("#####Run in %s\n" ,__func__);
@@ -302,7 +302,7 @@ int write_out_hex_with_reorder(int addr ,int data)
   return 0;
 }
 
-int read_one_time_string()
+unsigned int read_one_time_string()
 {
   //ToCheck
   struct pollfd serial_poll;
@@ -367,7 +367,7 @@ int read_one_time_string()
 }
 
 //read the contents from register with uart
-int read_in_hex_with_reorder(int addr)
+unsigned int read_in_hex_with_reorder(int addr)
 {
   #if PRINT_DEBUG_ENABLE
     printf("#####Run in %s\n" ,__func__);
@@ -501,7 +501,7 @@ unsigned int poll_data_one_time_without_while()
 }
 
 
-int read_in_hex_with_reorder_send_comand_only(int addr)
+unsigned int read_in_hex_with_reorder_send_comand_only(int addr)
 {
   #if PRINT_DEBUG_ENABLE
     printf("#####Run in %s\n" ,__func__);
