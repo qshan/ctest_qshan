@@ -289,6 +289,11 @@ int write_out_hex_with_reorder(int addr ,int data)
     }
   #endif
 
+  #if PRINT_DEBUG_ENABLE
+    printf("Try to delay 100ms delay");
+  #endif
+  usleep(100000); //int usleep(useconds_t usec);
+
   #if 1
     //read ack info
     poll_data_one_time_without_while();
@@ -434,6 +439,11 @@ int read_in_hex_with_reorder(int addr)
       exit(-EIO);
     }
   #endif
+
+  #if PRINT_DEBUG_ENABLE
+    printf("Try to delay 100ms delay");
+  #endif
+  usleep(100000); //int usleep(useconds_t usec);
 
   return poll_data_one_time_without_while();
 

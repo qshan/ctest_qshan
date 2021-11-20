@@ -7,6 +7,7 @@
 //  extern char *_cl_port;
 //unsigned char * _write_data;
 
+#include <unistd.h> //for usleep(usecond_t usec)
 
 int main()
 {
@@ -67,7 +68,13 @@ int main()
     //try to read the data from serial port
     //TODO//read_one_time_string();
 
-    #if 0
+    #if 1
+
+    #if PRINT_DEBUG_ENABLE
+      printf("Try to delay 1000ms delay");
+    #endif
+    usleep(1000000); //int usleep(useconds_t usec);
+
     clock_gettime(CLOCK_MONOTONIC, &last_timeout);
     //for time_log check here
     check_time_stamp_log_data();
