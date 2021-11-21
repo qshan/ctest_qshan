@@ -84,16 +84,18 @@ int main()
   #endif
 
   #if 1
-  //function for file operation
-  *p_file_name  = "test_uart_file_test_func.txt";
-  file_init_func(p_file_name);
+    //function for file operation
+    *p_file_name  = "test_uart_file_test_func.txt";
+    file_init_func(p_file_name);
 
-  char argv[] = "Try to write file test with func!";
-  file_write_func(argv);
-  file_read_by_line_func(p_fp_global);
+    char argv[] = "Try to write file test with func!";
+    file_write_func(argv);
+    file_read_by_line_func(p_fp_global);
   #endif
 
   #if 0
+{
+
   //file operation files
   #include <stdio.h>
   //FILE file_init_func(char *p_file_name)
@@ -273,6 +275,8 @@ int main()
 
     //return 0;
   }
+
+}
   #endif
 
 
