@@ -8,7 +8,8 @@
   #define PRINT_DEBUG_ENABLE  1
 #endif
 
-#define MAX_NUMBER_PER_LINE   200
+  #define MAX_NUMBER_PER_LINE   200
+  #define MAX_NUMBER_FILENAME   200
   extern FILE *p_fp_global;
   extern char *p_file_name[];
 
