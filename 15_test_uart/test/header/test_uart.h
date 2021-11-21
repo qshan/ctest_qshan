@@ -5,6 +5,8 @@
 #include "say_hello_uart.h"
 #include "uart.h"
 #include "time_stamp_log.h"
+#include "file_log.h"
+
 //#include "test_uart.h"
 
 #ifndef PRINT_DEBUG_ENABLE

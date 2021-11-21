@@ -63,6 +63,7 @@ objs.append( SConscript(['./test/SConscript']           , exports='env')  )
 objs.append( SConscript(['./libs_shared/shared/SConscript']    , exports='env')  )
 #libs
 objs.append( SConscript(['./libs/uart/SConscript'] , exports='env')  )
+objs.append( SConscript(['./libs/file_log/SConscript'] , exports='env')  )
 objs.append( SConscript(['./libs/time_stamp_log/SConscript'] , exports='env')  )
 objs.append( SConscript(['./libs/say_hello/SConscript'] , exports='env')  )
 #objs.append( SConscript(['./libs/practice/SConscript']  , exports='env')  )

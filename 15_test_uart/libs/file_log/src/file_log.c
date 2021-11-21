@@ -1,127 +1,59 @@
-#include <stdio.h>
-//#include "say_hello_uart.h"
-//#include "test_uart_shared.h"
-#include "test_uart.h"
+#include "file_log.h"
 
-//  extern int _fd;
-//  extern char *_cl_port;
-//unsigned char * _write_data;
-
-#include <unistd.h> //for usleep(usecond_t usec)
-
-int main()
-{
-  #if PRINT_DEBUG_ENABLE
-    printf("\n");
-    printf("===================================================\n");
-    printf("hello test_uart \n");
-    printf("\n");
-  #endif
+  FILE *p_fp_global;
+  char *p_file_name[200];
 
   #if 1
-    say_hello_uart();
-    printf("Try to call function_shared_test_uart(1), get: 0x%x \n"
-        , function_shared_test_uart(1)
-        );
-  #endif
-
-  int uart_api();
-
-  //todo
-  //uart and timestamp
-  #if 1
-    //uart operation here start
-    char serial_port_name[]="/dev/ttyUSB1";
-    int serial_speed = B115200;
-
-    #if PRINT_DEBUG_ENABLE
-      printf("check %s, get _fd is %d\n" ,_cl_port ,_fd);
-    #endif
-    //init the port
-    setup_serial_port(serial_port_name, serial_speed);
-    #if PRINT_DEBUG_ENABLE
-      printf("open %s, get _fd is %d\n" ,_cl_port ,_fd);
-    #endif
-    //clear the status of serial
-    clear_custom_speed_flag();
-
-    #if 1
-    //for time_log check here
-    init_time_stamp_log();
-    #endif
-    //try to write hello string
-    //write_hello_string();
-    //write_order_hex();
-    //write_out_hex_with_reorder(0x7654321 ,0xfedcba98);
-
-    //TODO//worked
-    #if 1
-    write_out_hex_with_reorder(0x01234567 ,0x89abcdef);
-    #endif
-
-    //TODO//worked?????
-    #if 1
-    read_in_hex_with_reorder(0x01234567);
-    #endif
-
-
-    //try to read the data from serial port
-    //TODO//read_one_time_string();
-
-    #if 1
-
-    #if PRINT_DEBUG_ENABLE
-      printf("Try to delay 1000ms delay");
-    #endif
-    usleep(1000000); //int usleep(useconds_t usec);
-
-    clock_gettime(CLOCK_MONOTONIC, &last_timeout);
-    //for time_log check here
-    check_time_stamp_log_data();
-    #endif
-
-    atexit(&exit_handler);
-  #endif
-
-  #if 1
-  //function for file operation
-  *p_file_name  = "test_uart_file_test_func.txt";
-  file_init_func(p_file_name);
-
-  char argv[] = "Try to write file test with func!";
-  file_write_func(argv);
-  file_read_by_line_func(p_fp_global);
-  #endif
-
-  #if 0
   //file operation files
   #include <stdio.h>
-  //FILE file_init_func(char *p_file_name)
+  int file_init_func(char *p_file_name[200])
+  //int file_init_func(char *p_file_name[1024])
+  //FILE file_init_func(char *p_file_name[])
+  //FILE file_init_func()
   {
+
+    #if PRINT_DEBUG_ENABLE
+      printf("Run in %s\n" ,__func__);
+    #endif
+
     //return the file handler
-    FILE *p_fp;
-    char *p_file_name[] = "test_uart_file_test.txt";
+    //FILE *p_fp;
+    //char *p_file_name[] = "test_uart_file_test.txt";
+    //p_file_name = "test_uart_file_test.txt";
     //FILE *fopen(char *filename, char *mode);
     //p_fp = fopen("test_uart_file_test.txt", "a+");
     //p_fp = fopen(p_file_name, "a+");
+    //p_fp = fopen("test_uart_file_test.txt", "a+");
+    p_fp_global = fopen(*p_file_name, "a+");
     //fclose(p_fp);
+    fclose(p_fp_global);
 
-    //return fp;
-//  }
-//  //file_write_func(FILE *p_fp ,char argv[])
-//  {
+    //return *p_fp;
+    return 0;
+  }
+
+    //int file_write_func(FILE *p_fp ,char argv[])
+    int file_write_func(char argv[MAX_NUMBER_PER_LINE])
+    {
+
+    #if PRINT_DEBUG_ENABLE
+      printf("Run in %s\n" ,__func__);
+    #endif
+
     //file write case
     //open, write and close
     //p_fp = fopen("test_uart_file_test.txt", "a+");
     int wr_ret  = 0;
     //char argv[] = "Try to write file test from test_uart.c file!\n";
-    char argv[] = "Try to write file test from test_uart.c file!";
+    //char argv[] = "Try to write file test from test_uart.c file!";
+    //argv = "Try to write file test from test_uart.c file!";
+
     #if PRINT_DEBUG_ENABLE
       printf("the write contents is %s\n" ,argv);
     #endif
     //write(int p_fd, const void *buf, size_t count);
 
-    p_fp = fopen(p_file_name, "a+");
+    //p_fp = fopen(p_file_name, "a+");
     //p_fp = fopen(p_file_name, "w+");
 
     #if PRINT_DEBUG_ENABLE
@@ -146,17 +78,22 @@ int main()
     //  printf("wr_ret is 0x%x\n" ,wr_ret);
     //#endif
 
+    p_fp_global = fopen(*p_file_name, "a+");
+
     #if PRINT_DEBUG_ENABLE
       printf("Try #####fprintf() function in %s\n" ,__func__);
     #endif
-    fprintf(p_fp ,"fprintf %s\n" ,argv);
+    //fprintf(p_fp ,"fprintf %s\n" ,argv);
+    fprintf(p_fp_global ,"fprintf %s\n" ,argv);
 
-    fclose(p_fp);
+    //fclose(p_fp);
+    fclose(p_fp_global);
 
-    //return 0;
-//  }
-//  //file_read_by_line_func(FILE *p_fp )
-//  {
+      return 0;
+    }
+
+    int file_read_by_line_func(FILE *p_fp )
+    {
     //file read and write case
     //open, write and close
 
@@ -167,12 +104,19 @@ int main()
     //p_fp = fopen(p_file_name, "a+");
 
     #if PRINT_DEBUG_ENABLE
+      printf("Run in %s\n" ,__func__);
+    #endif
+
+
+    p_fp = p_fp_global;
+
+    #if PRINT_DEBUG_ENABLE
       //printf("Try to open file %s\n\r" ,p_file_name);
-      printf("Try to open file %s\n" ,p_file_name);
+      printf("Try to open file %s\n" ,*p_file_name);
     #endif
 
     #if 1
-      p_fp = fopen(p_file_name, "r+");
+      p_fp = fopen(*p_file_name, "r+");
 
       #if PRINT_DEBUG_ENABLE
         printf("Try #####getline() function in %s\n" ,__func__);
@@ -212,7 +156,7 @@ int main()
 
     //not worked
     #if 0
-      p_fp = fopen(p_file_name, "r+");
+      p_fp = fopen(*p_file_name, "r+");
       #if PRINT_DEBUG_ENABLE
         printf("Try #####fscanf() function in %s\n" ,__func__);
       #endif
@@ -261,8 +205,8 @@ int main()
     #endif
 
     /* Free the allocated line buffer */
-    free(line_buf);
-    line_buf = NULL;
+    //free(line_buf);
+    //line_buf = NULL;
 
     /* Close the file now that we are done with it */
     //fclose(p_fp);
@@ -271,16 +215,6 @@ int main()
     //int fread(char *buf, unsigned size, unsigned n, FILE *fp);
     //fclose(p_fp);
 
-    //return 0;
+    return 0;
   }
   #endif
-
-
-  #if PRINT_DEBUG_ENABLE
-    printf("\n");
-    printf("Bye test_uart \n");
-    printf("===================================================\n");
-    printf("\n");
-  #endif
-  return 0;
-}

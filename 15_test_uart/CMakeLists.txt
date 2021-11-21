@@ -64,6 +64,7 @@ INCLUDE_DIRECTORIES(
   #     ${PROJECT_SOURCE_DIR}/libs/practice/header
 #  ${PROJECT_SOURCE_DIR}/libs/*/header
   ${PROJECT_SOURCE_DIR}/libs/uart/header
+  ${PROJECT_SOURCE_DIR}/libs/file_log/header
   ${PROJECT_SOURCE_DIR}/libs/time_stamp_log/header
   ${PROJECT_SOURCE_DIR}/libs/say_hello/header
   )

@@ -96,9 +96,9 @@ INC_DIRS              := $(shell find $(SRC_DIRS) -type d)
 INC_DIRS              +=  $(PRO_ROOT_PATH)/test/header \
 													$(PRO_ROOT_PATH)/libs/say_hello/header \
 													$(PRO_ROOT_PATH)/libs/uart/header \
+													$(PRO_ROOT_PATH)/libs/file_log/header \
 													$(PRO_ROOT_PATH)/libs/time_stamp_log/header \
 
-#													$(PRO_ROOT_PATH)/libs/file_log/header \
 
 #                          $(PRO_ROOT_PATH)/libs/practice/header
 INC_DIRS              += $(INC_DIRS_SHARED)
