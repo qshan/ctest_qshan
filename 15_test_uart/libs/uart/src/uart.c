@@ -466,6 +466,8 @@ unsigned int poll_data_one_time_without_while()
     printf("current is serial_poll.revents 0x%x\n" ,serial_poll.revents);
   #endif
 
+  unsigned char data_get_hex[4]={0x01 ,0x23 ,0x45 ,0x67};
+
   if (serial_poll.revents & POLLIN)
   {
     unsigned char rb[1024];
@@ -479,25 +481,58 @@ unsigned int poll_data_one_time_without_while()
       }
       printf("\n");
     #endif
-    if(c<4)
+
+
+    switch (c)
     {
-      #if 1
-        printf("received data error %d\n" ,c);
-      #endif
+      case 1 :
+        //get the ack for write
+        data_get_hex[0] = rb[0];
+        //return (unsigned int) rb[0];
+        break;
+
+      case 5 :
+        //
+        //unsigned char data_get_hex[5]={0x11 ,0x01 ,0x23 ,0x45 ,0x67};
+        /* unsigned char data_get_hex[4]={0x01 ,0x23 ,0x45 ,0x67}; */
+        data_get_hex[0] = rb[c-1];
+        data_get_hex[1] = rb[c-2];
+        data_get_hex[2] = rb[c-3];
+        data_get_hex[3] = rb[c-4];
+        #if PRINT_DEBUG_ENABLE
+          printf("get the ack 0x%x in %s\n" ,(unsigned int) rb[0] ,__func__);
+        #endif
+        #if PRINT_DEBUG_ENABLE
+          printf("get the data 0x%x in %s\n" ,(unsigned int) data_get_hex ,__func__);
+        #endif
+        //return (unsigned int) data_get_hex;
+        break;
+
+      default :
+       //
+        #if 1
+          printf("received data error %d\n" ,c);
+        #endif
+
     }
-    //unsigned char data_get_hex[5]={0x11 ,0x01 ,0x23 ,0x45 ,0x67};
-    unsigned char data_get_hex[4]={0x01 ,0x23 ,0x45 ,0x67};
-    data_get_hex[0] = rb[c];
-    data_get_hex[1] = rb[c-1];
-    data_get_hex[2] = rb[c-2];
-    data_get_hex[3] = rb[c-3];
-    #if PRINT_DEBUG_ENABLE
-      printf("get the data 0x%x in %s\n" ,(unsigned int) data_get_hex ,__func__);
-    #endif
-    return (unsigned int) data_get_hex;
+
+    /* if (c=1) */
+    /* //just _ack for write */
+    /* { */
+
+    /* } */
+
+    /* if(c<4) */
+    /* //for read operation, should be 5, ack + data returned */
+    /* { */
+    /*   #if 1 */
+    /*     printf("received data error %d\n" ,c); */
+    /*   #endif */
+    /* } */
   }
 
-  return 0;
+  return (unsigned int) data_get_hex;
+  //return 0;
 }
 
 unsigned int read_in_hex_with_reorder_send_comand_only(int addr)
