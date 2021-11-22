@@ -124,6 +124,10 @@ DEBFLAGS += -Werror
 # '-Wfatal-errors' is to make compile abort when the hit the errors firstly
 DEBFLAGS += -Wfatal-errors
 #DEBFLAGS ?= -O -g -DSCULL_DEBUG	# "-O" is needed to expand inlines
+
+#TODO#worked
+DEBFLAGS += -DPRINT_DEBUG_ENABLE=1
+#DEBFLAGS += -DPRINT_DEBUG_ENABLE=0
 #------------------------------
 
 #.DEFAULT: compile

@@ -27,7 +27,10 @@ SET(CMAKE_BUILD_TYPE Debug)
 #SET(CMAKE_BUILD_TYPE Release)
 #SET(CMAKE_BUILD_TYPE MinSizeRel)
 
-SET(CMAKE_CXX_FLAGS_DEBUG   "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
+#SET(CMAKE_CXX_FLAGS_DEBUG   "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
+#TODO#worked
+SET(CMAKE_CXX_FLAGS_DEBUG   "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb -DPRINT_DEBUG_ENABLE=1")
+SET(CMAKE_C_FLAGS_DEBUG     "$ENV{CFLAGS} -O0 -Wall -g2 -ggdb -DPRINT_DEBUG_ENABLE=1")
 SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 #ADD_COMPILE_OPTIONS(-Wall -g)
 #------------------------------
@@ -103,6 +106,7 @@ MESSAGE(STATUS "{CMAKE_CPP_COMPILER}    "   ${CMAKE_CPP_COMPILER})
 #------------------------------
 MESSAGE(STATUS "{CXXFLAGS}              "   ${CXXFLAGS})
 MESSAGE(STATUS "{CMAKE_CXX_FLAGS_DEBUG} "   ${CMAKE_CXX_FLAGS_DEBUG})
+MESSAGE(STATUS "{CMAKE_C_FLAGS_DEBUG} "   ${CMAKE_C_FLAGS_DEBUG})
 MESSAGE(STATUS "{CXX_FLAGS_RELEASE}     "   ${CXX_FLAGS_RELEASE})
 MESSAGE(STATUS "------------------------------------------------------------")
 #------------------------------

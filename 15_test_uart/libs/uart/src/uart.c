@@ -29,7 +29,7 @@ int uart_init()
 
 int setup_serial_port(char port_name[], int serial_speed)
 {
-  #if PRINT_DEBUG_ENABLE
+  #if 1 //PRINT_DEBUG_ENABLE
     printf("\n-----Run in %s------------------------------\n" ,__func__);
     //printf("#####Get args port_name:speed \"%s\":%d in %s\n" ,port_name ,serial_speed ,__func__);
     printf("#####Get args port_name:speed \"%s\":%d in %s\n"
@@ -341,7 +341,12 @@ unsigned int read_one_time_string()
     int serial_port_timeout_number = 1000; //unit is milliseconds
     //extern int poll (struct pollfd *__fds, nfds_t __nfds, int __timeout);
     //int retval = poll(&serial_poll, 1, 1000);
-    int retval = poll(&serial_poll, 1, serial_port_timeout_number);
+    //int retval = poll(&serial_poll, 1, serial_port_timeout_number);
+    #if PRINT_DEBUG_ENABLE
+      int retval =
+    #endif
+    poll(&serial_poll, 1, serial_port_timeout_number);
+
     #if PRINT_DEBUG_ENABLE
       printf("Check retval : serial_poll.revents is %d:0x%x\n" ,retval ,serial_poll.revents);
     #endif
@@ -355,7 +360,10 @@ unsigned int read_one_time_string()
       {
         unsigned char rb[BUFFER_RECEIVED_SIZE];
         //ToCheck
-        int c = read(_fd, &rb, sizeof(rb));
+        #if PRINT_DEBUG_ENABLE
+        int c =
+        #endif
+        read(_fd, &rb, sizeof(rb));
 
         #if PRINT_DEBUG_ENABLE
           printf("Get data, number is 0x%x, rb is \"%s\"\n" ,c ,rb);
