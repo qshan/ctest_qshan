@@ -78,7 +78,8 @@ int main()
       //or 00801024 65457c04  ;# 1. LDO enable
 
       temp_data = ir_read_register(0x00801000);
-      #if 1 //PRINT_DEBUG_ENABLE
+      #if 1
+      //PRINT_DEBUG_ENABLE
         printf("get temp_data is 0x%08x in %s\n" ,temp_data ,__func__);
       #endif
       or_write_register(0x00801000 ,0x0c800b10);

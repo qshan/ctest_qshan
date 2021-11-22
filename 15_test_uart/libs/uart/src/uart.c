@@ -49,6 +49,10 @@ int setup_serial_port(char port_name[], int serial_speed)
   //_cl_port = strdup("/dev/ttyUSB1");
   //_cl_port="/dev/ttyUSB1";
 
+/* #define  B4800	0000014 */
+/* #define  B9600	0000015 */
+/* #define  B19200	0000016 */
+/* #define  B38400	0000017 */
 /* #define  B57600   0010001 */
 /* #define  B115200  0010002 */
 /* #define  B230400  0010003 */
@@ -70,14 +74,16 @@ int setup_serial_port(char port_name[], int serial_speed)
   //int baud = B115200;
   int baud =
              (serial_speed == 115200 )?B115200
-            :(serial_speed == 230400 )?B230400
-            :(serial_speed == 460800 )?B460800
-            :(serial_speed == 500000 )?B500000
-            :(serial_speed == 576000 )?B576000
             :(serial_speed == 921600 )?B921600
+            :(serial_speed == 576000 )?B576000
+            :(serial_speed == 500000 )?B500000
+            :(serial_speed == 460800 )?B460800
+            :(serial_speed == 230400 )?B230400
             :(serial_speed == 57600  )?B57600
             :(serial_speed == 38400  )?B38400
+            :(serial_speed == 19200  )?B19200
             :(serial_speed == 9600   )?B9600
+            :(serial_speed == 4800   )?B4800
             :B115200; //default config
 
   struct termios newtio;
@@ -496,6 +502,7 @@ unsigned int poll_data_one_time_without_while()
 
   struct pollfd serial_poll;
   serial_poll.fd = _fd;
+  serial_poll.events |= POLLIN;
   serial_poll.events &= ~POLLOUT;
   //int retval = poll(&serial_poll, 1, 1000);
   //int retval = poll(&serial_poll, 1, 100);
@@ -554,14 +561,14 @@ unsigned int poll_data_one_time_without_while()
           printf("get the ack 0x%x in %s\n" ,(unsigned int) rb[0] ,__func__);
         #endif
         #if PRINT_DEBUG_ENABLE
-          printf("get the data 0x%x in %s\n" ,data_get_hex ,__func__);
+          printf("get the data 0x%08x in %s\n" ,data_get_hex ,__func__);
         #endif
         //return (unsigned int) data_get_hex;
         break;
 
       default :
         #if 1
-          printf("received data error %d\n" ,c);
+          printf("received data ###error### %d\n" ,c);
         #endif
 
         #if PRINT_DEBUG_ENABLE
