@@ -33,19 +33,21 @@ int setup_serial_port(char port_name[], int serial_speed)
     printf("\n-----Run in %s------------------------------\n" ,__func__);
     //printf("#####Get args port_name:speed \"%s\":%d in %s\n" ,port_name ,serial_speed ,__func__);
     printf("#####Get args port_name:speed \"%s\":%d in %s\n"
-        ,port_name
-          ,  (serial_speed == B115200 )?115200
-            :(serial_speed == B230400 )?230400
-            :(serial_speed == B460800 )?460800
-            :(serial_speed == B500000 )?500000
-            :(serial_speed == B576000 )?576000
-            :(serial_speed == B921600 )?921600
-            :(serial_speed == B57600  )?57600
-            :(serial_speed == B38400  )?38400
-            :(serial_speed == B9600   )?9600
-            :115200
-          ,__func__);
+        ,port_name ,serial_speed ,__func__);
   #endif
+
+  #if PRINT_DEBUG_ENABLE
+    printf("-----start setup_serial_port\n");
+  #endif
+  /*
+    //strdup is in string.h
+    The strdup() function shall return a pointer to a new string on success. Otherwise, it shall return a null pointer and set errno to indicate the error.
+    char *strdup(const char *s);
+  */
+  _cl_port = strdup(port_name);
+  //_cl_port = port_name;
+  //_cl_port = strdup("/dev/ttyUSB1");
+  //_cl_port="/dev/ttyUSB1";
 
 /* #define  B57600   0010001 */
 /* #define  B115200  0010002 */
@@ -64,21 +66,19 @@ int setup_serial_port(char port_name[], int serial_speed)
 /* #define  B4000000 0010017 */
 /* #define __MAX_BAUD B4000000 */
 
-  #if PRINT_DEBUG_ENABLE
-    printf("-----start setup_serial_port\n");
-  #endif
-  /*
-    //strdup is in string.h
-    The strdup() function shall return a pointer to a new string on success. Otherwise, it shall return a null pointer and set errno to indicate the error.
-    char *strdup(const char *s);
-  */
-  _cl_port = strdup(port_name);
-  //_cl_port = port_name;
-  //_cl_port = strdup("/dev/ttyUSB1");
-  //_cl_port="/dev/ttyUSB1";
-
-  int baud = serial_speed;
+  //int baud = serial_speed;
   //int baud = B115200;
+  int baud =
+             (serial_speed == 115200 )?B115200
+            :(serial_speed == 230400 )?B230400
+            :(serial_speed == 460800 )?B460800
+            :(serial_speed == 500000 )?B500000
+            :(serial_speed == 576000 )?B576000
+            :(serial_speed == 921600 )?B921600
+            :(serial_speed == 57600  )?B57600
+            :(serial_speed == 38400  )?B38400
+            :(serial_speed == 9600   )?B9600
+            :B115200; //default config
 
   struct termios newtio;
   int ret;

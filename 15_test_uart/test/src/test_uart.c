@@ -34,7 +34,7 @@ int main()
   #if 1
     //uart operation here start
     char serial_port_name[]="/dev/ttyUSB0";
-    int serial_speed = B115200;
+    int serial_speed = 115200;
 
     #if PRINT_DEBUG_ENABLE
       printf("check %s, get _fd is %d\n" ,_cl_port ,_fd);
