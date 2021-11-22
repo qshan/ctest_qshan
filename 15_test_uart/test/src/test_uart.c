@@ -68,18 +68,18 @@ int main()
 
     #if 1
     unsigned int  temp_data;
-      or_write_register(0x00801024 ,0x65457c04);
       temp_data = ir_read_register(0x00801024);
       #if PRINT_DEBUG_ENABLE
-        printf("get temp_data is 0x%x in %s" ,temp_data ,__func__);
+        printf("get temp_data is 0x%08x in %s\n" ,temp_data ,__func__);
       #endif
+      or_write_register(0x00801024 ,0x65457c04);
 
       //ir 00801024     ;# read LDO_CTRL_REG, check default value 65457c04
       //or 00801024 65457c04  ;# 1. LDO enable
 
       temp_data = ir_read_register(0x00801000);
       #if PRINT_DEBUG_ENABLE
-        printf("get temp_data is 0x%x in %s" ,temp_data ,__func__);
+        printf("get temp_data is 0x%08x in %s\n" ,temp_data ,__func__);
       #endif
       or_write_register(0x00801000 ,0x0c800b10);
 
@@ -95,7 +95,7 @@ int main()
     //TODO
     #if 0
     #if PRINT_DEBUG_ENABLE
-      printf("Try to delay 1000ms delay");
+      printf("Try to delay 1000ms delay\n");
     #endif
     usleep(1000000); //int usleep(useconds_t usec);
 

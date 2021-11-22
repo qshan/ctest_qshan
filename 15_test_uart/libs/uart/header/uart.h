@@ -24,6 +24,16 @@
   #include <poll.h>       /* poll, ppoll - wait for some event on a file descriptor */
 //  #include <time.h>
 
+  //#define CMD_CODE_WRITE            0x01
+  #define CMD_CODE_READ             0x11
+  #define CMD_READ_PACKAGE_LEN      0x5
+  //#define CMD_READ_PACKAGE_LEN      0x1024
+  #define CMD_CODE_WRITE            0x01
+  #define CMD_WRITE_PACKAGE_LEN     0x9
+
+  //#define BUFFER_RECEIVED_SIZE      1024
+  #define BUFFER_RECEIVED_SIZE      200
+
   //for returned hander of serial port open
   extern int _fd;
   //for the port name on pc hardware view, like"/dev/ttyUSB0"
