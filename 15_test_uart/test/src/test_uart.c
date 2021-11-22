@@ -18,7 +18,7 @@ int main()
     printf("\n");
   #endif
 
-  #if 1
+  #if 0
     say_hello_uart();
     printf("Try to call function_shared_test_uart(1), get: 0x%x \n"
         , function_shared_test_uart(1)
@@ -33,7 +33,7 @@ int main()
   //uart and timestamp
   #if 1
     //uart operation here start
-    char serial_port_name[]="/dev/ttyUSB1";
+    char serial_port_name[]="/dev/ttyUSB0";
     int serial_speed = B115200;
 
     #if PRINT_DEBUG_ENABLE
@@ -67,14 +67,22 @@ int main()
     #endif
 
     #if 1
-      ir_read_register(0x00801024);
+    unsigned int  temp_data;
       or_write_register(0x00801024 ,0x65457c04);
+      temp_data = ir_read_register(0x00801024);
+      #if PRINT_DEBUG_ENABLE
+        printf("get temp_data is 0x%x in %s" ,temp_data ,__func__);
+      #endif
 
       //ir 00801024     ;# read LDO_CTRL_REG, check default value 65457c04
       //or 00801024 65457c04  ;# 1. LDO enable
 
-      ir_read_register(0x00801000);
+      temp_data = ir_read_register(0x00801000);
+      #if PRINT_DEBUG_ENABLE
+        printf("get temp_data is 0x%x in %s" ,temp_data ,__func__);
+      #endif
       or_write_register(0x00801000 ,0x0c800b10);
+
       //ir 00801000		;# read PLL_CTRL_REG, check default value 0c800b10
       //or 00801000 0c800b10    ;# 2. set DDRC_PLL_DDR_DIV_SEL 0, set PLL_LOOP_PI_SEL 0
 
@@ -84,8 +92,8 @@ int main()
     //try to read the data from serial port
     //TODO//read_one_time_string();
 
-    #if 1
-
+    //TODO
+    #if 0
     #if PRINT_DEBUG_ENABLE
       printf("Try to delay 1000ms delay");
     #endif
@@ -99,7 +107,8 @@ int main()
     atexit(&exit_handler);
   #endif
 
-  #if 1
+  //TODO
+  #if 0
     //function for file operation
     *p_file_name  = "test_uart_file_test_func.txt";
     file_init_func(p_file_name);

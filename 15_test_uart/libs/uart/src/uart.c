@@ -30,6 +30,11 @@ int uart_init()
 int setup_serial_port(char port_name[], int serial_speed)
 {
   #if PRINT_DEBUG_ENABLE
+    printf("\n#####Run in %s------------------------------\n" ,__func__);
+    printf("#####Get args port_name:speed \"%s\":0x%x in %s\n" ,port_name ,serial_speed ,__func__);
+  #endif
+
+  #if PRINT_DEBUG_ENABLE
     printf("#####start setup_serial_port\n");
   #endif
   /*
@@ -195,7 +200,7 @@ unsigned int write_order_hex()
   #endif
   #if PRINT_DEBUG_ENABLE
     int k;
-    printf("Send data: hex format is\n");
+    printf("Send data: hex format is in %s\n" ,__func__);
     for (k=0; k < written; k++)
     {
       printf("%02x ", hello_hex[k]);
@@ -223,7 +228,7 @@ unsigned int write_order_hex()
 unsigned int write_out_hex_with_reorder(int addr ,int data)
 {
   #if PRINT_DEBUG_ENABLE
-    printf("#####Run in %s\n" ,__func__);
+    printf("\n#####Run in %s\n" ,__func__);
     printf("#####start try to send 0x%x 0x%x\n" ,addr ,data);
   #endif
 
@@ -266,7 +271,7 @@ unsigned int write_out_hex_with_reorder(int addr ,int data)
 
   #if PRINT_DEBUG_ENABLE
     int k;
-    printf("Send data: hex format is\n");
+    printf("Send data: hex format is in %s\n" ,__func__);
     for (k=0; k < written; k++)
     {
       printf("%02x ", hello_hex[k]);
@@ -371,14 +376,15 @@ unsigned int read_one_time_string()
 unsigned int read_in_hex_with_reorder(int addr)
 {
   #if PRINT_DEBUG_ENABLE
-    printf("#####Run in %s\n" ,__func__);
+    printf("\n#####Run in %s\n" ,__func__);
     //printf("#####start try to send 0x%x 0x%x\n" ,addr ,data);
     printf("#####start try to read 0x%x\n" ,addr);
   #endif
 
 //#define CMD_CODE_WRITE            0x01
 #define CMD_CODE_READ             0x11
-#define CMD_READ_PACKAGE_LEN      0x5
+//#define CMD_READ_PACKAGE_LEN      0x5
+#define CMD_READ_PACKAGE_LEN      0x1024
 
   //int data ,read_count;
   int written;
@@ -387,8 +393,9 @@ unsigned int read_in_hex_with_reorder(int addr)
   //unsigned char hello_hex[]={0x30 ,0x31 ,0x32 ,0x33 ,0x34 ,0x35 ,0x36 ,0x37 ,0x38 ,0x39 ,0x3a ,0x3b ,0x3c ,0x3d ,0x3e ,0x3f};
   //unsigned int hello_hex[9]={0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
   //unsigned char hello_hex[9]={0x01 ,0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
+  //unsigned char hello_hex[5]={0x11 ,0x01 ,0x23 ,0x45 ,0x67};
   unsigned char hello_hex[5]={0x11 ,0x01 ,0x23 ,0x45 ,0x67};
-  hello_hex[0]    = CMD_CODE_WRITE;
+  hello_hex[0]    = CMD_CODE_READ;
   hello_hex[1]    = ((addr >>  0) & 0xff);
   hello_hex[2]    = ((addr >>  8) & 0xff);
   hello_hex[3]    = ((addr >> 16) & 0xff);
@@ -466,7 +473,8 @@ unsigned int poll_data_one_time_without_while()
     printf("current is serial_poll.revents 0x%x\n" ,serial_poll.revents);
   #endif
 
-  unsigned char data_get_hex[4]={0x01 ,0x23 ,0x45 ,0x67};
+  //unsigned char data_get_hex[4]={0x01 ,0x23 ,0x45 ,0x67};
+  unsigned char data_get_hex[1024]={0x01 ,0x23 ,0x45 ,0x67};
 
   if (serial_poll.revents & POLLIN)
   {
@@ -514,6 +522,16 @@ unsigned int poll_data_one_time_without_while()
           printf("received data error %d\n" ,c);
         #endif
 
+        #if PRINT_DEBUG_ENABLE
+          int j;
+          printf("get data: hex format is\n");
+          for (j=0; j < c; j++)
+          {
+            printf("%02x ", rb[j]);
+          }
+          printf("\n");
+        #endif
+
     }
 
     /* if (c=1) */
@@ -538,14 +556,15 @@ unsigned int poll_data_one_time_without_while()
 unsigned int read_in_hex_with_reorder_send_comand_only(int addr)
 {
   #if PRINT_DEBUG_ENABLE
-    printf("#####Run in %s\n" ,__func__);
+    printf("\n#####Run in %s\n" ,__func__);
     //printf("#####start try to send 0x%x 0x%x\n" ,addr ,data);
     printf("#####start try to read 0x%x\n" ,addr);
   #endif
 
 //#define CMD_CODE_WRITE            0x01
 #define CMD_CODE_READ             0x11
-#define CMD_READ_PACKAGE_LEN      0x5
+//#define CMD_READ_PACKAGE_LEN      0x5
+#define CMD_READ_PACKAGE_LEN      0x1024
 
   //int data ,read_count;
   int written;
@@ -555,7 +574,7 @@ unsigned int read_in_hex_with_reorder_send_comand_only(int addr)
   //unsigned int hello_hex[9]={0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
   //unsigned char hello_hex[9]={0x01 ,0x01 ,0x23 ,0x45 ,0x67 ,0x89 ,0xab ,0xcd ,0xef};
   unsigned char hello_hex[5]={0x11 ,0x01 ,0x23 ,0x45 ,0x67};
-  hello_hex[0]    = CMD_CODE_WRITE;
+  hello_hex[0]    = CMD_CODE_READ;
   hello_hex[1]    = ((addr >>  0) & 0xff);
   hello_hex[2]    = ((addr >>  8) & 0xff);
   hello_hex[3]    = ((addr >> 16) & 0xff);
@@ -567,7 +586,7 @@ unsigned int read_in_hex_with_reorder_send_comand_only(int addr)
 
   #if 0
     int i;
-    for (i=0;i<CMD_WRITE_PACKAGE_LEN;i++)
+    for (i=0;i<CMD_READ_PACKAGE_LEN;i++)
     {
       hello_hex[i] = ((hello_hex[i] >> 4) & 0xf) | ((hello_hex[i] << 4) & 0xf0);
     }
@@ -613,14 +632,18 @@ unsigned int read_in_hex_with_reorder_send_comand_only(int addr)
   unsigned int or_write_register(int addr ,int data)
   {
     #if PRINT_DEBUG_ENABLE
-      printf("#####Run in %s\n" ,__func__);
-      printf("#####Get addr:data 0x%x:0x%x in %s\n" ,addr ,data ,__func__);
+      printf("\n#####Run in %s------------------------------\n" ,__func__);
+      printf("#####Get args addr:data 0x%x:0x%x in %s\n" ,addr ,data ,__func__);
     #endif
     return write_out_hex_with_reorder(addr ,data);
   }
 
   unsigned int ir_read_register(int addr)
   {
+    #if PRINT_DEBUG_ENABLE
+      printf("\n#####Run in %s------------------------------\n" ,__func__);
+      printf("#####Get args addr 0x%x in %s\n" ,addr ,__func__);
+    #endif
     return read_in_hex_with_reorder(addr);
   }
 
