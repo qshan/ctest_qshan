@@ -25,7 +25,9 @@ int main()
         );
   #endif
 
-  int uart_api();
+  #if 0
+    int uart_api();
+  #endif
 
   //todo
   //uart and timestamp
@@ -55,13 +57,27 @@ int main()
     //write_out_hex_with_reorder(0x7654321 ,0xfedcba98);
 
     //TODO//worked
-    #if 1
+    #if 0
     write_out_hex_with_reorder(0x01234567 ,0x89abcdef);
     #endif
 
     //TODO//worked?????
-    #if 1
+    #if 0
     read_in_hex_with_reorder(0x01234567);
+    #endif
+
+    #if 1
+      ir_read_register(0x00801024);
+      or_write_register(0x00801024 ,0x65457c04);
+
+      //ir 00801024     ;# read LDO_CTRL_REG, check default value 65457c04
+      //or 00801024 65457c04  ;# 1. LDO enable
+
+      ir_read_register(0x00801000);
+      or_write_register(0x00801000 ,0x0c800b10);
+      //ir 00801000		;# read PLL_CTRL_REG, check default value 0c800b10
+      //or 00801000 0c800b10    ;# 2. set DDRC_PLL_DDR_DIV_SEL 0, set PLL_LOOP_PI_SEL 0
+
     #endif
 
 
