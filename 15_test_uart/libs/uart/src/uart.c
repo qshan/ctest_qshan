@@ -35,11 +35,34 @@ int setup_serial_port(char port_name[], int serial_speed)
     printf("#####Get args port_name:speed \"%s\":%d in %s\n"
         ,port_name
           ,  (serial_speed == B115200 )?115200
+            :(serial_speed == B230400 )?230400
+            :(serial_speed == B460800 )?460800
+            :(serial_speed == B500000 )?500000
+            :(serial_speed == B576000 )?576000
+            :(serial_speed == B921600 )?921600
             :(serial_speed == B57600  )?57600
+            :(serial_speed == B38400  )?38400
             :(serial_speed == B9600   )?9600
             :115200
           ,__func__);
   #endif
+
+/* #define  B57600   0010001 */
+/* #define  B115200  0010002 */
+/* #define  B230400  0010003 */
+/* #define  B460800  0010004 */
+/* #define  B500000  0010005 */
+/* #define  B576000  0010006 */
+/* #define  B921600  0010007 */
+/* #define  B1000000 0010010 */
+/* #define  B1152000 0010011 */
+/* #define  B1500000 0010012 */
+/* #define  B2000000 0010013 */
+/* #define  B2500000 0010014 */
+/* #define  B3000000 0010015 */
+/* #define  B3500000 0010016 */
+/* #define  B4000000 0010017 */
+/* #define __MAX_BAUD B4000000 */
 
   #if PRINT_DEBUG_ENABLE
     printf("-----start setup_serial_port\n");
