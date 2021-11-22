@@ -58,7 +58,7 @@ Export ('opt', 'dbg')
 print("[env.CC]       is  %s" % env['CC'])
 print("[env.CXX]      is  %s" % env['CXX'])
 print("[env.CCFLAGS]  is  %s" % env['CCFLAGS'])
-print("[env.CFLAGS]  is  %s" % env['CCFLAGS'])
+print("[env.CFLAGS]   is  %s" % env['CFLAGS'])
 
 objs  = []
 header_file_path  = []
