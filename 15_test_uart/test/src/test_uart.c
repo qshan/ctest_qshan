@@ -70,7 +70,7 @@ int main()
     unsigned int  temp_data;
       temp_data = ir_read_register(0x00801024);
       #if 1 //PRINT_DEBUG_ENABLE
-        printf("get temp_data is 0x%08x in %s\n" ,temp_data ,__func__);
+        printf("#####get temp_data is 0x%08x in %s\n" ,temp_data ,__func__);
       #endif
       or_write_register(0x00801024 ,0x65457c04);
 
@@ -80,7 +80,7 @@ int main()
       temp_data = ir_read_register(0x00801000);
       #if 1
       //PRINT_DEBUG_ENABLE
-        printf("get temp_data is 0x%08x in %s\n" ,temp_data ,__func__);
+        printf("#####get temp_data is 0x%08x in %s\n" ,temp_data ,__func__);
       #endif
       or_write_register(0x00801000 ,0x0c800b10);
 

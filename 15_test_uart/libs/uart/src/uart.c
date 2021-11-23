@@ -263,6 +263,7 @@ unsigned int write_order_hex()
 //write the contents into register with uart
 unsigned int write_out_hex_with_reorder(int addr ,int data)
 {
+  unsigned int data_returned;
   #if PRINT_DEBUG_ENABLE
     printf("\n-----Run in %s\n" ,__func__);
     printf("-----start try to send 0x%x 0x%x\n" ,addr ,data);
@@ -337,10 +338,12 @@ unsigned int write_out_hex_with_reorder(int addr ,int data)
 
   #if 1
     //read ack info
-    poll_data_one_time_without_while();
+    //poll_data_one_time_without_while();
+    data_returned = poll_data_one_time_without_while();
   #endif
 
-  return 0;
+  return data_returned;
+  //return 0;
 }
 
 unsigned int read_one_time_string()
@@ -551,10 +554,14 @@ unsigned int poll_data_one_time_without_while()
         /* data_get_hex[3] = rb[c-4]; */
         data_get_hex  =
                   (0
-                  | rb[c-1] << 0
-                  | rb[c-2] << 8
-                  | rb[c-3] << 16
-                  | rb[c-4] << 24
+                  | ( (rb[c-4] << 0 ) & 0xff        )
+                  | ( (rb[c-3] << 8 ) & 0xff00      )
+                  | ( (rb[c-2] << 16) & 0xff0000    )
+                  | ( (rb[c-1] << 24) & 0xff000000  )
+                  /* | rb[c-4] << 0 */
+                  /* | rb[c-3] << 8 */
+                  /* | rb[c-2] << 16 */
+                  /* | rb[c-1] << 24 */
                   );
 
         #if PRINT_DEBUG_ENABLE
@@ -581,11 +588,24 @@ unsigned int poll_data_one_time_without_while()
           printf("\n");
         #endif
 
+        data_get_hex  =
+                  (0
+                  | ( (rb[c-4] << 0 ) & 0xff        )
+                  | ( (rb[c-3] << 8 ) & 0xff00      )
+                  | ( (rb[c-2] << 16) & 0xff0000    )
+                  | ( (rb[c-1] << 24) & 0xff000000  )
+                  );
+
     }
 
   }
 
-  return (unsigned int) data_get_hex;
+  #if PRINT_DEBUG_ENABLE
+    printf("#####Return data_get_hex: 0x%08x in %s\n" ,data_get_hex ,__func__);
+  #endif
+
+  return data_get_hex;
+  //return (unsigned int) data_get_hex;
   //return 0;
 }
 
@@ -664,20 +684,37 @@ unsigned int read_in_hex_with_reorder_send_comand_only(int addr)
 
   unsigned int or_write_register(int addr ,int data)
   {
+    unsigned int temp_data;
+
     #if PRINT_DEBUG_ENABLE
       printf("\n-----Run in [%s]------------------------------\n" ,__func__);
       printf("#####Get args addr:data 0x%08x:0x%08x in %s\n" ,addr ,data ,__func__);
     #endif
-    return write_out_hex_with_reorder(addr ,data);
+
+    temp_data = write_out_hex_with_reorder(addr ,data);
+
+    #if 1 //PRINT_DEBUG_ENABLE
+      printf("#####Write addr:data [0x%08x:0x%08x], Get _ack:[0x%08x]\n" ,addr ,data ,temp_data);
+    #endif
+
+    return temp_data;
   }
 
   unsigned int ir_read_register(int addr)
   {
+    unsigned int temp_data;
     #if PRINT_DEBUG_ENABLE
       printf("\n-----Run in [%s]------------------------------\n" ,__func__);
       printf("#####Get args addr 0x%08x in %s\n" ,addr ,__func__);
     #endif
-    return read_in_hex_with_reorder(addr);
+
+    temp_data = read_in_hex_with_reorder(addr);
+
+    #if 1 //PRINT_DEBUG_ENABLE
+      printf("#####Read addr:[0x%08x], Get data:[0x%08x]\n" ,addr ,temp_data);
+    #endif
+
+    return temp_data;
   }
 
 //static void exit_handler(void)
