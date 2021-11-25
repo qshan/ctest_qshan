@@ -1,0 +1,13 @@
+#old format one
+#need run in test/build_scon folder
+#
+#Library('',[])
+#Library('TestSharedLib', ['../src_shared/test_shared.c'])
+Library('TestSharedLib', ['../src_shared/test_shared.c'] ,CPPPATH=['../include'])
+
+#Program('',[])
+#Program('',[])
+
+#Program('test' ,['../src/test.c' ,CPPPATH=['../src' ,'../scr_shared' ,'../include'] ,['../src/say_hello_.c'] ,LIBS=['TestSharedLib'] ,LIBPATH=['.'])
+#Program('test' ,['../src/test.c' ,'../src/say_hello_.c'] ,CPPPATH=['../include'] ,LIBS=['TestSharedLib'] ,LIBPATH=['.'])
+Program('test' ,['../src/test.c' ,'../src/say_hello_.c'] ,CPPPATH=['../include'] ,LIBS=['TestSharedLib'] ,LIBPATH=['.'])

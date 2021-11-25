@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+scons -c
+#scons
+#scons --tree=all
+scons --tree=status
+./test_run
+#scons -c

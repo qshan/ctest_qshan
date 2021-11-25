@@ -37,7 +37,7 @@ CC=clang
 CXX=clang++
 #------------------------------
 #set target name
-TARGET_EXEC ?= test_uart
+TARGET_EXEC ?= test_run
 #------------------------------
 #set project/code root path
 PRO_ROOT_PATH = .
@@ -45,25 +45,25 @@ PRO_ROOT_PATH = .
 BUILD_DIR ?= $(PRO_ROOT_PATH)/build_make
 #------------------------------
 #test code
-SRC_DIRS ?= $(PRO_ROOT_PATH)/test/src
+SRC_DIRS ?= $(PRO_ROOT_PATH)/test_main/src
 #libs code
 #INC_DIRS							:= $(shell find $(SRC_DIRS) -type d)
 #TODO#Add the src by manual
 #SRC_DIRS += $(PRO_ROOT_PATH)/libs/say_hello/src
-#SRC_DIRS += $(PRO_ROOT_PATH)/libs/uart/src
 #SRC_DIRS += $(PRO_ROOT_PATH)/libs/practice/src
 #Add the src by searching
 SRC_DIRS += $(shell find ./libs -type d -iname "*src")
 #shared libs code
 #get the shared path here
 #SRC_SHARED_DIRS ?= $(PRO_ROOT_PATH)/libs_shared/shared/src
+#SRC_SHARED_DIRS ?= $(PRO_ROOT_PATH)/libs_shared
 SRC_SHARED_DIRS ?= $(shell find ./libs_shared -type d -iname "*src")
 
 #log define
 BUILD_LOG_FILE ?= $(BUILD_DIR)/$(TARGET_EXEC).log
 
 #share lib name defined
-TOP_OBJ_SHARED ?= TestUartSharedLib.o
+TOP_OBJ_SHARED ?= TestSharedLib.o
 
 #$(BUILD_LOG_FILE):
 #	$(MKDIR_P) $(BUILD_DIR)
@@ -76,6 +76,7 @@ TOP_OBJ_SHARED ?= TestUartSharedLib.o
 SRC_SHARED  = $(wildcard \
 								$(SRC_SHARED_DIRS)/*.c \
 								$(SRC_SHARED_DIRS)/*.cpp)
+
 OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 
 #ToCheck
@@ -93,12 +94,8 @@ DEPS                  := $(OBJS:.o=.d)
 
 #include/HeadhFile path for source code info
 INC_DIRS              := $(shell find $(SRC_DIRS) -type d)
-INC_DIRS              +=  $(PRO_ROOT_PATH)/test/header \
+INC_DIRS              +=  $(PRO_ROOT_PATH)/test_main/header \
 													$(PRO_ROOT_PATH)/libs/say_hello/header \
-													$(PRO_ROOT_PATH)/libs/uart/header \
-													$(PRO_ROOT_PATH)/libs/file_log/header \
-													$(PRO_ROOT_PATH)/libs/time_stamp_log/header \
-
 
 #                          $(PRO_ROOT_PATH)/libs/practice/header
 INC_DIRS              += $(INC_DIRS_SHARED)
