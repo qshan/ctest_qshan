@@ -107,9 +107,10 @@ INC_DIRS              +=  $(PRO_ROOT_PATH)/test/header \
 #													$(PRO_ROOT_PATH)/libs/uart/header \
 #													$(PRO_ROOT_PATH)/libs/file_log/header \
 #													$(PRO_ROOT_PATH)/libs/time_stamp_log/header \
-
 #                          $(PRO_ROOT_PATH)/libs/practice/header
+#$(info "INC_DIRS is $(INC_DIRS)")
 INC_DIRS              += $(INC_DIRS_SHARED)
+#$(info "INC_DIRS is $(INC_DIRS)")
 INC_FLAGS             := $(addprefix -I,$(INC_DIRS))
 
 CFLAGS                ?= $(INC_FLAGS) -MMD -MP

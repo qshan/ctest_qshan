@@ -682,40 +682,40 @@ unsigned int read_in_hex_with_reorder_send_comand_only(int addr)
   return 0;
 }
 
-  unsigned int or_write_register(int addr ,int data)
-  {
-    unsigned int temp_data;
+unsigned int or_write_register(int addr ,int data)
+{
+  unsigned int temp_data;
 
-    #if PRINT_DEBUG_ENABLE
-      printf("\n-----Run in [%s]------------------------------\n" ,__func__);
-      printf("#####Get args addr:data 0x%08x:0x%08x in %s\n" ,addr ,data ,__func__);
-    #endif
+  #if PRINT_DEBUG_ENABLE
+    printf("\n-----Run in [%s]------------------------------\n" ,__func__);
+    printf("#####Get args addr:data 0x%08x:0x%08x in %s\n" ,addr ,data ,__func__);
+  #endif
 
-    temp_data = write_out_hex_with_reorder(addr ,data);
+  temp_data = write_out_hex_with_reorder(addr ,data);
 
-    #if 1 //PRINT_DEBUG_ENABLE
-      printf("#####Write addr:data [0x%08x:0x%08x], Get _ack:[0x%08x]\n" ,addr ,data ,temp_data);
-    #endif
+  #if 1 //PRINT_DEBUG_ENABLE
+    printf("#####Write addr:data [0x%08x:0x%08x], Get _ack:[0x%08x]\n" ,addr ,data ,temp_data);
+  #endif
 
-    return temp_data;
-  }
+  return temp_data;
+}
 
-  unsigned int ir_read_register(int addr)
-  {
-    unsigned int temp_data;
-    #if PRINT_DEBUG_ENABLE
-      printf("\n-----Run in [%s]------------------------------\n" ,__func__);
-      printf("#####Get args addr 0x%08x in %s\n" ,addr ,__func__);
-    #endif
+unsigned int ir_read_register(int addr)
+{
+  unsigned int temp_data;
+  #if PRINT_DEBUG_ENABLE
+    printf("\n-----Run in [%s]------------------------------\n" ,__func__);
+    printf("#####Get args addr 0x%08x in %s\n" ,addr ,__func__);
+  #endif
 
-    temp_data = read_in_hex_with_reorder(addr);
+  temp_data = read_in_hex_with_reorder(addr);
 
-    #if 1 //PRINT_DEBUG_ENABLE
-      printf("#####Read addr:[0x%08x], Get data:[0x%08x]\n" ,addr ,temp_data);
-    #endif
+  #if 1 //PRINT_DEBUG_ENABLE
+    printf("#####Read addr:[0x%08x], Get data:[0x%08x]\n" ,addr ,temp_data);
+  #endif
 
-    return temp_data;
-  }
+  return temp_data;
+}
 
 //static void exit_handler(void)
 void exit_handler()
