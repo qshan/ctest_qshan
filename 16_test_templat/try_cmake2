@@ -14,7 +14,7 @@ if [ -d ${TestBuildPath} ]; then
   make clean
   make
 #  ./Test_Hello
-  ./test_main
+  ./test_run
   cd -
 #  mkdir build_cmake
 fi
