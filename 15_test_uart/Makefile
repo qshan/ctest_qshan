@@ -54,10 +54,12 @@ SRC_DIRS ?= $(PRO_ROOT_PATH)/test/src
 #SRC_DIRS += $(PRO_ROOT_PATH)/libs/practice/src
 #Add the src by searching
 SRC_DIRS += $(shell find ./libs -type d -iname "*src")
+$(info "SRC_DIRS is $(SRC_DIRS)")
 #shared libs code
 #get the shared path here
 #SRC_SHARED_DIRS ?= $(PRO_ROOT_PATH)/libs_shared/shared/src
 SRC_SHARED_DIRS ?= $(shell find ./libs_shared -type d -iname "*src")
+$(info "SRC_SHARED_DIRS is $(SRC_SHARED_DIRS)")
 
 #log define
 BUILD_LOG_FILE ?= $(BUILD_DIR)/$(TARGET_EXEC).log
@@ -76,11 +78,14 @@ TOP_OBJ_SHARED ?= TestUartSharedLib.o
 SRC_SHARED  = $(wildcard \
 								$(SRC_SHARED_DIRS)/*.c \
 								$(SRC_SHARED_DIRS)/*.cpp)
+$(info "SRC_SHARED is $(SRC_SHARED)")
 OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 
 #ToCheck
 #include/HeadhFile path for shared lib generating info
-INC_DIRS_SHARED       := $(PRO_ROOT_PATH)/libs_shared/shared/header
+#INC_DIRS_SHARED       := $(PRO_ROOT_PATH)/libs_shared/shared/header
+INC_DIRS_SHARED       := $(shell find $(PRO_ROOT_PATH)/libs_shared -type d -iname header)
+$(info "INC_DIRS_SHARED is $(INC_DIRS_SHARED)")
 INC_FLAGS_SHARED      := $(addprefix -I,$(INC_DIRS_SHARED))
 
 CFLAGS_SHARED         ?= $(INC_FLAGS_SHARED) -fPIC -shared
@@ -88,17 +93,20 @@ CPPFLAGS_SHARED       ?= $(INC_FLAGS_SHARED) -fPIC -shared
 
 #source code info
 SRCS                  := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
+$(info "SRCS is $(SRCS)")
 OBJS                  := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS                  := $(OBJS:.o=.d)
 
 #include/HeadhFile path for source code info
-INC_DIRS              := $(shell find $(SRC_DIRS) -type d)
+#INC_DIRS              := $(shell find $(SRC_DIRS) -type d)
+INC_DIRS              := $(shell find $(PRO_ROOT_PATH)/libs -type d -iname header)
+$(info "INC_DIRS is $(INC_DIRS)")
 INC_DIRS              +=  $(PRO_ROOT_PATH)/test/header \
-													$(PRO_ROOT_PATH)/libs/say_hello/header \
-													$(PRO_ROOT_PATH)/libs/uart/header \
-													$(PRO_ROOT_PATH)/libs/file_log/header \
-													$(PRO_ROOT_PATH)/libs/time_stamp_log/header \
 
+#													$(PRO_ROOT_PATH)/libs/say_hello/header \
+#													$(PRO_ROOT_PATH)/libs/uart/header \
+#													$(PRO_ROOT_PATH)/libs/file_log/header \
+#													$(PRO_ROOT_PATH)/libs/time_stamp_log/header \
 
 #                          $(PRO_ROOT_PATH)/libs/practice/header
 INC_DIRS              += $(INC_DIRS_SHARED)
