@@ -39,12 +39,15 @@
   //for the port name on pc hardware view, like"/dev/ttyUSB0"
   extern char *_cl_port;
 
-  int setup_serial_port(char port_name[], int serial_speed);
+  int setup_serial_port_01(char port_name[], int serial_speed);
   unsigned int write_out_hex_with_reorder_01(int addr ,int data);
   unsigned int read_in_hex_with_reorder_01(int addr);
   unsigned int poll_data_one_time_without_while_01();
+  unsigned int or_write_register(int addr ,int data);
+  unsigned int ir_read_register(int addr);
   void exit_handler();
 
+  int setup_serial_port(char port_name[], int serial_speed);
   void clear_custom_speed_flag();
   int write_hello_string();
   unsigned int write_order_hex();
@@ -53,7 +56,5 @@
   unsigned int read_in_hex_with_reorder(int addr);
   unsigned int poll_data_one_time_without_while();
   unsigned int read_in_hex_with_reorder(int addr);
-  unsigned int or_write_register(int addr ,int data);
-  unsigned int ir_read_register(int addr);
 
 #endif

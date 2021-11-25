@@ -40,7 +40,7 @@ int main()
       printf("check %s, get _fd is %d\n" ,_cl_port ,_fd);
     #endif
     //init the port
-    setup_serial_port(serial_port_name, serial_speed);
+    setup_serial_port_01(serial_port_name, serial_speed);
     #if PRINT_DEBUG_ENABLE
       printf("open %s, get _fd is %d\n" ,_cl_port ,_fd);
     #endif

@@ -158,6 +158,105 @@ int setup_serial_port(char port_name[], int serial_speed)
   return 0;
 }
 
+int setup_serial_port_01(char port_name[], int serial_speed)
+{
+  #if 1 //PRINT_DEBUG_ENABLE
+    printf("\n-----Run in %s------------------------------\n" ,__func__);
+    printf("#####Get args port_name:speed \"%s\":%d in %s\n"
+        ,port_name ,serial_speed ,__func__);
+  #endif
+
+  #if PRINT_DEBUG_ENABLE
+    printf("-----start setup_serial_port\n");
+  #endif
+  _cl_port = strdup(port_name);
+
+  int baud =
+             (serial_speed == 115200 )?B115200
+            :(serial_speed == 921600 )?B921600
+            :(serial_speed == 576000 )?B576000
+            :(serial_speed == 500000 )?B500000
+            :(serial_speed == 460800 )?B460800
+            :(serial_speed == 230400 )?B230400
+            :(serial_speed == 57600  )?B57600
+            :(serial_speed == 38400  )?B38400
+            :(serial_speed == 19200  )?B19200
+            :(serial_speed == 9600   )?B9600
+            :(serial_speed == 4800   )?B4800
+            :B115200; //default config
+
+  struct termios newtio;
+  int ret;
+
+  #if PRINT_DEBUG_ENABLE
+    printf("run in \"%s\"\n" ,__func__);
+  #endif
+
+  #if PRINT_DEBUG_ENABLE
+    printf("_cl_port is \"%s\"\n" ,_cl_port);
+  #endif
+  _fd = open(_cl_port, O_RDWR | O_NONBLOCK);
+  #if PRINT_DEBUG_ENABLE
+    printf("open %s, get _fd is %d\n" ,_cl_port ,_fd);
+  #endif
+
+  if (_fd < 0) {
+    ret = -errno;
+    perror("Error opening serial port");
+    exit(ret);
+  }
+
+  /* Lock device file */
+  //ToCheck
+  if (flock(_fd, LOCK_EX | LOCK_NB) < 0) {
+    ret = -errno;
+    perror("Error failed to lock device file");
+    exit(ret);
+  }
+  //ToCheck
+  bzero(&newtio, sizeof(newtio)); /* clear struct for new port settings */
+
+  /* man termios get more info on below settings */
+  //newtio.c_cflag = baud | CS8 | CLOCAL | CREAD;
+  newtio.c_cflag = baud | CS8 | CLOCAL | CREAD | PARENB;
+  //newtio.c_cflag = baud | CS8 | CLOCAL | CREAD | PARENB | PARODD;
+
+#if 0
+  newtio.c_cflag &= ~CRTSCTS;
+  newtio.c_cflag &= ~CSTOPB;
+#endif
+
+  newtio.c_cflag &= ~CRTSCTS;
+  newtio.c_cflag &= ~CSTOPB;
+  //newtio.c_cflag |= CSTOPB;
+
+  #if PRINT_DEBUG_ENABLE
+    printf("current newtio.c_cflag is 0x%x\n" ,newtio.c_cflag);
+    printf("current CRTSCTS is 0x%x\n"  ,(newtio.c_cflag&CRTSCTS));
+    printf("current CSTOPB is 0x%x\n"   ,(newtio.c_cflag&CSTOPB));
+  #endif
+
+  newtio.c_iflag = 0;
+  newtio.c_oflag = 0;
+  newtio.c_lflag = 0;
+  // block for up till 128 characters
+  newtio.c_cc[VMIN] = 128;
+  // 0.5 seconds read timeout
+  newtio.c_cc[VTIME] = 5;
+
+  /* now clean the modem line and activate the settings for the port */
+  //ToCheck
+  tcflush(_fd, TCIOFLUSH);
+  //ToCheck
+  tcsetattr(_fd,TCSANOW,&newtio);
+  #if PRINT_DEBUG_ENABLE
+    printf("-----turn on the serial\n");
+  #endif
+
+  return 0;
+}
+
+
 void clear_custom_speed_flag()
 {
   struct serial_struct ss;
