@@ -20,6 +20,8 @@
 env = Environment(CC='clang')
 env = Environment(CXX='clang++')
 #
+#env.BuildDir('buildpath' ,'src')
+#
 #env.Append(CCFLAGS=' -Wall -g')
 #env.Append(CCFLAGS=' -O2 -Wall -g')
 env.Append(CCFLAGS=' -O2 -Wall -g')
@@ -65,10 +67,14 @@ header_file_path  = []
 
 #            , variant_dir='build_sc'
 
+#objs.append( SConscript([Glob('./libs/*/SConscript')]           , exports='env')  )
+
 objs.append( SConscript(['./test_main/SConscript']           , exports='env')  )
 objs.append( SConscript(['./libs_shared/shared/SConscript']    , exports='env')  )
-#objs.append( SConscript(['./libs/practice/SConscript']  , exports='env')  )
 objs.append( SConscript(['./libs/say_hello/SConscript'] , exports='env')  )
+#objs.append( SConscript(['./libs/practice/SConscript']  , exports='env')  )
+
+#print FindFile('SConscript' ,['./libs' ,'./libs_shared'])
 
 #env.Program('test' , objs)
 #env.Program('test' ,objs ,CPPPATH=['./include' ,'./libs/shared/header' ,'./libs/say_hello/header' ,'./libs/practice/header'])
