@@ -5,7 +5,8 @@
 export TestBuildPath="./build_cmake"
 export TestSourcePath="."
 
-  #cmake3.#cmake -B${TestBuildPath} -S${TestSourcePath}
+  #cmake3.13
+  #cmake -B${TestBuildPath} -S${TestSourcePath}
   cmake -B${TestBuildPath} -H${TestSourcePath}
   cd ${TestBuildPath}
   make clean

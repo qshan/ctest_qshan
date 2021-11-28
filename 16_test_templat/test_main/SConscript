@@ -18,7 +18,9 @@ obj = env.Object([Glob('./src/*.c')]
                               './header'
                               #TODO# add include path one by one by manual
                             , '../libs_shared/shared/header'
-                            , '../libs/say_hello/header'])
+                            , '../libs/say_hello/header'
+                            ]
+                )
 
 #                            ,'../libs/practice/header'
 Return('obj')

@@ -18,7 +18,10 @@
 #env = Environment(CC='gcc')
 #env = Environment(CXX='g++')
 env = Environment(CC='clang')
-env = Environment(CXX='clang++')
+#env = Environment(CXX='clang++')
+env.Append(CXX='clang++')
+#
+#env.BuildDir('buildpath' ,'src')
 #
 #env.Append(CCFLAGS=' -Wall -g')
 #env.Append(CCFLAGS=' -O2 -Wall -g')

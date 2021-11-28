@@ -18,7 +18,8 @@
 #env = Environment(CC='gcc')
 #env = Environment(CXX='g++')
 env = Environment(CC='clang')
-env = Environment(CXX='clang++')
+#env = Environment(CXX='clang++')
+env.Append(CXX='clang++')
 #
 #env.BuildDir('buildpath' ,'src')
 #
@@ -74,10 +75,16 @@ objs.append( SConscript(['./libs_shared/shared/SConscript']    , exports='env') 
 objs.append( SConscript(['./libs/say_hello/SConscript'] , exports='env')  )
 #objs.append( SConscript(['./libs/practice/SConscript']  , exports='env')  )
 
-#print FindFile('SConscript' ,['./libs' ,'./libs_shared'])
+#not_work#print (env.File('SConscript' ,['./libs' ,'./libs_shared']))
+#not_work#
+#not_work#try_get_file[] = env.FindFile('SConscript' ,['./libs' ,'./libs_shared'])
+#not_work#try_get_file[] =
+#objs.append(env.FindFile('SConscript', ['./libs', './libs_shared']))
 
-#env.Program('test' , objs)
-#env.Program('test' ,objs ,CPPPATH=['./include' ,'./libs/shared/header' ,'./libs/say_hello/header' ,'./libs/practice/header'])
+#print("[get_data_after_findfile]   is  %s" % get_data_after_findfile[])
+
+#not_work#print (try_get_file[])
+
 env.Program('test_run'
             ,objs
             ,CPPPATH=[
