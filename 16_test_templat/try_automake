@@ -22,8 +22,8 @@ if [ -f ${PathOfSouceCode}/configure.scan ]; then
 fi
 
 #update the contents according the project
-sed -i -r "s/AC_INIT(.*)/AC_INIT(${FileNameOfTopCode})/g" configure.in
-sed -i -r "s/AC_CONFIG_SRCDIR(.*)/AM_INIT_AUTOMAKE(${FileNameOfExe} ,1.0)/g" configure.in
+sed -i -r "s/AC_INIT(.*)/AC_INIT(${FileNameOfTopCode})#ToCheck/g" configure.in
+sed -i -r "s/AC_CONFIG_SRCDIR(.*)/AM_INIT_AUTOMAKE(${FileNameOfExe} ,1.0)#ToCheck/g" configure.in
 sed -i -r "s/AC_CONFIG_HEADERS(.*)//g" configure.in
 
 #AM_INIT_AUTOMAKE(hello, 1.0)
@@ -33,7 +33,7 @@ sed -i -r "s/AC_CONFIG_HEADERS(.*)//g" configure.in
 
 sed -i -r "s/AC_CONFIG_FILES(.*)//g" configure.in
 #AC_CONFIG_FILES([Makefile])
-sed -i -r "s/AC_OUTPUT.*/AC_OUTPUT(Makefile)/g" configure.in
+sed -i -r "s/AC_OUTPUT.*/AC_OUTPUT(Makefile)#ToCheck/g" configure.in
 #AC_OUTPUT
 
 #TODO#EmacsM configure.in
