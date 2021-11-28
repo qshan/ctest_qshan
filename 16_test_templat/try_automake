@@ -1,0 +1,67 @@
+#!/bin/bash
+# run like this
+
+#TODO#
+export TestBuildPath="`pwd`/build_automake"
+export PathOfSouceCode="`pwd`"
+export FileNameOfTopCode="test_main.c"
+export FileNameOfExe="test_run"
+
+if [ ! -d ${TestBuildPath} ]; then
+   mkdir -p ${TestBuildPath}
+fi
+
+cd ${TestBuildPath}
+
+#generate configure.scan file
+autoscan ${PathOfSouceCode}
+
+#change filename from configure.scan to configure.in
+if [ -f ${PathOfSouceCode}/configure.scan ]; then
+    mv -f ${PathOfSouceCode}/configure.scan ${TestBuildPath}/configure.in
+fi
+
+#update the contents according the project
+sed -i -r "s/AC_INIT(.*)/AC_INIT(${FileNameOfTopCode})/g" configure.in
+sed -i -r "s/AC_CONFIG_SRCDIR(.*)/AM_INIT_AUTOMAKE(${FileNameOfExe} ,1.0)/g" configure.in
+sed -i -r "s/AC_CONFIG_HEADERS(.*)//g" configure.in
+
+#AM_INIT_AUTOMAKE(hello, 1.0)
+
+#AC_CONFIG_SRCDIR([test_main/header/test_main.h])
+#AC_CONFIG_HEADERS([config.h])
+
+sed -i -r "s/AC_CONFIG_FILES(.*)//g" configure.in
+#AC_CONFIG_FILES([Makefile])
+sed -i -r "s/AC_OUTPUT.*/AC_OUTPUT(Makefile)/g" configure.in
+#AC_OUTPUT
+
+#TODO#EmacsM configure.in
+
+aclocal
+autoconf
+
+touch NEWS
+touch README
+touch AUTHORS
+touch ChangeLog
+
+touch Makefile.am
+echo "AUTOMAKE_OPTIONS= foreign"    >> Makefile.am
+echo "bin_PROGRAMS= test_run"       >> Makefile.am
+echo "hello_SOURCES= test_main.c"   >> Makefile.am
+
+automake --add-missing
+
+
+#####if [ -d ${TestBuildPath} ]; then
+#####  cd ${TestBuildPath}
+#####  #cmake -G "Unix Makefiles" ..
+#####  cmake ..
+#####  make clean
+#####  make
+######  ./Test_Hello
+#####  ./test_run
+#####  cd -
+######  mkdir build_cmake
+#####fi
