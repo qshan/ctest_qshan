@@ -1,17 +1,89 @@
 #!/bin/bash
 # run like this
 
+#work flow of Autotools
+#
+# (configure.ac) --autoconf/autoreconf/autoscan--> (configure.scan) --mv--> (configure.in)
+# (Makefile.am)                     --automake-->                           (Makefile.in)
+#
+# (configure.ac + Makefile.am) --autoreconf/autoconf/autoscan/automake--> (configure.in + Makefile.in)
+#
+# (Makefile.in + configure.in) --./configure--> (Makefile)
+#
+# 1. autoscan -> (configure.scan + autoscan.log)
+# 2. mv configure.scan configure.in
+# 3. # Process this file with autoconf to produce a configure script.
+#    AC_INIT(hello.c)
+#    AM_INIT_AUTOMAKE(ProName, 1.0)
+#    # Checks for programs.
+#    AC_PROG_CC
+#    # Checks for library functions.
+#    AC_OUTPUT(Makefile)
+# 4. aclocal -> (aclocal.m4 + autom4te.cache) #refer to (configure.in)
+# 5. autoconf -> (configure) #refer to (configure.in, + aclocal.m4)
+# 6. edit the Makefile.am
+#    AUTOMAKE_OPTIONS= foreign
+#    bin_PROGRAMS= ExeName
+#    Pro_SOURCES= hello.c
+# 7. automake --add-missing -> (Makefile.in + depcomp + install-sh + missing) #refer to (configure.in)
+# 8. ./configure -> (Makefile + config.log + config.status)
+#      #export LDFLAGS="-L/home/songwei/double-conversion/"
+#      #export CPPFLAGS="-I/home/songwei/double-conversion/src/"
+#      #export CFLAGS="-I/home/songwei/double-conversion/src/"
+#      #export LIBS="-ldouble_conversion -ldouble_conversion_pic"
+#      #./configure --prefix=/usr/local/folly
+#
+# 1. write the (configure.ac + Makefile.am)
+# 2. autoreconf -i
+# 3. Get the (configure + Makefile.in)
+# 4. ./configure
+# 5. Get the Makefile
+# 6. make
+# 7. Get the target file
+# 8. make install
 #TODO#
 export TestBuildPath="`pwd`/build_automake"
 export PathOfSouceCode="`pwd`"
 export FileNameOfTopCode="test_main.c"
 export FileNameOfExe="test_run"
+export TimeStampCurrentTryRun="`date +%Y-%m-%d-%H%M`"
 
 if [ ! -d ${TestBuildPath} ]; then
    mkdir -p ${TestBuildPath}
 fi
 
 cd ${TestBuildPath}
+
+#ToCheck#####generate the [configure.ac] file
+export ConfigureFileName="configure.ac"
+if [ -f ${ConfigureFileName} ]; then
+   \rm -f ${ConfigureFileName}
+fi
+touch ${ConfigureFileName}
+echo "# Create by ${USER} on ${TimeStampCurrentTryRun}" >> ${ConfigureFileName}
+echo "AC_INIT(${FileNameOfTopCode})"                    >> ${ConfigureFileName}
+echo "AC_PREREQ(2.5) #AC Version required"              >> ${ConfigureFileName}
+echo "AM_INIT_AUTOMAKE(${FileNameOfExe} ,1.0)"          >> ${ConfigureFileName}
+echo "AC_CONFIG_HEADERS(config.h)"                      >> ${ConfigureFileName}
+#echo "AC_CONFIG_HEADERS(config.h:config.in)"            >> ${ConfigureFileName}
+#echo "AC_CONFIG_HEADERS(config.h)"                      >> ${ConfigureFileName}
+echo "AC_OUTPUT(Makefile)"                              >> ${ConfigureFileName}
+
+echo "AC_PROG_CC"                                       >> ${ConfigureFileName}
+echo "AC_CONFIG_SRCDIR(test_main/src/test_main.c)"      >> ${ConfigureFileName}
+#echo "AC_CONFIG_AUX_DIR(config)"                        >> ${ConfigureFileName}
+echo "AC_CONFIG_FILES(Makefile)"                        >> ${ConfigureFileName}
+
+#ToCheck#####generate the [Makefile.am] file
+export MakefielAMFileName="Makefile.am"
+if [ -f ${MakefielAMFileName} ]; then
+   \rm -f ${MakefielAMFileName}
+fi
+touch ${MakefielAMFileName}
+echo "# Create by ${USER} on ${TimeStampCurrentTryRun}" >> ${MakefielAMFileName}
+echo "AUTOMAKE_OPTIONS= foreign"                        >> ${MakefielAMFileName}
+echo "bin_PROGRAMS= test_run"                           >> ${MakefielAMFileName}
+echo "files_SOURCES= test_main.c"                       >> ${MakefielAMFileName}
 
 #generate configure.scan file
 autoscan ${PathOfSouceCode}
@@ -20,10 +92,10 @@ autoscan ${PathOfSouceCode}
 if [ -f ${PathOfSouceCode}/configure.scan ]; then
     mv -f ${PathOfSouceCode}/configure.scan ${TestBuildPath}/configure.in
 fi
-
-#update the contents according the project
-sed -i -r "s/AC_INIT(.*)/AC_INIT(${FileNameOfTopCode})#ToCheck/g" configure.in
-sed -i -r "s/AC_CONFIG_SRCDIR(.*)/AM_INIT_AUTOMAKE(${FileNameOfExe} ,1.0)#ToCheck/g" configure.in
+#update the contents of configure.in file according the project
+sed -i -r "s/AC_INIT(.*)/AC_INIT(${FileNameOfTopCode}) #ToCheck/g" configure.in
+sed -i -r "s/AC_CONFIG_SRCDIR(.*)//g" configure.in
+#sed -i -r "s/AC_CONFIG_SRCDIR(.*)/AM_INIT_AUTOMAKE(${FileNameOfExe} ,1.0) #ToCheck/g" configure.in
 sed -i -r "s/AC_CONFIG_HEADERS(.*)//g" configure.in
 
 #AM_INIT_AUTOMAKE(hello, 1.0)
@@ -33,7 +105,7 @@ sed -i -r "s/AC_CONFIG_HEADERS(.*)//g" configure.in
 
 sed -i -r "s/AC_CONFIG_FILES(.*)//g" configure.in
 #AC_CONFIG_FILES([Makefile])
-sed -i -r "s/AC_OUTPUT.*/AC_OUTPUT(Makefile)#ToCheck/g" configure.in
+sed -i -r "s/AC_OUTPUT.*/AC_OUTPUT(Makefile) #ToCheck/g" configure.in
 #AC_OUTPUT
 
 #TODO#EmacsM configure.in
@@ -42,17 +114,17 @@ aclocal
 autoconf
 
 touch NEWS
+#echo "# Create by ${USER} on ${TimeStampCurrentTryRun}" >> NEWS
 touch README
 touch AUTHORS
 touch ChangeLog
 
-touch Makefile.am
-echo "AUTOMAKE_OPTIONS= foreign"    >> Makefile.am
-echo "bin_PROGRAMS= test_run"       >> Makefile.am
-echo "hello_SOURCES= test_main.c"   >> Makefile.am
-
+autoheader
+#automake
+#automake -a --add-missing
 automake --add-missing
 
+./configure
 
 #####if [ -d ${TestBuildPath} ]; then
 #####  cd ${TestBuildPath}

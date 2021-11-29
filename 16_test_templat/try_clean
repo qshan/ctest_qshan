@@ -1,4 +1,8 @@
 #!/bin/bash
 
 \rm -rf ./build_*
+
 scons -c
+\rm -rf  .sconsign.dblite*
+
+\rm -rf  autoscan.log*
