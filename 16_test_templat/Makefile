@@ -1,19 +1,19 @@
 #
 #
 #meaning of specific strings
-#*# $@ all of FileNameWithExtension produced
-# $* all of FileNameWithoutExtension produced
-# $< the FileName of first dependance item
-#*# $^ the dependance items with space islated and remove the repeated item
-# $+ the dependance items with space islated, but do not remove the repeated item
-# $? the dependance items with space islated, but just have the new item
-# %
+#*#     $@ all of FileNameWithExtension produced
+#       $* all of FileNameWithoutExtension produced
+#       $< the FileName of first dependance item
+#*#     $^ the dependance items with space islated and remove the repeated item
+#       $+ the dependance items with space islated, but do not remove the repeated item
+#       $? the dependance items with space islated, but just have the new item
+#       %
 #
-#automatic variables          descriptions
-#       $@                    The file name of the target
+#automatic variables          Descriptions
+#*#     $@                    The file name of the target
 #       $<                    The name of the first prerequisite
-#       $^                    The names of all the prerequisites
-#       $+                    prerequisites listed more than once are duplicated in the order
+#*#     $^                    The names of all the prerequisites
+#       $+                    Prerequisites listed more than once are duplicated in the order
 #
 # define a variable, Var=xx , and the methods of using variable is $(Var)
 #
@@ -28,8 +28,8 @@
 # %.o: %.c
 #   gcc -g -o $@ -c $<
 #
-
-#.PHONY: all
+#
+#.PHONY: all #info#this items is for no dependance item
 #------------------------------
 #CC=gcc
 #CXX=g++

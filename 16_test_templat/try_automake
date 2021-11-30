@@ -1,5 +1,5 @@
 #!/bin/bash
-# run like this
+#TODO# not worked in current status
 
 #work flow of Autotools
 #
@@ -41,10 +41,12 @@
 # 6. make
 # 7. Get the target file
 # 8. make install
+#
 #TODO#
 export TestBuildPath="`pwd`/build_automake"
 export PathOfSouceCode="`pwd`"
-export FileNameOfTopCode="test_main.c"
+#export FileNameOfTopCode="test_main.c"
+export FileNameOfTopCode="../test_main/src/test_main.c"
 export FileNameOfExe="test_run"
 export TimeStampCurrentTryRun="`date +%Y-%m-%d-%H%M`"
 
@@ -53,7 +55,7 @@ if [ ! -d ${TestBuildPath} ]; then
 fi
 
 cd ${TestBuildPath}
-
+#------------------------------
 #ToCheck#####generate the [configure.ac] file
 export ConfigureFileName="configure.ac"
 if [ -f ${ConfigureFileName} ]; then
@@ -61,19 +63,26 @@ if [ -f ${ConfigureFileName} ]; then
 fi
 touch ${ConfigureFileName}
 echo "# Create by ${USER} on ${TimeStampCurrentTryRun}" >> ${ConfigureFileName}
-echo "AC_INIT(${FileNameOfTopCode})"                    >> ${ConfigureFileName}
+#echo "AC_INIT(${FileNameOfTopCode})"                    >> ${ConfigureFileName}
+echo "AC_INIT([${FileNameOfTopCode}] ,[1.0] ,[frankqs0304@hotmail.org])"                    >> ${ConfigureFileName}
+#echo "AM_INIT_AUTOMAKE([${FileNameOfExe}] ,[1.0])"      >> ${ConfigureFileName}
+echo "AM_INIT_AUTOMAKE([-Wall -Werror foreign])"      >> ${ConfigureFileName}
+#
 echo "AC_PREREQ(2.5) #AC Version required"              >> ${ConfigureFileName}
-echo "AM_INIT_AUTOMAKE(${FileNameOfExe} ,1.0)"          >> ${ConfigureFileName}
-echo "AC_CONFIG_HEADERS(config.h)"                      >> ${ConfigureFileName}
-#echo "AC_CONFIG_HEADERS(config.h:config.in)"            >> ${ConfigureFileName}
-#echo "AC_CONFIG_HEADERS(config.h)"                      >> ${ConfigureFileName}
-echo "AC_OUTPUT(Makefile)"                              >> ${ConfigureFileName}
-
+#
 echo "AC_PROG_CC"                                       >> ${ConfigureFileName}
-echo "AC_CONFIG_SRCDIR(test_main/src/test_main.c)"      >> ${ConfigureFileName}
+echo "AC_CONFIG_HEADERS(config.h:config.in)"            >> ${ConfigureFileName}
+#echo "AC_CONFIG_HEADERS(config.h)"                      >> ${ConfigureFileName}
+#echo "AC_CONFIG_HEADERS(config.h)"                      >> ${ConfigureFileName}
+#
+#echo "AC_OUTPUT(Makefile)"                              >> ${ConfigureFileName}
+echo "AC_CONFIG_FILES([Makefile])"                      >> ${ConfigureFileName} #add makefile list here with list format
+echo "AC_OUTPUT"                                        >> ${ConfigureFileName}
+#
+#debug#echo "AC_CONFIG_SRCDIR(test_main/src/test_main.c)"      >> ${ConfigureFileName}
 #echo "AC_CONFIG_AUX_DIR(config)"                        >> ${ConfigureFileName}
-echo "AC_CONFIG_FILES(Makefile)"                        >> ${ConfigureFileName}
 
+#------------------------------
 #ToCheck#####generate the [Makefile.am] file
 export MakefielAMFileName="Makefile.am"
 if [ -f ${MakefielAMFileName} ]; then
@@ -85,9 +94,11 @@ echo "AUTOMAKE_OPTIONS= foreign"                        >> ${MakefielAMFileName}
 echo "bin_PROGRAMS= test_run"                           >> ${MakefielAMFileName}
 echo "files_SOURCES= test_main.c"                       >> ${MakefielAMFileName}
 
+#------------------------------
 #generate configure.scan file
 autoscan ${PathOfSouceCode}
 
+#------------------------------
 #change filename from configure.scan to configure.in
 if [ -f ${PathOfSouceCode}/configure.scan ]; then
     mv -f ${PathOfSouceCode}/configure.scan ${TestBuildPath}/configure.in
@@ -108,6 +119,7 @@ sed -i -r "s/AC_CONFIG_FILES(.*)//g" configure.in
 sed -i -r "s/AC_OUTPUT.*/AC_OUTPUT(Makefile) #ToCheck/g" configure.in
 #AC_OUTPUT
 
+#------------------------------
 #TODO#EmacsM configure.in
 
 aclocal
