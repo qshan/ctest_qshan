@@ -1,9 +1,15 @@
 #include <stdio.h>
-
-#include "arg_read.h"
 #include "string.h"
 
-//int arg_read(char *argv[], char *input_arg_list[][3][MAXSTRING_LENGTH])
+  //macro and data type here
+  #define MAX_STRING_LENGTH 100
+
+  //function list
+  //int arg_read(char *argv[], char *input_arg_list[][3][MAX_STRING_LENGTH]);
+  int arg_read(int argc ,char *argv[], char input_arg_list[][3][MAX_STRING_LENGTH]);
+  int print_arg_list(char input_arg_list[][3][MAX_STRING_LENGTH]);
+
+
 int arg_read(int argc ,char *argv[] ,char input_arg_list[][3][MAX_STRING_LENGTH])
 {
   int i, j;//for arg print control
@@ -78,6 +84,7 @@ int arg_read(int argc ,char *argv[] ,char input_arg_list[][3][MAX_STRING_LENGTH]
   return value_returned;
 }
 
+
 int print_arg_list(char input_arg_list[][3][MAX_STRING_LENGTH])
 {
   int value_returned =0;
@@ -98,4 +105,95 @@ int print_arg_list(char input_arg_list[][3][MAX_STRING_LENGTH])
   }
 
   return value_returned;
+}
+
+int main(int argc ,char *argv[])
+{
+  int value_returned=0;
+
+  #if PRINT_DEBUG_ENABLE
+    printf("\n");
+    printf("===================================================\n");
+    printf("hello read_argu \n");
+    printf("\n");
+  #endif
+
+  #if 1
+  {
+    int i=0;
+    printf("------------------------------\n");
+    //printf("##### Get argument is %s\n", *argv);
+    printf("##### Get argc is %d\n"    , argc);
+    printf("##### Get argv is ");
+    for(i=0;i<argc;i++)
+    {
+      printf(" %s" , argv[i]);
+    }
+    printf("\n");
+
+    printf("------------------------------\n");
+
+    for(i=0;i<argc;i++)
+    {
+      printf("##### Get argv[%d] is %s\n" ,i ,argv[i]);
+    }
+  }
+  #endif
+
+
+  #if 1
+  {
+    //ToCheck
+    //#define MAX_STRING_LENGTH 100
+    char input_arg_list1[][3][MAX_STRING_LENGTH]=
+    //char *input_arg_list1[][3]=
+    {
+       {"--port"  ,""         ,"set port name info"}
+      ,{"--file"  ,""         ,"set file name"}
+      ,{"--end--" ,"--end--"  ,"reserved keywords"}
+    };
+
+    #if 1
+      //check the argument list contents before updated
+      print_arg_list(input_arg_list1);
+    #endif
+
+    printf("------------------------------\n");
+
+    printf("Start call arg_read function\n");
+    value_returned  = arg_read(argc ,argv ,input_arg_list1);
+    printf("exit arg_read function now\n");
+
+    #if 0
+      int i=0;
+      printf("------------------------------\n");
+      printf("check the input_arg_list info\n");
+      for (i=0;;i++)
+      {
+        if ((strcasecmp (input_arg_list1[i][0], "--end--") == 0)){break;}
+        printf("#####     %s : %s\n" ,input_arg_list1[i][0] ,input_arg_list1[i][1]);
+      }
+    #endif
+
+    #if 1
+      //check the argument list contents updated
+      print_arg_list(input_arg_list1);
+    #endif
+
+
+  }
+  #endif
+
+
+  #if PRINT_DEBUG_ENABLE
+    printf("\n");
+    printf("Bye read_argu \n");
+    printf("===================================================\n");
+    printf("\n");
+  #endif
+
+  printf("------------------------------\n");
+  printf("value_returned is %d\n" ,value_returned);
+  return value_returned;
+
 }
