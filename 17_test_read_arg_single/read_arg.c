@@ -5,7 +5,6 @@
   #define MAX_STRING_LENGTH 100
 
   //function list
-  //int arg_read(char *argv[], char *input_arg_list[][3][MAX_STRING_LENGTH]);
   int arg_read(int argc ,char *argv[], char input_arg_list[][3][MAX_STRING_LENGTH]);
   int print_arg_list(char input_arg_list[][3][MAX_STRING_LENGTH]);
 
@@ -53,19 +52,12 @@ int arg_read(int argc ,char *argv[] ,char input_arg_list[][3][MAX_STRING_LENGTH]
     {
       for(i=1;i<argc;)
       {
-        //printf("------------------------------\n");
-        //printf("##### Check argv[%d] info: %s\n" ,i ,argv[i]);
         for (j=0;;j++)
         {
-          //printf("##### Check input_arg_list[%d][0] info: %s\n" ,i ,input_arg_list[j][0]);
           if ((strcasecmp (input_arg_list[j][0], "--end--") == 0)){break;}
 
           if ((strcasecmp (argv[i], input_arg_list[j][0]) == 0))
-          //if ((strcmp (argv[i], input_arg_list[j][0]) == 0))
           {
-            //printf("##### get input_arg_list[j][0] info: %s\n", argv[i+1]);
-            //strcpy(input_arg_list[j][1], argv[i+1]);
-            //TODO//strncpy(input_arg_list[j][1], argv[i+1] ,MAX_STRING_LENGTH);
             strncpy(input_arg_list[j][1], argv[i+1] ,strlen(argv[i+1]));
             printf("##### Get %s info: %s\n" ,input_arg_list[j][0] ,input_arg_list[j][1]);
           }
@@ -122,7 +114,6 @@ int main(int argc ,char *argv[])
   {
     int i=0;
     printf("------------------------------\n");
-    //printf("##### Get argument is %s\n", *argv);
     printf("##### Get argc is %d\n"    , argc);
     printf("##### Get argv is ");
     for(i=0;i<argc;i++)
@@ -140,13 +131,11 @@ int main(int argc ,char *argv[])
   }
   #endif
 
-
   #if 1
   {
     //ToCheck
     //#define MAX_STRING_LENGTH 100
     char input_arg_list1[][3][MAX_STRING_LENGTH]=
-    //char *input_arg_list1[][3]=
     {
        {"--port"  ,""         ,"set port name info"}
       ,{"--file"  ,""         ,"set file name"}
@@ -179,7 +168,6 @@ int main(int argc ,char *argv[])
       //check the argument list contents updated
       print_arg_list(input_arg_list1);
     #endif
-
 
   }
   #endif
