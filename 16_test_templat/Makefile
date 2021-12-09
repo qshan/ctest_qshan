@@ -1,13 +1,17 @@
-#
+#!/usr/bin/make
 #
 #meaning of specific strings
-#*#     $@ all of FileNameWithExtension produced
-#       $* all of FileNameWithoutExtension produced
-#       $< the FileName of first dependance item
-#*#     $^ the dependance items with space islated and remove the repeated item
-#       $+ the dependance items with space islated, but do not remove the repeated item
-#       $? the dependance items with space islated, but just have the new item
-#       %
+#reference info is here: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables
+#--------------------------------------------------
+#*#     $@  The file name of the target of the rule. ‘$@’ is the name of whichever target caused the rule’s recipe to be run. all of FileNameWithExtension produced
+#       $*  all of FileNameWithoutExtension produced
+#       $<  the FileName of first dependence item
+#*#     $^  the dependency items with space isolated and remove the repeated item
+#       $+  the dependency items with space isolated, but do not remove the repeated item
+#       $?  the dependency items with space isolated, but just have the new item
+#       $|  The names of all the order-only prerequisites, with spaces between them
+#--------------------------------------------------
+#*#     %   pattern rules, like %.o : %.c
 #
 #automatic variables          Descriptions
 #*#     $@                    The file name of the target
@@ -103,7 +107,7 @@ INC_DIRS              := $(shell find $(PRO_ROOT_PATH)/libs -type d -iname heade
 $(info "INC_DIRS is $(INC_DIRS)")
 INC_DIRS              +=  $(PRO_ROOT_PATH)/test_main/header \
 
-#													$(PRO_ROOT_PATH)/libs/say_hello/header \
+#                          $(PRO_ROOT_PATH)/libs/say_hello/header \
 #                          $(PRO_ROOT_PATH)/libs/practice/header
 INC_DIRS              += $(INC_DIRS_SHARED)
 INC_FLAGS             := $(addprefix -I,$(INC_DIRS))
