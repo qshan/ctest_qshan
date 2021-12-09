@@ -3,7 +3,8 @@
 #meaning of specific strings
 #reference info is here: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables
 #--------------------------------------------------
-#*#     $@      The file name of the target of the rule. ‘$@’ is the name of whichever target caused the rule’s recipe to be run. all of FileNameWithExtension produced
+#*#     $@      The file name of the target of the rule. ‘$@’ is the name of whichever target caused the rule’s recipe
+#                 to be run. all of FileNameWithExtension produced
 #       $*      all of FileNameWithoutExtension produced
 #       $<      the FileName of first dependence item
 #*#     $^      the dependency items with space isolated and remove the repeated item
@@ -12,7 +13,7 @@
 #       $|      The names of all the order-only prerequisites, with spaces between them
 #--------------------------------------------------
 #       $(@D)   The directory part of the file name of the target, with the trailing slash removed.
-#                 If the value of ‘$@’ is dir/foo.o then ‘$(@D)’ is dir. This value is . if ‘$@’ does not contain a slash.
+#                 If the value of ‘$@’ is dir/foo.o then ‘$(@D)’ is dir. This value is . if ‘$@’ does not contain a slash
 #       $(@F)   The file-within-directory part of the file name of the target. If the value of ‘$@’
 #                 is dir/foo.o then ‘$(@F)’ is foo.o. ‘$(@F)’ is equivalent to ‘$(notdir $@)’.
 #       $(*D)
@@ -29,7 +30,8 @@
 #       $(+F)   Lists of the directory parts and the file-within-directory parts of all prerequisites,
 #                 including multiple instances of duplicated prerequisites.
 #       $(?D)
-#       $(?F)   Lists of the directory parts and the file-within-directory parts of all prerequisites that are newer than the target.
+#       $(?F)   Lists of the directory parts and the file-within-directory parts of all prerequisites that are newer
+#                 than the target.
 #--------------------------------------------------
 #*#     %   pattern rules, like %.o : %.c
 #--------------------------------------------------
@@ -43,6 +45,11 @@
 # $(filter-out <pattern...>,<text> )
 # $(sort <list> )
 # $(word <n>,<text> )
+# $(word n,text)
+# $(wordlist s,e,text)
+# $(words text)
+# $(firstword names…)
+# $(lastword names…)
 #--------------------------------------------------
 ##### function about operation of filename
 # $(dir <names...> )
@@ -52,19 +59,30 @@
 # $(addsuffix <suffix>,<names...> )
 # $(addprefix <prefix>,<names...> )
 # $(join <list1>,<list2> )
+# $(wildcard pattern)
+# $(realpath names…)
+# $(abspath names…)
+#
+# $(file op filename[,text])
 #--------------------------------------------------
 ##### function foreach
 # $(foreach <var>,<list>,<text> )
 #--------------------------------------------------
-##### function if
+##### function conditional
 # $(if <condition>,<then-part> )
 # $(if <condition>,<then-part>,<else-part> )
+# $(if condition,then-part[,else-part])
+# $(or condition1[,condition2[,condition3…]])
+# $(and condition1[,condition2[,condition3…]])
+
 #--------------------------------------------------
 ##### function call
 # $(call <expression>,<parm1>,<parm2>,<parm3>...)
 #--------------------------------------------------
 ##### function origin
 # $(origin <variable> )
+#--------------------------------------------------
+# $(value variable)
 #--------------------------------------------------
 ##### function shell
 # $(shell ls *.c)
@@ -144,8 +162,8 @@ TOP_OBJ_SHARED ?= TestSharedLib.o
 
 #source code for shared lib
 SRC_SHARED  = $(wildcard \
-								$(SRC_SHARED_DIRS)/*.c \
-								$(SRC_SHARED_DIRS)/*.cpp)
+                $(SRC_SHARED_DIRS)/*.c \
+                $(SRC_SHARED_DIRS)/*.cpp)
 $(info "SRC_SHARED is $(SRC_SHARED)")
 OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 
@@ -262,3 +280,6 @@ clean:
 -include $(DEPS)
 
 MKDIR_P ?= mkdir -p
+
+# LOG_INFO ?= | tee fshan_log.txt
+# $(LOG_INFO)
