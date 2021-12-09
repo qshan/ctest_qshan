@@ -3,15 +3,79 @@
 #meaning of specific strings
 #reference info is here: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables
 #--------------------------------------------------
-#*#     $@  The file name of the target of the rule. ‘$@’ is the name of whichever target caused the rule’s recipe to be run. all of FileNameWithExtension produced
-#       $*  all of FileNameWithoutExtension produced
-#       $<  the FileName of first dependence item
-#*#     $^  the dependency items with space isolated and remove the repeated item
-#       $+  the dependency items with space isolated, but do not remove the repeated item
-#       $?  the dependency items with space isolated, but just have the new item
-#       $|  The names of all the order-only prerequisites, with spaces between them
+#*#     $@      The file name of the target of the rule. ‘$@’ is the name of whichever target caused the rule’s recipe to be run. all of FileNameWithExtension produced
+#       $*      all of FileNameWithoutExtension produced
+#       $<      the FileName of first dependence item
+#*#     $^      the dependency items with space isolated and remove the repeated item
+#       $+      the dependency items with space isolated, but do not remove the repeated item
+#       $?      the dependency items with space isolated, but just have the new item
+#       $|      The names of all the order-only prerequisites, with spaces between them
+#--------------------------------------------------
+#       $(@D)   The directory part of the file name of the target, with the trailing slash removed.
+#                 If the value of ‘$@’ is dir/foo.o then ‘$(@D)’ is dir. This value is . if ‘$@’ does not contain a slash.
+#       $(@F)   The file-within-directory part of the file name of the target. If the value of ‘$@’
+#                 is dir/foo.o then ‘$(@F)’ is foo.o. ‘$(@F)’ is equivalent to ‘$(notdir $@)’.
+#       $(*D)
+#       $(*F)   The directory part and the file-within-directory part of the stem; dir and foo in this example.
+#       $(%D)
+#       $(%F)   The directory part and the file-within-directory part of the target archive member name.
+#                 This makes sense only for archive member targets of the form archive(member) and is useful
+#                 only when member may contain a directory name. (See Archive Members as Targets.)
+#       $(<D)
+#       $(<F)   The directory part and the file-within-directory part of the first prerequisite.
+#       $(^D)
+#       $(^F)   Lists of the directory parts and the file-within-directory parts of all prerequisites.
+#       $(+D)
+#       $(+F)   Lists of the directory parts and the file-within-directory parts of all prerequisites,
+#                 including multiple instances of duplicated prerequisites.
+#       $(?D)
+#       $(?F)   Lists of the directory parts and the file-within-directory parts of all prerequisites that are newer than the target.
 #--------------------------------------------------
 #*#     %   pattern rules, like %.o : %.c
+#--------------------------------------------------
+##### function about string
+# $(subst <from>,<to>,<text> )
+# $(patsubst <pattern>,<replacement>,<text> )
+# $(strip <string> )
+# $(strip a b c )
+# $(findstring <find>,<in> )
+# $(filter <pattern...>,<text> )
+# $(filter-out <pattern...>,<text> )
+# $(sort <list> )
+# $(word <n>,<text> )
+#--------------------------------------------------
+##### function about operation of filename
+# $(dir <names...> )
+# $(notdir <names...> )
+# $(suffix <names...> )
+# $(basename <names...> )
+# $(addsuffix <suffix>,<names...> )
+# $(addprefix <prefix>,<names...> )
+# $(join <list1>,<list2> )
+#--------------------------------------------------
+##### function foreach
+# $(foreach <var>,<list>,<text> )
+#--------------------------------------------------
+##### function if
+# $(if <condition>,<then-part> )
+# $(if <condition>,<then-part>,<else-part> )
+#--------------------------------------------------
+##### function call
+# $(call <expression>,<parm1>,<parm2>,<parm3>...)
+#--------------------------------------------------
+##### function origin
+# $(origin <variable> )
+#--------------------------------------------------
+##### function shell
+# $(shell ls *.c)
+# files := $(shell ls *.c)
+#--------------------------------------------------
+##### function control make process
+# $(error <text ...> )
+# $(warning <text ...> )
+# $(info <text ...> )
+#--------------------------------------------------
+#--------------------------------------------------
 #
 #automatic variables          Descriptions
 #*#     $@                    The file name of the target
