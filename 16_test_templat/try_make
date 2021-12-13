@@ -1,9 +1,12 @@
 #!/bin/bash
 
+export MakeBuildLogFileName="fshan_cbuild_log.txt"
+
 # run like this
 #for gcc make
 #make clean
-make all
+#make all
+make all | tee -a ${MakeBuildLogFileName}
 #make
 #./build_gcc/test_main
 #make run

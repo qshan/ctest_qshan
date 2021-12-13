@@ -281,5 +281,5 @@ clean:
 
 MKDIR_P ?= mkdir -p
 
-# LOG_INFO ?= | tee fshan_log.txt
+# LOG_INFO ?= | tee -a fshan_log.txt
 # $(LOG_INFO)
