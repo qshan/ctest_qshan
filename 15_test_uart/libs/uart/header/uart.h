@@ -24,12 +24,28 @@
   #include <poll.h>       /* poll, ppoll - wait for some event on a file descriptor */
 //  #include <time.h>
 
-  //#define CMD_CODE_WRITE            0x01
+  //UART decode format
+  //bit[7:0] is from sw view, remove the start and end of serial package
+  //
+  //bit[3:0]  -> 1:csr ,2:spi ,3:efuse
+  //
+  //bit[4]    -> 0:wirte ,1:read
+  //bit[7:4]  -> 0/2/3/5/(6+end):wirte ,1/4/(7+end):read
+
+  //read 32 bit addr, 32 bit data
   #define CMD_CODE_READ             0x11
   #define CMD_READ_PACKAGE_LEN      0x5
   //#define CMD_READ_PACKAGE_LEN      0x1024
+  //write 32 bit addr, 32 bit data
   #define CMD_CODE_WRITE            0x01
   #define CMD_WRITE_PACKAGE_LEN     0x9
+
+  //read 16 bit addr, 8 bit data
+  #define CMD_CODE_READ16           0x13
+  #define CMD_READ16_PACKAGE_LEN    0x3
+  //write 16 bit addr, 8 bit data
+  #define CMD_CODE_WRITE16          0x03
+  #define CMD_WRITE16_PACKAGE_LEN   0x4
 
   //#define BUFFER_RECEIVED_SIZE      1024
   #define BUFFER_RECEIVED_SIZE      200
