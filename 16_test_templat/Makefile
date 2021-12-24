@@ -13,7 +13,8 @@
 #       $|      The names of all the order-only prerequisites, with spaces between them
 #--------------------------------------------------
 #       $(@D)   The directory part of the file name of the target, with the trailing slash removed.
-#                 If the value of ‘$@’ is dir/foo.o then ‘$(@D)’ is dir. This value is . if ‘$@’ does not contain a slash
+#                 If the value of ‘$@’ is dir/foo.o then ‘$(@D)’ is dir.
+#                 This value is . if ‘$@’ does not contain a slash
 #       $(@F)   The file-within-directory part of the file name of the target. If the value of ‘$@’
 #                 is dir/foo.o then ‘$(@F)’ is foo.o. ‘$(@F)’ is equivalent to ‘$(notdir $@)’.
 #       $(*D)
@@ -93,6 +94,11 @@
 # $(warning <text ...> )
 # $(info <text ...> )
 #--------------------------------------------------
+##### rule of Makefile, update a list from a to b
+# $(var_name:a=b)
+# $(var_name:.o=.c)
+# same as
+# $(patsubst %a ,%b ,var_name)
 #--------------------------------------------------
 #
 #automatic variables          Descriptions
@@ -162,8 +168,8 @@ TOP_OBJ_SHARED ?= TestSharedLib.o
 
 #source code for shared lib
 SRC_SHARED  = $(wildcard \
-                $(SRC_SHARED_DIRS)/*.c \
-                $(SRC_SHARED_DIRS)/*.cpp)
+								$(SRC_SHARED_DIRS)/*.c \
+								$(SRC_SHARED_DIRS)/*.cpp)
 $(info "SRC_SHARED is $(SRC_SHARED)")
 OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 
@@ -205,6 +211,18 @@ DEBFLAGS += -g
 #DEBFLAGS ?= -O0
 # '-O3' is optimize for performance
 #DEBFLAGS ?= -O3
+# '-E' means Stop after the preprocessing stage; do not run the compiler proper.
+#DEBFLAGS ?= -E
+# '-S' means Stop after the stage of compilation proper; do not assemble
+#DEBFLAGS ?= -S
+# '-c' means Compile or assemble the source files, but do not link.
+#DEBFLAGS ?= -c
+# '-save-temps' means Store the usual "temporary" intermediate files permanently;
+#                     place them in the current directory and name them based on the source file
+#DEBFLAGS+= -save-temps
+# '-v' means Print (on standard error output) the commands executed to run the stages of compilation.
+#            Also print the version number of the compiler driver program and of the preprocessor and the compiler proper.
+#DEBFLAGS ?= -v
 # '-Omin' is optimize for code size
 DEBFLAGS ?= -Omin
 # '-Wall' is to enable the all warning
