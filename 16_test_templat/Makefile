@@ -183,7 +183,7 @@ $(info "INC_DIRS_SHARED is $(INC_DIRS_SHARED)")
 INC_FLAGS_SHARED      := $(addprefix -I,$(INC_DIRS_SHARED))
 $(info "INC_FLAGS_SHARED is $(INC_FLAGS_SHARED)")
 
-CFLAGS_SHARED         ?= $(INC_FLAGS_SHARED) -fPIC -shared
+
 CPPFLAGS_SHARED       ?= $(INC_FLAGS_SHARED) -fPIC -shared
 
 #source code info
@@ -246,14 +246,23 @@ DEBFLAGS += -DPRINT_DEBUG_ENABLE=1
 #.DEFAULT: compile
 .DEFAULT: all
 
+#TODO set here to select the compile option
+USE_LIBS_LINK=ENABLE_1
+#USE_LIBS_LINK=DISABLE_0
+
 compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
 	$(info "Here get : " $(BUILD_DIR)/$(TOP_OBJ_SHARED))
 #run#	$(BUILD_DIR)/$(TARGET_EXEC)
 #compile:  $(BUILD_DIR)/$(TOP_OBJ_SHARED)
 
+ifeq ($(USE_LIBS_LINK),ENABLE_1)
+$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
+	$(CC) $(OBJS) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED) $(DEBFLAGS) -o $@ $(LDFLAGS)
+else
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(OBJ_SHARED)
 	$(CC) $(OBJS) $(OBJ_SHARED) $(DEBFLAGS) -o $@ $(LDFLAGS)
 #	$(CXX) $(OBJS) $(OBJ_SHARED) -o $@ $(LDFLAGS)
+endif
 
 ### shared lib, the name of libs is set by manual.
 $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED): $(SRC_SHARED)
