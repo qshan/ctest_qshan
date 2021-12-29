@@ -134,7 +134,9 @@ TARGET_EXEC ?= test_run
 #set project/code root path
 PRO_ROOT_PATH = .
 #set the build path, the temp file path
-BUILD_DIR ?= $(PRO_ROOT_PATH)/build_make
+export BUILD_DIR ?= $(PRO_ROOT_PATH)/build_make
+$(info "BUILD_DIR is $(BUILD_DIR)")
+#export $$BUILD_DIR
 #------------------------------
 #test code
 SRC_DIRS ?= $(PRO_ROOT_PATH)/test_main/src
@@ -179,6 +181,7 @@ OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 INC_DIRS_SHARED       := $(shell find $(PRO_ROOT_PATH)/libs_shared -type d -iname header)
 $(info "INC_DIRS_SHARED is $(INC_DIRS_SHARED)")
 INC_FLAGS_SHARED      := $(addprefix -I,$(INC_DIRS_SHARED))
+$(info "INC_FLAGS_SHARED is $(INC_FLAGS_SHARED)")
 
 CFLAGS_SHARED         ?= $(INC_FLAGS_SHARED) -fPIC -shared
 CPPFLAGS_SHARED       ?= $(INC_FLAGS_SHARED) -fPIC -shared
@@ -221,7 +224,8 @@ DEBFLAGS += -g
 #                     place them in the current directory and name them based on the source file
 #DEBFLAGS+= -save-temps
 # '-v' means Print (on standard error output) the commands executed to run the stages of compilation.
-#            Also print the version number of the compiler driver program and of the preprocessor and the compiler proper.
+#            Also print the version number of the compiler driver program and of the preprocessor
+#            and the compiler proper.
 #DEBFLAGS ?= -v
 # '-Omin' is optimize for code size
 DEBFLAGS ?= -Omin
@@ -231,6 +235,7 @@ DEBFLAGS += -Wall
 DEBFLAGS += -Werror
 # '-Wfatal-errors' is to make compile abort when the hit the errors firstly
 DEBFLAGS += -Wfatal-errors
+#
 #DEBFLAGS ?= -O -g -DSCULL_DEBUG	# "-O" is needed to expand inlines
 
 #TODO#worked
@@ -241,7 +246,7 @@ DEBFLAGS += -DPRINT_DEBUG_ENABLE=1
 #.DEFAULT: compile
 .DEFAULT: all
 
-compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs/$(TOP_OBJ_SHARED)
+compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
 	$(info "Here get : " $(BUILD_DIR)/$(TOP_OBJ_SHARED))
 #run#	$(BUILD_DIR)/$(TARGET_EXEC)
 #compile:  $(BUILD_DIR)/$(TOP_OBJ_SHARED)
@@ -251,7 +256,7 @@ $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(OBJ_SHARED)
 #	$(CXX) $(OBJS) $(OBJ_SHARED) -o $@ $(LDFLAGS)
 
 ### shared lib, the name of libs is set by manual.
-$(BUILD_DIR)/libs/$(TOP_OBJ_SHARED): $(SRC_SHARED)
+$(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED): $(SRC_SHARED)
 	$(MKDIR_P) $(dir $@)
 	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) $(DEBFLAGS) -o $@
 #	$(CC) $(SRC_SHARED) $(CFLAGS)  $(CFLAGS_SHARED) -o $@

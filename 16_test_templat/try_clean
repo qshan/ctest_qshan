@@ -6,3 +6,5 @@ scons -c
 \rm -rf  .sconsign.dblite*
 
 \rm -rf  autoscan.log*
+
+\rm -rf fshan_cbuild_log.txt

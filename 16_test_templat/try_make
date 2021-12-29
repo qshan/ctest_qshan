@@ -7,6 +7,7 @@ export MakeBuildLogFileName="fshan_cbuild_log.txt"
 #make clean
 #make all
 make all | tee -a ${MakeBuildLogFileName}
+#echo "BUILD_DIR is: " $BUILD_DIR
 #make
 #./build_gcc/test_main
 #make run
