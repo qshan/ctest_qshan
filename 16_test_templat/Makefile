@@ -208,8 +208,23 @@ CPPFLAGS              ?= $(INC_FLAGS) -MMD -MP
 
 #------------------------------
 #compile option here
-# '-g' is for dgb support
-DEBFLAGS += -g
+## '-g' mean to generate default debug information for dgb support
+#DEBFLAGS += -g
+## '-g0' mean no debug information for dgb support
+#DEBFLAGS += -g0
+## '-g1' mean minimal debug information for dgb support
+#DEBFLAGS += -g1
+# '-g3' mean maximal debug information for dgb support
+DEBFLAGS += -g3
+#
+# for gcc
+#gcc#DEBFLAGS += -fcallgraph-info
+#
+# for clang
+DEBFLAGS += -ftrigraphs
+DEBFLAGS += -trigraphs
+DEBFLAGS += -finstrument-functions
+#
 # '-O0' is optimize for faster compilation and build time
 #DEBFLAGS ?= -O0
 # '-O3' is optimize for performance
