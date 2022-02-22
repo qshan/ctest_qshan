@@ -170,8 +170,8 @@ TOP_OBJ_SHARED ?= TestSharedLib.o
 
 #source code for shared lib
 SRC_SHARED  = $(wildcard \
-								$(SRC_SHARED_DIRS)/*.c \
-								$(SRC_SHARED_DIRS)/*.cpp)
+                $(SRC_SHARED_DIRS)/*.c \
+                $(SRC_SHARED_DIRS)/*.cpp)
 $(info "SRC_SHARED is $(SRC_SHARED)")
 OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 
@@ -209,21 +209,21 @@ CPPFLAGS              ?= $(INC_FLAGS) -MMD -MP
 #------------------------------
 #compile option here
 ## '-g' mean to generate default debug information for dgb support
-#DEBFLAGS += -g
+DEBFLAGS += -g
 ## '-g0' mean no debug information for dgb support
 #DEBFLAGS += -g0
 ## '-g1' mean minimal debug information for dgb support
 #DEBFLAGS += -g1
 # '-g3' mean maximal debug information for dgb support
-DEBFLAGS += -g3
+#DEBFLAGS += -g3
 #
 # for gcc
 #gcc#DEBFLAGS += -fcallgraph-info
 #
 # for clang
-DEBFLAGS += -ftrigraphs
-DEBFLAGS += -trigraphs
-DEBFLAGS += -finstrument-functions
+#issued#DEBFLAGS += -ftrigraphs
+#issued#DEBFLAGS += -trigraphs
+#issued#DEBFLAGS += -finstrument-functions
 #
 # '-O0' is optimize for faster compilation and build time
 #DEBFLAGS ?= -O0
@@ -234,7 +234,7 @@ DEBFLAGS += -finstrument-functions
 # '-S' means Stop after the stage of compilation proper; do not assemble
 #DEBFLAGS ?= -S
 # '-c' means Compile or assemble the source files, but do not link.
-#DEBFLAGS ?= -c
+DEBFLAGS += -c
 # '-save-temps' means Store the usual "temporary" intermediate files permanently;
 #                     place them in the current directory and name them based on the source file
 #DEBFLAGS+= -save-temps
@@ -243,13 +243,13 @@ DEBFLAGS += -finstrument-functions
 #            and the compiler proper.
 #DEBFLAGS ?= -v
 # '-Omin' is optimize for code size
-DEBFLAGS ?= -Omin
+#DEBFLAGS += -Omin
 # '-Wall' is to enable the all warning
 DEBFLAGS += -Wall
 # '-Werror' is to make all warnings into errors
-DEBFLAGS += -Werror
+#DEBFLAGS += -Werror
 # '-Wfatal-errors' is to make compile abort when the hit the errors firstly
-DEBFLAGS += -Wfatal-errors
+#DEBFLAGS += -Wfatal-errors
 #
 #DEBFLAGS ?= -O -g -DSCULL_DEBUG	# "-O" is needed to expand inlines
 
@@ -283,7 +283,6 @@ endif
 $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED): $(SRC_SHARED)
 	$(MKDIR_P) $(dir $@)
 	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) $(DEBFLAGS) -o $@
-#	$(CC) $(SRC_SHARED) $(CFLAGS)  $(CFLAGS_SHARED) -o $@
 ##	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
 
 # assembly

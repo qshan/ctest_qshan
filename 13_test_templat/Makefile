@@ -9,11 +9,11 @@
 # $? the dependance items with space islated, but just have the new item
 # %
 #
-#automatic variables          descriptions
-#       $@                    The file name of the target
+#automatic variables          Descriptions
+#*#     $@                    The file name of the target
 #       $<                    The name of the first prerequisite
-#       $^                    The names of all the prerequisites
-#       $+                    prerequisites listed more than once are duplicated in the order
+#*#     $^                    The names of all the prerequisites
+#       $+                    Prerequisites listed more than once are duplicated in the order
 #
 # define a variable, Var=xx , and the methods of using variable is $(Var)
 #
@@ -28,8 +28,8 @@
 # %.o: %.c
 #   gcc -g -o $@ -c $<
 #
-
-#.PHONY: all
+#
+#.PHONY: all #info#this items is for no dependance item
 #------------------------------
 #CC=gcc
 #CXX=g++
@@ -42,7 +42,9 @@ TARGET_EXEC ?= test13
 #set project/code root path
 PRO_ROOT_PATH = .
 #set the build path, the temp file path
-BUILD_DIR ?= $(PRO_ROOT_PATH)/build_make
+export BUILD_DIR ?= $(PRO_ROOT_PATH)/build_make
+$(info "BUILD_DIR is $(BUILD_DIR)")
+#export $$BUILD_DIR
 #------------------------------
 #test code
 SRC_DIRS ?= $(PRO_ROOT_PATH)/test/src
@@ -74,12 +76,15 @@ TOP_OBJ_SHARED ?= Test13SharedLib.o
 SRC_SHARED  = $(wildcard \
                 $(SRC_SHARED_DIRS)/*.c \
                 $(SRC_SHARED_DIRS)/*.cpp)
+$(info "SRC_SHARED is $(SRC_SHARED)")
 OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 
 #ToCheck
 #include/HeadhFile path for shared lib generating info
 INC_DIRS_SHARED       := $(PRO_ROOT_PATH)/libs/shared/header
+$(info "INC_DIRS_SHARED is $(INC_DIRS_SHARED)")
 INC_FLAGS_SHARED      := $(addprefix -I,$(INC_DIRS_SHARED))
+$(info "INC_FLAGS_SHARED is $(INC_FLAGS_SHARED)")
 
 CFLAGS_SHARED         ?= $(INC_FLAGS_SHARED) -fPIC -shared
 CPPFLAGS_SHARED       ?= $(INC_FLAGS_SHARED) -fPIC -shared
@@ -91,6 +96,7 @@ DEPS                  := $(OBJS:.o=.d)
 
 #include/HeadhFile path for source code info
 INC_DIRS              := $(shell find $(SRC_DIRS) -type d)
+$(info "INC_DIRS is $(INC_DIRS)")
 INC_DIRS              +=  $(PRO_ROOT_PATH)/test/header \
                           $(PRO_ROOT_PATH)/libs/say_hello/header \
 
