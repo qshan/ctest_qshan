@@ -8,3 +8,8 @@ scons -c
 \rm -rf  autoscan.log*
 
 \rm -rf fshan_cbuild_log.txt
+
+\rm -rf *.i
+\rm -rf *.s
+\rm -rf *.o
+\rm -rf *.bc

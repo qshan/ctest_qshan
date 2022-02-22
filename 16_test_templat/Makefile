@@ -125,8 +125,8 @@
 #------------------------------
 #CC=gcc
 #CXX=g++
-CC=clang
-CXX=clang++
+CC:=clang
+CXX:=clang++
 #------------------------------
 #set target name
 TARGET_EXEC ?= test_run
@@ -134,12 +134,12 @@ TARGET_EXEC ?= test_run
 #set project/code root path
 PRO_ROOT_PATH = .
 #set the build path, the temp file path
-export BUILD_DIR ?= $(PRO_ROOT_PATH)/build_make
+export BUILD_DIR := $(PRO_ROOT_PATH)/build_make
 $(info "BUILD_DIR is $(BUILD_DIR)")
 #export $$BUILD_DIR
 #------------------------------
 #test code
-SRC_DIRS ?= $(PRO_ROOT_PATH)/test_main/src
+SRC_DIRS := $(PRO_ROOT_PATH)/test_main/src
 #libs code
 #INC_DIRS							:= $(shell find $(SRC_DIRS) -type d)
 #TODO#Add the src by manual
@@ -152,14 +152,14 @@ $(info "SRC_DIRS is $(SRC_DIRS)")
 #get the shared path here
 #SRC_SHARED_DIRS ?= $(PRO_ROOT_PATH)/libs_shared/shared/src
 #SRC_SHARED_DIRS ?= $(PRO_ROOT_PATH)/libs_shared
-SRC_SHARED_DIRS ?= $(shell find ./libs_shared -type d -iname "*src")
+SRC_SHARED_DIRS := $(shell find ./libs_shared -type d -iname "*src")
 $(info "SRC_SHARED_DIRS is $(SRC_SHARED_DIRS)")
 
 #log define
 BUILD_LOG_FILE ?= $(BUILD_DIR)/$(TARGET_EXEC).log
 
 #share lib name defined
-TOP_OBJ_SHARED ?= TestSharedLib.o
+TOP_OBJ_SHARED := TestSharedLib.o
 
 #$(BUILD_LOG_FILE):
 #	$(MKDIR_P) $(BUILD_DIR)
@@ -169,11 +169,11 @@ TOP_OBJ_SHARED ?= TestSharedLib.o
 #all: $(TARGET_EXEC)
 
 #source code for shared lib
-SRC_SHARED  = $(wildcard \
-                $(SRC_SHARED_DIRS)/*.c \
-                $(SRC_SHARED_DIRS)/*.cpp)
+SRC_SHARED  := $(wildcard \
+								$(SRC_SHARED_DIRS)/*.c \
+								$(SRC_SHARED_DIRS)/*.cpp)
 $(info "SRC_SHARED is $(SRC_SHARED)")
-OBJ_SHARED  = $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
+OBJ_SHARED  := $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
 
 #ToCheck
 #include/HeadhFile path for shared lib generating info
@@ -184,13 +184,16 @@ INC_FLAGS_SHARED      := $(addprefix -I,$(INC_DIRS_SHARED))
 $(info "INC_FLAGS_SHARED is $(INC_FLAGS_SHARED)")
 
 
-CPPFLAGS_SHARED       ?= $(INC_FLAGS_SHARED) -fPIC -shared
+CFLAGS_SHARED					:= $(INC_FLAGS_SHARED) -fPIC -shared
+CPPFLAGS_SHARED       := $(INC_FLAGS_SHARED) -fPIC -shared
 
 #source code info
-SRCS                  := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
+SRCS                  := $(shell find $(SRC_DIRS) -type f -name *.cpp -or -name *.c -or -name *.s)
 $(info "SRCS is $(SRCS)")
 OBJS                  := $(SRCS:%=$(BUILD_DIR)/%.o)
+$(info "OBJS is $(OBJS)")
 DEPS                  := $(OBJS:.o=.d)
+$(info "DEPS is $(DEPS)")
 
 #include/HeadhFile path for source code info
 #INC_DIRS              := $(shell find $(SRC_DIRS) -type d -iname header)
@@ -234,7 +237,7 @@ DEBFLAGS += -g
 # '-S' means Stop after the stage of compilation proper; do not assemble
 #DEBFLAGS ?= -S
 # '-c' means Compile or assemble the source files, but do not link.
-DEBFLAGS += -c
+#DEBFLAGS += -c
 # '-save-temps' means Store the usual "temporary" intermediate files permanently;
 #                     place them in the current directory and name them based on the source file
 #DEBFLAGS+= -save-temps
@@ -262,19 +265,22 @@ DEBFLAGS += -DPRINT_DEBUG_ENABLE=1
 .DEFAULT: all
 
 #TODO set here to select the compile option
-USE_LIBS_LINK=ENABLE_1
-#USE_LIBS_LINK=DISABLE_0
+#USE_LIBS_LINK=ENABLE_1
+USE_LIBS_LINK=DISABLE_0
 
 compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
-	$(info "Here get : " $(BUILD_DIR)/$(TOP_OBJ_SHARED))
+	$(info "Here get : " $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED))
 #run#	$(BUILD_DIR)/$(TARGET_EXEC)
 #compile:  $(BUILD_DIR)/$(TOP_OBJ_SHARED)
 
 ifeq ($(USE_LIBS_LINK),ENABLE_1)
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
+	$(info "Use the ###libs### to generate target")
 	$(CC) $(OBJS) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED) $(DEBFLAGS) -o $@ $(LDFLAGS)
 else
+#$(BUILD_DIR)/$(TARGET_EXEC): $(BUILD_DIR)/$(OBJS) $(OBJ_SHARED)
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(OBJ_SHARED)
+	$(info "Use the ###src### to generate target")
 	$(CC) $(OBJS) $(OBJ_SHARED) $(DEBFLAGS) -o $@ $(LDFLAGS)
 #	$(CXX) $(OBJS) $(OBJ_SHARED) -o $@ $(LDFLAGS)
 endif
