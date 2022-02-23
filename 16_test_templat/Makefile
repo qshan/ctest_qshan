@@ -133,12 +133,12 @@ TARGET_EXEC ?= test_run
 #------------------------------
 #set project/code root path
 PRO_ROOT_PATH = .
-#set the build path, the temp file path
+#TODO#set the build path, the temp file path
 export BUILD_DIR := $(PRO_ROOT_PATH)/build_make
 $(info "BUILD_DIR is $(BUILD_DIR)")
 #export $$BUILD_DIR
 #------------------------------
-#test code
+#TODO#test code
 SRC_DIRS := $(PRO_ROOT_PATH)/test_main/src
 #libs code
 #INC_DIRS							:= $(shell find $(SRC_DIRS) -type d)
@@ -148,6 +148,7 @@ SRC_DIRS := $(PRO_ROOT_PATH)/test_main/src
 #Add the src by searching
 SRC_DIRS += $(shell find ./libs -type d -iname "*src")
 $(info "SRC_DIRS is $(SRC_DIRS)")
+#TODO#----------
 #shared libs code
 #get the shared path here
 #SRC_SHARED_DIRS ?= $(PRO_ROOT_PATH)/libs_shared/shared/src
@@ -158,7 +159,8 @@ $(info "SRC_SHARED_DIRS is $(SRC_SHARED_DIRS)")
 #log define
 BUILD_LOG_FILE ?= $(BUILD_DIR)/$(TARGET_EXEC).log
 
-#share lib name defined
+#----------
+#TODO#share lib name defined
 TOP_OBJ_SHARED := TestSharedLib.o
 
 #$(BUILD_LOG_FILE):
@@ -168,12 +170,16 @@ TOP_OBJ_SHARED := TestSharedLib.o
 
 #all: $(TARGET_EXEC)
 
-#source code for shared lib
+#------------------------------
+#TODO#test code
+#get source code list for shared lib
 SRC_SHARED  := $(wildcard \
 								$(SRC_SHARED_DIRS)/*.c \
 								$(SRC_SHARED_DIRS)/*.cpp)
 $(info "SRC_SHARED is $(SRC_SHARED)")
+#get the obj list
 OBJ_SHARED  := $(SRC_SHARED:%=$(BUILD_DIR)/%.o)
+$(info "OBJ_SHARED is $(OBJ_SHARED)")
 
 #ToCheck
 #include/HeadhFile path for shared lib generating info
@@ -184,28 +190,35 @@ INC_FLAGS_SHARED      := $(addprefix -I,$(INC_DIRS_SHARED))
 $(info "INC_FLAGS_SHARED is $(INC_FLAGS_SHARED)")
 
 
-CFLAGS_SHARED					:= $(INC_FLAGS_SHARED) -fPIC -shared
+#shared code compile control/argument
+CFLAGS_SHARED         := $(INC_FLAGS_SHARED) -fPIC -shared
 CPPFLAGS_SHARED       := $(INC_FLAGS_SHARED) -fPIC -shared
 
-#source code info
+#get the source code list info
 SRCS                  := $(shell find $(SRC_DIRS) -type f -name *.cpp -or -name *.c -or -name *.s)
 $(info "SRCS is $(SRCS)")
+#get the obj list
 OBJS                  := $(SRCS:%=$(BUILD_DIR)/%.o)
 $(info "OBJS is $(OBJS)")
+#get the include path
 DEPS                  := $(OBJS:.o=.d)
 $(info "DEPS is $(DEPS)")
 
-#include/HeadhFile path for source code info
+#get the include/Head File path for source code info
 #INC_DIRS              := $(shell find $(SRC_DIRS) -type d -iname header)
 INC_DIRS              := $(shell find $(PRO_ROOT_PATH)/libs -type d -iname header)
 $(info "INC_DIRS is $(INC_DIRS)")
+#add test case code path
 INC_DIRS              +=  $(PRO_ROOT_PATH)/test_main/header \
 
 #                          $(PRO_ROOT_PATH)/libs/say_hello/header \
 #                          $(PRO_ROOT_PATH)/libs/practice/header
+#add share code/libs header file path
 INC_DIRS              += $(INC_DIRS_SHARED)
+#add prefix for compile
 INC_FLAGS             := $(addprefix -I,$(INC_DIRS))
 
+#source code compile control/argument
 CFLAGS                ?= $(INC_FLAGS) -MMD -MP
 CPPFLAGS              ?= $(INC_FLAGS) -MMD -MP
 
@@ -248,9 +261,9 @@ DEBFLAGS += -g
 # '-Omin' is optimize for code size
 #DEBFLAGS += -Omin
 # '-Wall' is to enable the all warning
-DEBFLAGS += -Wall
+#DEBFLAGS += -Wall
 # '-Werror' is to make all warnings into errors
-#DEBFLAGS += -Werror
+DEBFLAGS += -Werror
 # '-Wfatal-errors' is to make compile abort when the hit the errors firstly
 #DEBFLAGS += -Wfatal-errors
 #
@@ -264,7 +277,7 @@ DEBFLAGS += -DPRINT_DEBUG_ENABLE=1
 #.DEFAULT: compile
 .DEFAULT: all
 
-#TODO set here to select the compile option
+#TODO set here to select the compile option for shared code/libs style
 #USE_LIBS_LINK=ENABLE_1
 USE_LIBS_LINK=DISABLE_0
 
