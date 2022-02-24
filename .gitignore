@@ -5,7 +5,10 @@ tags
 TAGS
 
 
-*.Debug/*
+*.Debug/
 *.Debug
 
+!*.c
+!*.h
+!*.cpp
 *_log.txt

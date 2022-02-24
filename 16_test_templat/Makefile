@@ -134,7 +134,7 @@ TARGET_EXEC ?= test_run
 #set project/code root path
 PRO_ROOT_PATH = .
 #TODO#set the build path, the temp file path
-export BUILD_DIR := $(PRO_ROOT_PATH)/build_make
+export BUILD_DIR ?= $(PRO_ROOT_PATH)/build_make
 $(info "BUILD_DIR is $(BUILD_DIR)")
 #export $$BUILD_DIR
 #------------------------------
@@ -300,7 +300,8 @@ $(info "DebugCompileFlags is $(DebugCompileFlags)")
 
 #compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
 compile : $(BUILD_DIR)/$(TARGET_EXEC)
-	$(info "Here get : " $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED))
+#	$(info "Here get : " $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED))
+	$(info "Here gen : $(BUILD_DIR)/$(TARGET_EXEC)")
 #run#	$(BUILD_DIR)/$(TARGET_EXEC)
 #compile:  $(BUILD_DIR)/$(TOP_OBJ_SHARED)
 
@@ -312,6 +313,7 @@ $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
 
 ### shared lib, the name of libs is set by manual.
 $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED): $(SRC_SHARED)
+	$(info "Here gen : " $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED))
 	$(MKDIR_P) $(dir $@)
 	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) $(DEBFLAGS) $(DebugCompileFlags) -o $@
 ##	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
@@ -339,7 +341,7 @@ $(BUILD_DIR)/%.c.o: %.c
 # c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp
 	$(MKDIR_P) $(dir $@)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEBFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEBFLAGS) $(DebugCompileFlags) -c $< -o $@
 
 #.PHONY: compile
 
@@ -370,6 +372,4 @@ clean:
 -include $(DEPS)
 
 MKDIR_P ?= mkdir -p
-
-# LOG_INFO ?= | tee -a fshan_log.txt
-# $(LOG_INFO)
+RM      ?= \rm -f
