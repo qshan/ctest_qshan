@@ -195,7 +195,8 @@ CFLAGS_SHARED         := $(INC_FLAGS_SHARED) -fPIC -shared
 CPPFLAGS_SHARED       := $(INC_FLAGS_SHARED) -fPIC -shared
 
 #get the source code list info
-SRCS                  := $(shell find $(SRC_DIRS) -type f -iname *.cpp -or -iname *.c -or -iname *.s)
+#SRCS                  := $(shell find $(SRC_DIRS) -type f -iname *.cpp -or -iname *.c -or -iname *.s)
+SRCS                  := $(shell find $(SRC_DIRS) -type f -iname *.cpp -or -iname *.c)
 $(info "SRCS is $(SRCS)")
 #get the obj list
 OBJS                  := $(SRCS:%=$(BUILD_DIR)/%.o)
@@ -244,17 +245,23 @@ DEBFLAGS += -g
 # '-O0' is optimize for faster compilation and build time
 #DEBFLAGS ?= -O0
 # '-O3' is optimize for performance
-#DEBFLAGS ?= -O3
+DEBFLAGS ?= -O3
+#
+DebugCompileFlags :=
+#$(DebugCompileFlags)
 # '-E' means Stop after the preprocessing stage; do not run the compiler proper.
-#DEBFLAGS ?= -E
+#DebugCompileFlags ?= -E
 # '-S' means Stop after the stage of compilation proper; do not assemble
-#DEBFLAGS ?= -S
-# '-c' means Compile or assemble the source files, but do not link.
-#DEBFLAGS += -c
+#DebugCompileFlags ?= -S
+#Attention# '-c' means Compile or assemble the source files, but do not link.
+#it is not prefer to add this argument into common setting
+#Attention#DebugCompileFlags += -c
 # '-save-temps' means Store the usual "temporary" intermediate files permanently;
 #                     place them in the current directory and name them based on the source file
 #it is better to clean before compile with this argument
-#DEBFLAGS+= -save-temps
+DebugCompileFlags+= -save-temps=obj
+#
+#
 # '-v' means Print (on standard error output) the commands executed to run the stages of compilation.
 #            Also print the version number of the compiler driver program and of the preprocessor
 #            and the compiler proper.
@@ -282,12 +289,17 @@ DEBFLAGS += -DPRINT_DEBUG_ENABLE=1
 USE_LIBS_LINK=ENABLE_1
 #USE_LIBS_LINK=DISABLE_0
 
+DebugLinkFlags :=
+#$(DebugLinkFlags)
+
 #CCLDFLAGS_SHARED+= -nostartfiles -Wl,-e,function_shared_test
 #CCLDFLAGS_SHARED+= -nostartfiles
 #CCLDFLAGS_SHARED+= -Wl,-Map=$(try_project_name)_output.map
 
+$(info "DebugCompileFlags is $(DebugCompileFlags)")
 
-compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
+#compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
+compile : $(BUILD_DIR)/$(TARGET_EXEC)
 	$(info "Here get : " $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED))
 #run#	$(BUILD_DIR)/$(TARGET_EXEC)
 #compile:  $(BUILD_DIR)/$(TOP_OBJ_SHARED)
@@ -297,20 +309,21 @@ ifeq ($(USE_LIBS_LINK),ENABLE_1)
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
 	$(info "Use the ###libs### to generate target")
 	$(CC) $(OBJS) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED) $(DEBFLAGS) -o $@ $(CCLDFLAGS_SHARED)
+
+### shared lib, the name of libs is set by manual.
+$(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED): $(SRC_SHARED)
+	$(MKDIR_P) $(dir $@)
+	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) $(DEBFLAGS) $(DebugCompileFlags) -o $@
+##	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
 else
 #==========
 #$(BUILD_DIR)/$(TARGET_EXEC): $(BUILD_DIR)/$(OBJS) $(OBJ_SHARED)
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(OBJ_SHARED)
 	$(info "Use the ###src### to generate target")
-	$(CC) $(OBJS) $(OBJ_SHARED) $(DEBFLAGS) -o $@ $(LDFLAGS)
+	$(CC) $(OBJS) $(OBJ_SHARED) $(DEBFLAGS) $(DebugCompileFlags) -o $@ $(LDFLAGS)
 #	$(CXX) $(OBJS) $(OBJ_SHARED) -o $@ $(LDFLAGS)
 endif
 
-### shared lib, the name of libs is set by manual.
-$(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED): $(SRC_SHARED)
-	$(MKDIR_P) $(dir $@)
-	$(CC) $(SRC_SHARED)  $(CFLAGS_SHARED) $(DEBFLAGS) -o $@
-##	$(CC) $(CPPFLAGS) $(CFLAGS) $(DEBFLAGS) -c $< -o $@
 
 # assembly
 $(BUILD_DIR)/%.s.o : %.s
@@ -321,7 +334,7 @@ $(BUILD_DIR)/%.s.o : %.s
 #$(BUILD_DIR)/%.c.o: %.c
 $(BUILD_DIR)/%.c.o: %.c
 	$(MKDIR_P) $(dir $@)
-	$(CC)  $(CFLAGS) $(DEBFLAGS) -c $< -o $@
+	$(CC)  $(CFLAGS) $(DEBFLAGS) $(DebugCompileFlags) -c $< -o $@
 
 # c++ source
 $(BUILD_DIR)/%.cpp.o: %.cpp

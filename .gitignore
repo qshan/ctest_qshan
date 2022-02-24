@@ -1,8 +1,11 @@
 *.o
 *.d
 
+tags
 TAGS
 
 
 *.Debug/*
 *.Debug
+
+*_log.txt
