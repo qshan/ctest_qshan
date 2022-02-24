@@ -195,7 +195,7 @@ CFLAGS_SHARED         := $(INC_FLAGS_SHARED) -fPIC -shared
 CPPFLAGS_SHARED       := $(INC_FLAGS_SHARED) -fPIC -shared
 
 #get the source code list info
-SRCS                  := $(shell find $(SRC_DIRS) -type f -name *.cpp -or -name *.c -or -name *.s)
+SRCS                  := $(shell find $(SRC_DIRS) -type f -iname *.cpp -or -iname *.c -or -iname *.s)
 $(info "SRCS is $(SRCS)")
 #get the obj list
 OBJS                  := $(SRCS:%=$(BUILD_DIR)/%.o)
@@ -253,6 +253,7 @@ DEBFLAGS += -g
 #DEBFLAGS += -c
 # '-save-temps' means Store the usual "temporary" intermediate files permanently;
 #                     place them in the current directory and name them based on the source file
+#it is better to clean before compile with this argument
 #DEBFLAGS+= -save-temps
 # '-v' means Print (on standard error output) the commands executed to run the stages of compilation.
 #            Also print the version number of the compiler driver program and of the preprocessor
@@ -278,8 +279,13 @@ DEBFLAGS += -DPRINT_DEBUG_ENABLE=1
 .DEFAULT: all
 
 #TODO set here to select the compile option for shared code/libs style
-#USE_LIBS_LINK=ENABLE_1
-USE_LIBS_LINK=DISABLE_0
+USE_LIBS_LINK=ENABLE_1
+#USE_LIBS_LINK=DISABLE_0
+
+#CCLDFLAGS_SHARED+= -nostartfiles -Wl,-e,function_shared_test
+#CCLDFLAGS_SHARED+= -nostartfiles
+#CCLDFLAGS_SHARED+= -Wl,-Map=$(try_project_name)_output.map
+
 
 compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
 	$(info "Here get : " $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED))
@@ -287,10 +293,12 @@ compile : $(BUILD_DIR)/$(TARGET_EXEC) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
 #compile:  $(BUILD_DIR)/$(TOP_OBJ_SHARED)
 
 ifeq ($(USE_LIBS_LINK),ENABLE_1)
+#==========
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED)
 	$(info "Use the ###libs### to generate target")
-	$(CC) $(OBJS) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED) $(DEBFLAGS) -o $@ $(LDFLAGS)
+	$(CC) $(OBJS) $(BUILD_DIR)/libs_shared/$(TOP_OBJ_SHARED) $(DEBFLAGS) -o $@ $(CCLDFLAGS_SHARED)
 else
+#==========
 #$(BUILD_DIR)/$(TARGET_EXEC): $(BUILD_DIR)/$(OBJS) $(OBJ_SHARED)
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS) $(OBJ_SHARED)
 	$(info "Use the ###src### to generate target")
@@ -322,7 +330,6 @@ $(BUILD_DIR)/%.cpp.o: %.cpp
 
 #.PHONY: compile
 
-
 #$(info "run $(BUILD_DIR)/$(TARGET_EXEC)")
 run:
 	$(info "####################")
@@ -340,7 +347,12 @@ all : clean compile run
 
 .PHONY: clean
 clean:
-	$(RM) -r $(BUILD_DIR)
+	$(RM) -r    $(BUILD_DIR)
+	$(RM)       *.o
+	$(RM)       *.i
+	$(RM)       *.bc
+	$(RM)       *.s
+	$(RM)       *.map
 
 -include $(DEPS)
 

@@ -2,6 +2,8 @@
 
 export MakeBuildLogFileName="fshan_cbuild_log.txt"
 
+#source try_clean
+
 # run like this
 #for gcc make
 #make clean
