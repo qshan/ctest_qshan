@@ -36,6 +36,7 @@
 #--------------------------------------------------
 #*#     %   pattern rules, like %.o : %.c
 #--------------------------------------------------
+# Functions for Transforming Text : https://www.gnu.org/software/make/manual/html_node/Functions.html
 ##### function about string
 # $(subst <from>,<to>,<text> )
 # $(patsubst <pattern>,<replacement>,<text> )
@@ -52,7 +53,8 @@
 # $(firstword names…)
 # $(lastword names…)
 #--------------------------------------------------
-##### function about operation of filename
+# https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html
+##### function about operation of file name
 # $(dir <names...> )
 # $(notdir <names...> )
 # $(suffix <names...> )
@@ -110,9 +112,22 @@
 # define a variable, Var=xx , and the methods of using variable is $(Var)
 #
 #search path
+# VPATH was designed to find sources, not targets.
+#
 # VPATH = src include
-# vpath %.c src
-# vpath %.h include
+# VPATH %.c src
+# VPATH %.C src
+#
+# VPATH %.cpp src
+# VPATH %.CPP src
+#
+# VPATH %.h include
+#
+# VPATH %.cc src
+# VPATH %.CC src
+#
+# VPATH %.s src
+# VPATH %.S src
 #
 #match standard
 # %.o: %.c
@@ -236,6 +251,15 @@ DEBFLAGS += -g
 #
 # for gcc
 #gcc#DEBFLAGS += -fcallgraph-info
+#DEBFLAGS += -Wa,-h
+# -g: Produce debugging information
+#  -Wa,option: Pass option as an option to the assembler
+#  -adhln:
+#  a: turn on listings
+#  d: omit debugging directives
+#  n: omit forms processing
+#  h: include high-level source
+#  l: include assembly
 #
 # for clang
 #issued#DEBFLAGS += -ftrigraphs
