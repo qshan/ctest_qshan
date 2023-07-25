@@ -45,7 +45,7 @@
 # $(findstring <find>,<in> )
 # $(filter <pattern...>,<text> )
 # $(filter-out <pattern...>,<text> )
-# $(sort <list> )
+# $(sort <list> )  #sort the words of the list in lexical order, removing duplicate words.
 # $(word <n>,<text> )
 # $(word n,text)
 # $(wordlist s,e,text)
@@ -217,6 +217,7 @@ $(info "SRCS is $(SRCS)")
 OBJS                  := $(SRCS:%=$(BUILD_DIR)/%.o)
 $(info "OBJS is $(OBJS)")
 #get the include path
+#generate the dependency file from .o to .d
 DEPS                  := $(OBJS:.o=.d)
 $(info "DEPS is $(DEPS)")
 
@@ -393,6 +394,7 @@ clean:
 	$(RM)       *.s
 	$(RM)       *.map
 
+#generate the header dependency file
 -include $(DEPS)
 
 MKDIR_P ?= mkdir -p
